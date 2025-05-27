@@ -1,5 +1,5 @@
 //
-//  Home.swift
+//  HomeView.swift
 //  paninoMaker
 //
 //  Created by Nicola Graziotin on 27/05/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Home: View {
+struct HomeView: View {
     var body: some View {
         NavigationView {
             VStack {
@@ -44,13 +44,11 @@ struct Home: View {
                 .padding()
                 
                 Spacer()
-                
-                
             }
         }
     }
 }
 
 #Preview {
-    Home()
+    HomeView()
 }

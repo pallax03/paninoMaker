@@ -48,9 +48,27 @@ struct ProfileView: View {
             .foregroundStyle(.red)
             .padding()
             
-            BadgeView()
+            HStack {
+                ForEach(0..<6) { _ in
+                    VStack {
+                        Badge()
+                        
+                        Text("x 0")
+                    }
+                }
+            }
         }
         .padding()
+    }
+}
+
+struct Badge: View {
+    var body: some View {
+        Circle()
+            .fill(Color.white)
+            .overlay {
+                Circle().stroke(Color.green, lineWidth: 2)
+        }
     }
 }
 

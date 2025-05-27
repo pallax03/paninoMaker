@@ -15,7 +15,6 @@ struct MapView: View {
             Map(position: $locationManager.position) {
                 UserAnnotation()
             }
-            .edgesIgnoringSafeArea(.all)
         }
 }
 

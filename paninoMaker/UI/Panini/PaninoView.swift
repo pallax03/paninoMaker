@@ -70,7 +70,7 @@ struct PaninoView: View {
                     }
                     
                     CardWrapper {
-                        BadgeView()
+                        Badge()
                     }
                     
                     CardWrapper {
