@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Profile: View {
+struct ProfileView: View {
     var body: some View {
         Text("Profile")
             .font(.title)
@@ -15,5 +15,5 @@ struct Profile: View {
 }
 
 #Preview {
-    Profile()
+    ProfileView()
 }

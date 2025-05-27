@@ -20,7 +20,7 @@ struct ContentView: View {
                     Label("Home", systemImage: "house")
                 }
             
-            Profile()
+            ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person.circle")
                 }

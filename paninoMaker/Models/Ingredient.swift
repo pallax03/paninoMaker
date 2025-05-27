@@ -6,9 +6,19 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct Ingredient: Codable {
-    var id = UUID()
+struct Ingredient: Codable, Identifiable {
+    var id: String
     var name: String
-    var image: String
+    var imageName: String
+    var category: String
+    var tags: [String]
+    var unlockLevel: String
+}
+
+
+
+enum TagType: String, Codable {
+    case vegan, veg, egg, dairy, gluten
 }
