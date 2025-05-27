@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		880A3BD12DE5C1E800DB0BA5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 880A3BBB2DE5C1E700DB0BA5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 880A3BC22DE5C1E700DB0BA5;
+			remoteInfo = paninoMaker;
+		};
+		880A3BDB2DE5C1E800DB0BA5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 880A3BBB2DE5C1E700DB0BA5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 880A3BC22DE5C1E700DB0BA5;
+			remoteInfo = paninoMaker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		880A3BC32DE5C1E700DB0BA5 /* paninoMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = paninoMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		880A3BD02DE5C1E800DB0BA5 /* paninoMakerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = paninoMakerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		880A3BDA2DE5C1E800DB0BA5 /* paninoMakerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = paninoMakerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		880A3BC52DE5C1E700DB0BA5 /* paninoMaker */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = paninoMaker;
+			sourceTree = "<group>";
+		};
+		880A3BD32DE5C1E800DB0BA5 /* paninoMakerTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = paninoMakerTests;
+			sourceTree = "<group>";
+		};
+		880A3BDD2DE5C1E800DB0BA5 /* paninoMakerUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = paninoMakerUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		880A3BC02DE5C1E700DB0BA5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		880A3BCD2DE5C1E800DB0BA5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		880A3BD72DE5C1E800DB0BA5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		880A3BBA2DE5C1E700DB0BA5 = {
+			isa = PBXGroup;
+			children = (
+				880A3BC52DE5C1E700DB0BA5 /* paninoMaker */,
+				880A3BD32DE5C1E800DB0BA5 /* paninoMakerTests */,
+				880A3BDD2DE5C1E800DB0BA5 /* paninoMakerUITests */,
+				880A3BC42DE5C1E700DB0BA5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		880A3BC42DE5C1E700DB0BA5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				880A3BC32DE5C1E700DB0BA5 /* paninoMaker.app */,
+				880A3BD02DE5C1E800DB0BA5 /* paninoMakerTests.xctest */,
+				880A3BDA2DE5C1E800DB0BA5 /* paninoMakerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		880A3BC22DE5C1E700DB0BA5 /* paninoMaker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 880A3BE42DE5C1E800DB0BA5 /* Build configuration list for PBXNativeTarget "paninoMaker" */;
+			buildPhases = (
+				880A3BBF2DE5C1E700DB0BA5 /* Sources */,
+				880A3BC02DE5C1E700DB0BA5 /* Frameworks */,
+				880A3BC12DE5C1E700DB0BA5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				880A3BC52DE5C1E700DB0BA5 /* paninoMaker */,
+			);
+			name = paninoMaker;
+			packageProductDependencies = (
+			);
+			productName = paninoMaker;
+			productReference = 880A3BC32DE5C1E700DB0BA5 /* paninoMaker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		880A3BCF2DE5C1E800DB0BA5 /* paninoMakerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 880A3BE72DE5C1E800DB0BA5 /* Build configuration list for PBXNativeTarget "paninoMakerTests" */;
+			buildPhases = (
+				880A3BCC2DE5C1E800DB0BA5 /* Sources */,
+				880A3BCD2DE5C1E800DB0BA5 /* Frameworks */,
+				880A3BCE2DE5C1E800DB0BA5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				880A3BD22DE5C1E800DB0BA5 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				880A3BD32DE5C1E800DB0BA5 /* paninoMakerTests */,
+			);
+			name = paninoMakerTests;
+			packageProductDependencies = (
+			);
+			productName = paninoMakerTests;
+			productReference = 880A3BD02DE5C1E800DB0BA5 /* paninoMakerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		880A3BD92DE5C1E800DB0BA5 /* paninoMakerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 880A3BEA2DE5C1E800DB0BA5 /* Build configuration list for PBXNativeTarget "paninoMakerUITests" */;
+			buildPhases = (
+				880A3BD62DE5C1E800DB0BA5 /* Sources */,
+				880A3BD72DE5C1E800DB0BA5 /* Frameworks */,
+				880A3BD82DE5C1E800DB0BA5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				880A3BDC2DE5C1E800DB0BA5 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				880A3BDD2DE5C1E800DB0BA5 /* paninoMakerUITests */,
+			);
+			name = paninoMakerUITests;
+			packageProductDependencies = (
+			);
+			productName = paninoMakerUITests;
+			productReference = 880A3BDA2DE5C1E800DB0BA5 /* paninoMakerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		880A3BBB2DE5C1E700DB0BA5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					880A3BC22DE5C1E700DB0BA5 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					880A3BCF2DE5C1E800DB0BA5 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 880A3BC22DE5C1E700DB0BA5;
+					};
+					880A3BD92DE5C1E800DB0BA5 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 880A3BC22DE5C1E700DB0BA5;
+					};
+				};
+			};
+			buildConfigurationList = 880A3BBE2DE5C1E700DB0BA5 /* Build configuration list for PBXProject "paninoMaker" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 880A3BBA2DE5C1E700DB0BA5;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 880A3BC42DE5C1E700DB0BA5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				880A3BC22DE5C1E700DB0BA5 /* paninoMaker */,
+				880A3BCF2DE5C1E800DB0BA5 /* paninoMakerTests */,
+				880A3BD92DE5C1E800DB0BA5 /* paninoMakerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		880A3BC12DE5C1E700DB0BA5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		880A3BCE2DE5C1E800DB0BA5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		880A3BD82DE5C1E800DB0BA5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		880A3BBF2DE5C1E700DB0BA5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		880A3BCC2DE5C1E800DB0BA5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		880A3BD62DE5C1E800DB0BA5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		880A3BD22DE5C1E800DB0BA5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 880A3BC22DE5C1E700DB0BA5 /* paninoMaker */;
+			targetProxy = 880A3BD12DE5C1E800DB0BA5 /* PBXContainerItemProxy */;
+		};
+		880A3BDC2DE5C1E800DB0BA5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 880A3BC22DE5C1E700DB0BA5 /* paninoMaker */;
+			targetProxy = 880A3BDB2DE5C1E800DB0BA5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		880A3BE22DE5C1E800DB0BA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9RX8A59985;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		880A3BE32DE5C1E800DB0BA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9RX8A59985;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		880A3BE52DE5C1E800DB0BA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9RX8A59985;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = pallax.paninoMaker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		880A3BE62DE5C1E800DB0BA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9RX8A59985;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = pallax.paninoMaker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		880A3BE82DE5C1E800DB0BA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9RX8A59985;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = pallax.paninoMakerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/paninoMaker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/paninoMaker";
+			};
+			name = Debug;
+		};
+		880A3BE92DE5C1E800DB0BA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9RX8A59985;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = pallax.paninoMakerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/paninoMaker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/paninoMaker";
+			};
+			name = Release;
+		};
+		880A3BEB2DE5C1E800DB0BA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9RX8A59985;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = pallax.paninoMakerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = paninoMaker;
+			};
+			name = Debug;
+		};
+		880A3BEC2DE5C1E800DB0BA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9RX8A59985;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = pallax.paninoMakerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = paninoMaker;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		880A3BBE2DE5C1E700DB0BA5 /* Build configuration list for PBXProject "paninoMaker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				880A3BE22DE5C1E800DB0BA5 /* Debug */,
+				880A3BE32DE5C1E800DB0BA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		880A3BE42DE5C1E800DB0BA5 /* Build configuration list for PBXNativeTarget "paninoMaker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				880A3BE52DE5C1E800DB0BA5 /* Debug */,
+				880A3BE62DE5C1E800DB0BA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		880A3BE72DE5C1E800DB0BA5 /* Build configuration list for PBXNativeTarget "paninoMakerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				880A3BE82DE5C1E800DB0BA5 /* Debug */,
+				880A3BE92DE5C1E800DB0BA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		880A3BEA2DE5C1E800DB0BA5 /* Build configuration list for PBXNativeTarget "paninoMakerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				880A3BEB2DE5C1E800DB0BA5 /* Debug */,
+				880A3BEC2DE5C1E800DB0BA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 880A3BBB2DE5C1E700DB0BA5 /* Project object */;
+}
