@@ -1,5 +1,5 @@
 //
-//  MapArea.swift
+//  LocationManager.swift
 //  paninoMaker
 //
 //  Created by Nicola Graziotin on 27/05/25.

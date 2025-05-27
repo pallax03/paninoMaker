@@ -29,6 +29,7 @@ struct Home: View {
                     
                     NavigationLink(destination: PaninoView()) {
                         Image(systemName: "plus")
+                            .font(.title)
                     }
                 }
                 .padding()

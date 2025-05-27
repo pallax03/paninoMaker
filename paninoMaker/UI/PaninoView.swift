@@ -11,62 +11,112 @@ import PhotosUI
 struct PaninoView: View {
     
     @State private var selectedPhoto: PhotosPickerItem? = nil
-
+    @State private var showComposer: Bool = false
+    @State private var showMap: Bool = false
+    @State private var isReviewing: Bool = false
+    @State private var reviewDescription: String = ""
+    
     var body: some View {
         NavigationStack {
             VStack {
-                HStack {
-                    Text("Titolo Panino")
-                        .font(.title)
-                    
-                    Spacer()
-                    
-                    Button {
+                VStack {
+                    HStack {
+                        Text("Titolo Panino")
+                            .font(.title)
                         
-                    } label: {
-                        Image(systemName: "heart")
-                            .foregroundStyle(.red)
+                        Spacer()
+                        
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "heart")
+                                .foregroundStyle(.red)
+                        }
+                    }
+                    
+                    Divider()
+                    
+                    HStack {
+                        Text("27/05/2025")
+                            .font(.footnote)
+                        
+                        Spacer()
                     }
                 }
                 
-                Divider()
-                
-                HStack {
-                    Text("27/05/2025")
-                        .font(.footnote)
+                ScrollView {
+                    CardWrapper {
+                        PhotosPicker(
+                            selection: $selectedPhoto,
+                            matching: .images,
+                            photoLibrary: .shared()
+                        ) {
+                            Text("Seleziona foto")
+                        }
+                    }
+                    
                     
                     Spacer()
+                    
+                    CardWrapper {
+                        Button {
+                            showComposer = true
+                        } label: {
+                            Text("Composer")
+                        }
+                        .sheet(isPresented: $showComposer, content: {
+                            ComposerSheet()
+                        })
+                    }
+                    
+                    CardWrapper {
+                        BadgeView()
+                    }
+                    
+                    CardWrapper {
+                        VStack {
+                            Text("Tocca per valutare")
+                                .padding(.bottom, 5)
+                            
+                            HStack {
+                                ForEach(0..<5) { _ in
+                                    Button {
+                                        isReviewing = true
+                                    } label: {
+                                        Image(systemName: "star")
+                                            .font(.title)
+                                    }
+                                }
+                            }
+                            .padding(.bottom, 5)
+                            
+                            if isReviewing {
+                                Divider()
+                                
+                                TextField(text: $reviewDescription) {
+                                    Text("Aggiungi una descrizione...")
+                                }
+                            }
+                        }
+                    }
+                    
+                    CardWrapper {
+                        Button {
+                            showMap = true
+                        } label: {
+                            Text("Pin Mappa")
+                        }
+                        .sheet(isPresented: $showMap, content: {
+                            
+                        })
+                    }
                 }
-                .padding(.bottom)
-                
-                PhotosPicker(
-                    selection: $selectedPhoto,
-                    matching: .images,
-                    photoLibrary: .shared()
-                ) {
-                    Text("Seleziona foto")
-                }
-                
-                Spacer()
-                
-                Text("Composer")
-                
-                Spacer()
-                
-                Text("Badges")
-                
-                Spacer()
-                
-                Text("Rating")
-                
-                Spacer()
-                
-                Text("Pin Mappa")
             }
-            .padding()
         }
+        .edgesIgnoringSafeArea(.all)
+        .padding()
         .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     
                 } label: {
