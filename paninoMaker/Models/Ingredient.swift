@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct Ingredient: Codable {
+    var id = UUID()
+    var name: String
+    var image: String
+    
+}
