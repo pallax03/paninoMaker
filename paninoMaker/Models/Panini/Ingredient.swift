@@ -14,7 +14,7 @@ struct Ingredient: Codable, Identifiable {
     var imageName: String
     var category: String
     var tags: [String]
-    var unlockLevel: String
+    var unlockLevel: Int
 }
 
 

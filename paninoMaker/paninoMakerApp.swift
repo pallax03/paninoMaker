@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct paninoMakerApp: App {
+    @StateObject private var user = UserModel()
+    let ingredientStore = IngredientStore()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environment(\.ingredientStore, ingredientStore).environmentObject(user)
         }
     }
 }

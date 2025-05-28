@@ -22,6 +22,7 @@ class Panino: Identifiable, ObservableObject {
     @Published var rating: Int?
     @Published var ratingDescription: String?
     @Published var ingredients: [Ingredient]
+    var badges: [Badge] = []
     
     // MARK: - Computed
     var displayName: String {
@@ -47,5 +48,31 @@ class Panino: Identifiable, ObservableObject {
         self.rating = rating
         self.ratingDescription = ratingDescription
         self.ingredients = ingredients
+    }
+    
+    // MARK: - Ingredients
+    func addIngredient(_ ingredient: Ingredient) {
+        ingredients.append(ingredient)
+    }
+    
+    func removeIngredient(at index: Int) {
+        ingredients.remove(at: index)
+    }
+    
+    func searchIngredient(by name: String) -> Ingredient? {
+        ingredients.first { $0.name == name }
+    }
+    
+    // MARK: - Gamifications
+    func getPoints() -> Int {
+        var points: Int = 0
+        
+        images.forEach { _ in points += 4 }
+        if rating != nil { points += 1 }
+        if ratingDescription != nil { points += 2 }
+        if coordinates != nil { points += 5 }
+        
+        
+        return points
     }
 }

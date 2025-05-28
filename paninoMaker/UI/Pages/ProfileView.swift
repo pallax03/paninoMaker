@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject var user: UserModel
+    
     var body: some View {
         VStack {
             Circle()
@@ -17,7 +19,7 @@ struct ProfileView: View {
                     Circle().stroke(.black, lineWidth: 2)
                 }
             
-            Text("Username")
+            Text(user.username ?? "Error")
                 .font(.title)
             
             ZStack {
@@ -29,7 +31,7 @@ struct ProfileView: View {
                     }
                 
                 VStack {
-                    Text("LVL. 0")
+                    Text("LVL. \(user.level)")
                         .font(.title)
                         .fontWeight(.bold)
                     
@@ -51,7 +53,7 @@ struct ProfileView: View {
             HStack {
                 ForEach(0..<6) { _ in
                     VStack {
-                        Badge()
+                        BadgeView()
                         
                         Text("x 0")
                     }
@@ -62,7 +64,7 @@ struct ProfileView: View {
     }
 }
 
-struct Badge: View {
+struct BadgeView: View {
     var body: some View {
         Circle()
             .fill(Color.white)
@@ -73,5 +75,5 @@ struct Badge: View {
 }
 
 #Preview {
-    ProfileView()
+    ProfileView().environmentObject(UserModel())
 }
