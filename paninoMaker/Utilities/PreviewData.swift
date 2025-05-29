@@ -9,12 +9,15 @@ import Foundation
 import SwiftData
 
 enum PreviewData {
-    static let samplePanini: [Panino] = [
+    static let samplePanino: [Panino] = [
         Panino(
             name: "Hamburger",
             owner: "Preview User",
-            ingredients: IngredientStore().generateRandoms(count: 1)
-        ),
+            ingredients: IngredientStore().generateRandoms(count: 10)
+        )
+    ]
+    
+    static let samplePanini: [Panino] = [
         Panino(
             name: "CheeseBurger",
             owner: "Preview User",
@@ -26,9 +29,14 @@ enum PreviewData {
             ingredients: IngredientStore().generateRandoms(count: 5)
         )
     ]
+    
+    static let sampleMenus: [Menu] = [
+        Menu(title: "Preview Menu 1", panini: samplePanino),
+        Menu(title: "Preview Menu 2", panini: samplePanini)
+    ]
 
     static func makeModelContainer(
-        for entities: [any PersistentModel.Type] = [Panino.self],
+        for entities: [any PersistentModel.Type] = [Menu.self],
         withSampleData: Bool = true
     ) -> ModelContainer {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
@@ -37,8 +45,8 @@ enum PreviewData {
     
     if withSampleData {
         let modelContext = ModelContext(container)
-        for panino in samplePanini {
-            modelContext.insert(panino)
+        for menu in sampleMenus {
+            modelContext.insert(menu)
         }
         try! modelContext.save()
         

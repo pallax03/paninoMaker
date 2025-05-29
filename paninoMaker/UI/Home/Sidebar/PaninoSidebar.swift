@@ -6,34 +6,32 @@
 //
 
 import SwiftUI
+import SwiftData
+
+enum SidebarSection: Hashable {
+    case all
+    case menus(Menu)
+}
+
+
 
 struct PaninoSidebar: View {
-    @StateObject private var model = DataModel()
-    @Binding var selectedMenu: Menu?
+    @Environment(\.modelContext) var modelContext
+    @Query(sort: \Menu.title, order: .forward) var allMenus: [Menu]
+    @Binding var selectedMenu: SidebarSection?
     
     var body: some View {
-        VStack {
-            List(model.menus, selection: $selectedMenu) { menu in
-                NavigationLink(value: menu) {
-                    Text(menu.name)
+        List(selection: $selectedMenu) {
+            Section("Predefiniti") {
+                Button("Tutti i panini") {
+                    selectedMenu = .all
                 }
             }
-        }
-        .navigationTitle("Menu")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    
-                } label: {
-                    Image(systemName: "plus")
-                }
-            }
-            
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    
-                } label: {
-                    Image(systemName: "square.and.arrow.down")
+            Section("I tuoi menù") {
+                ForEach(allMenus) { menu in
+                    Button(menu.title) {
+                        selectedMenu = .menus(menu)
+                    }
                 }
             }
         }
@@ -42,4 +40,5 @@ struct PaninoSidebar: View {
 
 #Preview {
     PaninoSidebar(selectedMenu: .constant(nil))
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
 }
