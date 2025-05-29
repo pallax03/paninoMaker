@@ -11,9 +11,8 @@ import SwiftUI
 import SwiftData
 
 @Model
-class Panino: Identifiable, ObservableObject, Hashable {
+class Panino {
     // MARK: - Properties
-    var id: UUID
     var name: String
     var isFavorite: Bool
     var creationDate: Date
@@ -24,17 +23,12 @@ class Panino: Identifiable, ObservableObject, Hashable {
     var rating: Int?
     var ratingDescription: String?
     
-    var top: Ingredient
-    var ingredients: [Ingredient]
-    var bottom: Ingredient
-    
-//    @Relationship
+    var composer: Composer
+    var menu: Menu?
+
 //    var badges: [Badge] = []
     
     // MARK: - Computed
-    var displayName: String {
-        name.isEmpty ? "Panino #\(id.uuidString.prefix(5))" : name
-    }
     
     var images: [UIImage] {
         imageData.compactMap { UIImage(data: $0) }
@@ -53,11 +47,10 @@ class Panino: Identifiable, ObservableObject, Hashable {
         images: [UIImage] = [],
         rating: Int? = nil,
         ratingDescription: String? = nil,
-        top: Ingredient = IngredientStore().firstBun()!,
-        ingredients: [Ingredient] = [],
-        bottom: Ingredient = IngredientStore().firstBun()!
+        composer: Composer = .init(),
+        menu: Menu? = nil
     ) {
-        self.id = UUID()
+//        self.id = UUID()
         self.name = name
         self.isFavorite = false
         self.creationDate = Date()
@@ -73,9 +66,8 @@ class Panino: Identifiable, ObservableObject, Hashable {
         self.rating = rating
         self.ratingDescription = ratingDescription
         
-        self.top = top
-        self.ingredients = ingredients
-        self.bottom = bottom
+        self.composer = composer
+        self.menu = menu
     }
     
     // MARK: - Utilities
@@ -90,29 +82,6 @@ class Panino: Identifiable, ObservableObject, Hashable {
         longitude = coordinate.longitude
     }
     
-    // MARK: - Ingredients
-    func setTop(_ ingredient: Ingredient) {
-        guard ingredient.category == IngredientCategory.buns else { return }
-        self.top = ingredient
-    }
-    
-    func setBottom(_ ingredient: Ingredient) {
-        guard ingredient.category == IngredientCategory.buns else { return }
-        self.bottom = ingredient
-    }
-    
-    func addIngredient(_ ingredient: Ingredient) {
-        ingredients.append(ingredient)
-    }
-    
-    func removeIngredient(at index: Int) {
-        ingredients.remove(at: index)
-    }
-    
-    func searchIngredient(by name: String) -> Ingredient? {
-        ingredients.first { $0.name == name }
-    }
-    
     // MARK: - Gamifications
     func calculatePoints() -> Int {
         var points: Int = 0
@@ -125,13 +94,4 @@ class Panino: Identifiable, ObservableObject, Hashable {
 //        return Int(Double(points) * badges.reduce(1.0) { $0 * $1.mult })
         return points
     }
-    
-    // MARK: - Conformità a Hashable
-        static func == (lhs: Panino, rhs: Panino) -> Bool {
-            lhs.id == rhs.id
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
-        }
 }

@@ -16,6 +16,6 @@ struct paninoMakerApp: App {
         WindowGroup {
             ContentView().environment(\.ingredientStore, ingredientStore).environmentObject(user)
         }
-            .modelContainer(for: [Panino.self])
+        .modelContainer(for: [Menu.self])
     }
 }

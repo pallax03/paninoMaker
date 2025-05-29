@@ -9,7 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct PaninoDetail: View {
-    @State var panino: Panino?
+    @State var panino: Panino
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var showComposer: Bool = false
     @State private var showMap: Bool = false
@@ -22,7 +22,7 @@ struct PaninoDetail: View {
             VStack {
                 VStack {
                     HStack {
-                        Text(panino!.name)
+                        Text(panino.name)
                             .font(.title)
                         
                         Spacer()
@@ -130,9 +130,6 @@ struct PaninoDetail: View {
 }
 
 #Preview {
-    let model = DataModel()
-    let menu = model.menus.first!
-    let panino = menu.panini.first!
-    PaninoDetail(panino: panino)
+    PaninoDetail(panino: PreviewData.samplePanini.first!)
         .environmentObject(UserModel())
 }

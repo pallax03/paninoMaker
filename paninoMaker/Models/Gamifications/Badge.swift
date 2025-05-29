@@ -31,13 +31,11 @@ extension Badge {
 }
 
 @Model
-class BadgeEntity: Identifiable {
-    var id: UUID
+class BadgeEntity {
     var title: String
     var mult: Double
 
     init(title: String, mult: Double) {
-        self.id = UUID()
         self.title = title
         self.mult = mult
     }
@@ -65,7 +63,7 @@ struct VeganBadge: Badge {
         defaultView(icon: "heart.fill")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
-        return panino.ingredients.allSatisfy {$0.tags.contains(.vegan)}
+        return panino.composer.ingredients.allSatisfy {$0.tags.contains(.vegan)}
     }
 }
 
@@ -78,7 +76,7 @@ struct VegetarianBadge: Badge {
         defaultView(icon: "heart.fill")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
-        return panino.ingredients.allSatisfy {$0.tags.contains(.veg)}
+        return panino.composer.ingredients.allSatisfy {$0.tags.contains(.veg)}
     }
 }
 
@@ -91,7 +89,7 @@ struct GlutenFreeBadge: Badge {
         defaultView(icon: "heart.fill")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
-        return panino.ingredients.allSatisfy {!$0.tags.contains(.gluten)}
+        return panino.composer.ingredients.allSatisfy {!$0.tags.contains(.gluten)}
     }
 }
 
@@ -104,7 +102,7 @@ struct DairyFreeBadge: Badge {
         defaultView(icon: "heart.fill")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
-        return panino.ingredients.allSatisfy {!$0.tags.contains(.dairy)}
+        return panino.composer.ingredients.allSatisfy {!$0.tags.contains(.dairy)}
     }
 }
 
@@ -117,7 +115,7 @@ struct BigPortionBadge: Badge {
         defaultView(icon: "heart.fill")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
-        return panino.ingredients.count >= allPanini.map({$0.ingredients.count}).max() ?? 0
+        return panino.composer.ingredients.count >= allPanini.map({$0.composer.ingredients.count}).max() ?? 0
     }
 }
 
@@ -130,7 +128,7 @@ struct SmallPortionBadge: Badge {
         defaultView(icon: "heart.fill")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
-        return panino.ingredients.count <= allPanini.map({$0.ingredients.count}).min() ?? 0
+        return panino.composer.ingredients.count <= allPanini.map({$0.composer.ingredients.count}).min() ?? 0
     }
 }
 
@@ -143,7 +141,7 @@ struct HealthyBadge: Badge {
         defaultView(icon: "heart.fill")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
-        return panino.ingredients.allSatisfy {!$0.tags.contains(.fat)}
+        return panino.composer.ingredients.allSatisfy {!$0.tags.contains(.fat)}
     }
 }
 
@@ -156,7 +154,7 @@ struct SpicyBadge: Badge {
         defaultView(icon: "heart.fill")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
-        return panino.ingredients.contains(where: {$0.tags.contains(.spicy)})
+        return panino.composer.ingredients.contains(where: {$0.tags.contains(.spicy)})
     }
 }
 

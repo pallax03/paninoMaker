@@ -7,9 +7,15 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
-struct Menu: Identifiable, Hashable {
-    let id = UUID()
-    let name: String
-    let panini: [Panino]
+@Model
+class Menu {
+    var title: String
+    var panini: [Panino] = []
+    
+    init(title: String, panini: [Panino] = []) {
+        self.title = title
+        self.panini = panini
+    }
 }
