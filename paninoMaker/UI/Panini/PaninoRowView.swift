@@ -31,6 +31,6 @@ struct PaninoRowView: View {
 }
 
 #Preview {
-    PaninoRowView(panino: Panino(name: "Test", ingredients: IngredientStore().generateRandoms(count: 10)))
+    PaninoRowView(panino: Panino(name: "Test"))
         .environmentObject(UserModel())
 }

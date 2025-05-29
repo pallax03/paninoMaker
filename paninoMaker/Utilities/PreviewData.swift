@@ -12,27 +12,18 @@ enum PreviewData {
     static let samplePanini: [Panino] = [
         Panino(
             name: "Hamburger",
-            owner: "PreviewUser",
-            ingredients: [
-                IngredientStore().random()!,
-                IngredientStore().random()!,
-                IngredientStore().random()!
-            ]
+            owner: "Preview User",
+            ingredients: IngredientStore().generateRandoms(count: 1)
         ),
         Panino(
             name: "CheeseBurger",
-            owner: "PreviewUser",
-            ingredients: [
-                IngredientStore().random()!,
-                IngredientStore().random()!
-            ]
+            owner: "Preview User",
+            ingredients: IngredientStore().generateRandoms(count: 3)
         ),
         Panino(
             name: "Bacon Burger",
-            owner: "PreviewUser",
-            ingredients: [
-                IngredientStore().random()!,
-            ]
+            owner: "Preview User",
+            ingredients: IngredientStore().generateRandoms(count: 5)
         )
     ]
 

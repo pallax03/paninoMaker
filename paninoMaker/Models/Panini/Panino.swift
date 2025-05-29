@@ -24,7 +24,9 @@ class Panino: Identifiable, ObservableObject {
     var rating: Int?
     var ratingDescription: String?
     
+    var top: Ingredient
     var ingredients: [Ingredient]
+    var bottom: Ingredient
     
 //    @Relationship
 //    var badges: [Badge] = []
@@ -51,7 +53,9 @@ class Panino: Identifiable, ObservableObject {
         images: [UIImage] = [],
         rating: Int? = nil,
         ratingDescription: String? = nil,
-        ingredients: [Ingredient] = []
+        top: Ingredient = IngredientStore().firstBun()!,
+        ingredients: [Ingredient] = [],
+        bottom: Ingredient = IngredientStore().firstBun()!
     ) {
         self.id = UUID()
         self.name = name
@@ -68,7 +72,10 @@ class Panino: Identifiable, ObservableObject {
 
         self.rating = rating
         self.ratingDescription = ratingDescription
+        
+        self.top = top
         self.ingredients = ingredients
+        self.bottom = bottom
     }
     
     // MARK: - Utilities
@@ -84,6 +91,16 @@ class Panino: Identifiable, ObservableObject {
     }
     
     // MARK: - Ingredients
+    func setTop(_ ingredient: Ingredient) {
+        guard ingredient.category == IngredientCategory.buns else { return }
+        self.top = ingredient
+    }
+    
+    func setBottom(_ ingredient: Ingredient) {
+        guard ingredient.category == IngredientCategory.buns else { return }
+        self.bottom = ingredient
+    }
+    
     func addIngredient(_ ingredient: Ingredient) {
         ingredients.append(ingredient)
     }

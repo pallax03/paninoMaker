@@ -20,12 +20,20 @@ final class IngredientStore {
         ingredients.first(where: { $0.id == id })
     }
     
-    func first() -> Ingredient? {
-        ingredients.first
+    func firstBun() -> Ingredient? {
+        ingredients(ofCategory: IngredientCategory.buns).first
     }
     
-    func random() -> Ingredient? {
-        ingredients.randomElement()
+    func ingredients(ofCategory category: IngredientCategory) -> [Ingredient] {
+        ingredients.filter({ $0.category == category })
+    }
+    
+    func search(name: String) -> Ingredient? {
+        ingredients.first(where: {$0.name == name})
+    }
+    
+    func random(category: IngredientCategory? = nil) -> Ingredient? {
+        category != nil ? ingredients(ofCategory: category!).randomElement() : ingredients.randomElement()
     }
     
     func generateRandoms(count: Int) -> [Ingredient] {

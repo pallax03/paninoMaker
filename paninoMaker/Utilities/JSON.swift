@@ -8,14 +8,18 @@
 import Foundation
 
 func decodeJSON<T: Decodable>(_ filename: String) -> T {
-    guard
-        let url = Bundle.main.url(forResource: filename, withExtension: "json"),
-        let data = try? Data(contentsOf: url),
-        let content = try? JSONDecoder().decode(T.self, from: data)
-    else {
-        fatalError("File not found: \(filename).json")
+    guard let url = Bundle.main.url(forResource: filename, withExtension: "json") else {
+        fatalError("❌ File not found: \(filename).json")
     }
-    return content
+
+    do {
+        let data = try Data(contentsOf: url)
+        print(String(data: data, encoding: .utf8)!)
+        let decoded = try JSONDecoder().decode(T.self, from: data)
+        return decoded
+    } catch {
+        fatalError("❌ Error decoding \(filename).json: \(error)")
+    }
 }
 
 func codeJSON<T: Encodable>(_ value: T) -> String {

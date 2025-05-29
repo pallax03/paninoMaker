@@ -12,7 +12,7 @@ struct Ingredient: Codable, Identifiable {
     var id: String
     var name: String
     var imageName: String
-    var category: String
+    var category: IngredientCategory
     var tags: Set<IngredientTag>
     var unlockLevel: Int
 }
@@ -20,4 +20,8 @@ struct Ingredient: Codable, Identifiable {
 
 enum IngredientTag: String, Codable {
     case vegan, veg, egg, dairy, gluten, fat, spicy
+}
+
+enum IngredientCategory: String, Codable {
+    case buns, meats, vegetables, toppings, sauces
 }
