@@ -1,5 +1,5 @@
 //
-//  ComposerSheetView.swift
+//  ComposerSheet.swift
 //  paninoMaker
 //
 //  Created by Nicola Graziotin on 27/05/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ComposerSheetView: View {
+struct ComposerSheet: View {
     @Environment(\.ingredientStore) var ingredientStore
     @Environment(\.dismiss) private var dismiss
     @State private var isShown = false
@@ -50,7 +50,7 @@ struct ComposerSheetView: View {
                     }
                     .sheet(isPresented: $isShown) {
                         NavigationStack {
-                            IngredientsView(ingredients: ingredientStore.ingredients,
+                            IngredientList(ingredients: ingredientStore.ingredients,
                                 onIngredientSelected: { ingredient in
                                 ingredientList.append(ingredient)
                             })
@@ -103,7 +103,7 @@ struct Bread: View {
         }
         .sheet(isPresented: $isShownBread) {
             NavigationStack {
-                IngredientsView(ingredients: ingredientStore.ingredients(ofCategory:    IngredientCategory.buns),
+                IngredientList(ingredients: ingredientStore.ingredients(ofCategory:    IngredientCategory.buns),
                     onIngredientSelected: { ingredient in
                         if !ingredientList.contains(ingredient) {
                             ingredientList.append(ingredient)
@@ -116,5 +116,5 @@ struct Bread: View {
 }
 
 #Preview {
-    ComposerSheetView().environmentObject(UserModel())
+    ComposerSheet().environmentObject(UserModel())
 }

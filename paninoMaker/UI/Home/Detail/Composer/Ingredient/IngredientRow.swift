@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct IngredientRowView: View {
+struct IngredientRow: View {
     @EnvironmentObject var user: UserModel
     @Environment(\.dismiss) var dismiss
     
@@ -59,6 +59,6 @@ struct IngredientRowView: View {
 }
 
 //#Preview {
-//    IngredientRowView(ingredient: IngredientStore().ingredients.randomElement()!)
+//    IngredientRow(ingredient: IngredientStore().ingredients.randomElement()!)
 //        .environmentObject(UserModel())
 //}

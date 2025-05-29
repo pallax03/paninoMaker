@@ -1,5 +1,5 @@
 //
-//  IngredientsView.swift
+//  IngredientList.swift
 //  paninoMaker
 //
 //  Created by alex mazzoni on 27/05/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct IngredientsView: View {
+struct IngredientList: View {
     var ingredients: [Ingredient] = []
     var onIngredientSelected: (Ingredient) -> Void
     var groupedIngredients: [(key: IngredientCategory, value: [Ingredient])] {
@@ -20,7 +20,7 @@ struct IngredientsView: View {
             ForEach(groupedIngredients, id: \.key) { category, ingredients in
                 Section(header: Text(category.rawValue.capitalized)) {
                     ForEach(ingredients) { ingredient in
-                        IngredientRowView(ingredient: ingredient, onSelect: onIngredientSelected)
+                        IngredientRow(ingredient: ingredient, onSelect: onIngredientSelected)
                             .contentShape(Rectangle())                    }
                 }
             }
@@ -29,7 +29,7 @@ struct IngredientsView: View {
 }
 
 #Preview {
-    IngredientsView(
+    IngredientList(
         ingredients: IngredientStore().ingredients,
         onIngredientSelected: { ingredient in
             print("Preview selected: \(ingredient.name)")

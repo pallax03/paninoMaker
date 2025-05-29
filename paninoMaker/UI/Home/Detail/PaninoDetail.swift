@@ -1,5 +1,5 @@
 //
-//  PaninoView.swift
+//  PaninoDetail.swift
 //  paninoMaker
 //
 //  Created by Nicola Graziotin on 27/05/25.
@@ -8,7 +8,7 @@
 import SwiftUI
 import PhotosUI
 
-struct PaninoDetailsView: View {
+struct PaninoDetail: View {
     @State var panino: Panino?
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var showComposer: Bool = false
@@ -66,7 +66,7 @@ struct PaninoDetailsView: View {
                             Text("Composer")
                         }
                         .sheet(isPresented: $showComposer, content: {
-                            ComposerSheetView()
+                            ComposerSheet()
                         })
                     }
                     
@@ -133,5 +133,5 @@ struct PaninoDetailsView: View {
     let model = DataModel()
     let menu = model.menus.first!
     let panino = menu.panini.first!
-    PaninoDetailsView(panino: panino)
+    PaninoDetail(panino: panino)
 }

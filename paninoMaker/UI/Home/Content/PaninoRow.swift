@@ -1,5 +1,5 @@
 //
-//  PaninoRowView.swift
+//  PaninoRow.swift
 //  paninoMaker
 //
 //  Created by alex mazzoni on 28/05/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PaninoRowView: View {
+struct PaninoRow: View {
     @EnvironmentObject var user: UserModel
     
     let panino: Panino
@@ -26,11 +26,10 @@ struct PaninoRowView: View {
             
             Text(panino.owner ?? "no user")
         }
-        .padding()
     }
 }
 
 #Preview {
-    PaninoRowView(panino: Panino(name: "Test"))
+    PaninoRow(panino: Panino(name: "Test"))
         .environmentObject(UserModel())
 }

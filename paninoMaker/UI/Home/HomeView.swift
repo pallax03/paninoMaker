@@ -43,13 +43,13 @@ struct HomeView: View {
             .navigationTitle("Menu")
         } content: {
             if let menu = selectedMenu {
-                PaninoContentView(selectedPanino: $selectedPanino, menu: menu)
+                PaninoContent(selectedPanino: $selectedPanino, menu: menu)
             } else {
                 Text("Select a menu")
             }
         } detail: {
             if let panino = selectedPanino {
-                PaninoDetailsView(panino: panino)
+                PaninoDetail(panino: panino)
                 .padding()
             } else {
                 Text("Select an item")

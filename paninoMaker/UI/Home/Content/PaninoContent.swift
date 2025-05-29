@@ -1,5 +1,5 @@
 //
-//  PaninoListView.swift
+//  PaninoContent.swift
 //  paninoMaker
 //
 //  Created by alex mazzoni on 28/05/25.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct PaninoContentView: View {
+struct PaninoContent: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Panino.creationDate, order: .reverse) var panini: [Panino]
     @Binding var selectedPanino: Panino?
@@ -17,7 +17,7 @@ struct PaninoContentView: View {
     var body: some View {
         List(menu.panini, selection: $selectedPanino) { panino in
             NavigationLink(value: panino) {
-                PaninoRowView(panino: panino)
+                PaninoRow(panino: panino)
             }
         }
         .navigationTitle(menu.name)
@@ -40,5 +40,5 @@ struct PaninoContentView: View {
 //#Preview {
 //    @State var panini = PreviewData.samplePanini
 //    let menuTest = Menu(name: "Test", panini: panini)
-//    PaninoContentView(selectedPanino: $panini.first, menu: menuTest).modelContainer(PreviewData.makeModelContainer(withSampleData: true)).environmentObject(UserModel())
+//    PaninoContent(selectedPanino: $panini.first, menu: menuTest).modelContainer(PreviewData.makeModelContainer(withSampleData: true)).environmentObject(UserModel())
 //}
