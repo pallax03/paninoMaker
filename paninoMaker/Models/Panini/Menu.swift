@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct Menu {
-    
+struct Menu: Identifiable, Hashable {
+    let id = UUID()
+    let name: String
+    let panini: [Panino]
 }

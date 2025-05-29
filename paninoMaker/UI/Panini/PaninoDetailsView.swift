@@ -9,27 +9,28 @@ import SwiftUI
 import PhotosUI
 
 struct PaninoDetailsView: View {
-    
+    @State var panino: Panino?
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var showComposer: Bool = false
     @State private var showMap: Bool = false
     @State private var isReviewing: Bool = false
     @State private var reviewDescription: String = ""
+    @State private var isFavorite: Bool = false
     
     var body: some View {
         NavigationStack {
             VStack {
                 VStack {
                     HStack {
-                        Text("Titolo Panino")
+                        Text(panino!.name)
                             .font(.title)
                         
                         Spacer()
                         
                         Button {
-                            
+                            isFavorite.toggle()
                         } label: {
-                            Image(systemName: "heart")
+                            Image(systemName: isFavorite ? "heart.fill" : "heart")
                                 .foregroundStyle(.red)
                         }
                     }
@@ -71,6 +72,7 @@ struct PaninoDetailsView: View {
                     
                     CardWrapper {
                         BadgeView()
+                            .frame(width: 50)
                     }
                     
                     CardWrapper {
@@ -128,5 +130,8 @@ struct PaninoDetailsView: View {
 }
 
 #Preview {
-    PaninoDetailsView()
+    let model = DataModel()
+    let menu = model.menus.first!
+    let panino = menu.panini.first!
+    PaninoDetailsView(panino: panino)
 }

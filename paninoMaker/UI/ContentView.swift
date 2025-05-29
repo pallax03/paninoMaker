@@ -29,5 +29,4 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView().environmentObject(UserModel())
-}
+    ContentView().environmentObject(UserModel()).modelContainer(PreviewData.makeModelContainer(withSampleData: true))}

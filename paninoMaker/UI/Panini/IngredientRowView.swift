@@ -9,28 +9,56 @@ import SwiftUI
 
 struct IngredientRowView: View {
     @EnvironmentObject var user: UserModel
+    @Environment(\.dismiss) var dismiss
     
     let ingredient: Ingredient
+    let onSelect: (Ingredient) -> Void
     
     var body: some View {
-        HStack(alignment: .center) {
-            
-            VStack(alignment: .leading) {
-                Text(ingredient.name)
-                    .font(.headline)
-                Text(ingredient.tags.map { $0.rawValue.capitalized }.joined(separator: ", "))
+        let isUnlocked = ingredient.unlockLevel <= user.level
+        
+        if isUnlocked {
+            Button {
+                onSelect(ingredient)
+                dismiss()
+            } label: {
+                HStack(alignment: .center) {
+                    
+                    VStack(alignment: .leading) {
+                        Text(ingredient.name)
+                            .font(.headline)
+                        Text(ingredient.tags.map { $0.rawValue.capitalized }.joined(separator: ", "))                    }
+                    .foregroundStyle(.black)
+                    
+                    Spacer()
+                    
+                    
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.green)
+                }
+                .padding(.vertical, 4)
             }
-            
-            Spacer()
-            
-            let isUnlocked = ingredient.unlockLevel <= user.level
-            Image(systemName: isUnlocked ? "checkmark.circle.fill" : "lock.fill")
-                .foregroundColor(isUnlocked ? .green : .gray)
+        } else {
+            HStack(alignment: .center) {
+                
+                VStack(alignment: .leading) {
+                    Text(ingredient.name)
+                        .font(.headline)
+                    Text(ingredient.tags.map { $0.rawValue.capitalized }.joined(separator: ", "))
+                }
+                
+                Spacer()
+                
+                Image(systemName: "lock.fill")
+            }
+            .padding(.vertical, 4)
+            .foregroundStyle(.gray)
         }
+        
     }
 }
 
-#Preview {
-    IngredientRowView(ingredient: IngredientStore().ingredients.randomElement()!)
-        .environmentObject(UserModel())
-}
+//#Preview {
+//    IngredientRowView(ingredient: IngredientStore().ingredients.randomElement()!)
+//        .environmentObject(UserModel())
+//}

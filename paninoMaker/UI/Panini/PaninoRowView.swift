@@ -1,5 +1,5 @@
 //
-//  paninoRowView.swift
+//  PaninoRowView.swift
 //  paninoMaker
 //
 //  Created by alex mazzoni on 28/05/25.
@@ -11,7 +11,6 @@ struct PaninoRowView: View {
     @EnvironmentObject var user: UserModel
     
     let panino: Panino
-    @State var isSelected: Bool = false
     
     var body: some View {
         HStack(alignment: .firstTextBaseline) {
@@ -22,11 +21,12 @@ struct PaninoRowView: View {
                     .fontWeight(.light)
                     .foregroundStyle(.secondary)
             }
+            
             Spacer()
             
             Text(panino.owner ?? "no user")
         }
-        
+        .padding()
     }
 }
 
