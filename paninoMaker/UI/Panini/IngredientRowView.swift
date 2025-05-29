@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct IngredientRow: View {
+struct IngredientRowView: View {
     @EnvironmentObject var user: UserModel
     
     let ingredient: Ingredient
@@ -18,7 +18,7 @@ struct IngredientRow: View {
             VStack(alignment: .leading) {
                 Text(ingredient.name)
                     .font(.headline)
-                Text(ingredient.tags.joined(separator: ", "))
+                Text(ingredient.tags.map { $0.rawValue.capitalized }.joined(separator: ", "))
             }
             
             Spacer()
@@ -31,6 +31,6 @@ struct IngredientRow: View {
 }
 
 #Preview {
-    IngredientRow(ingredient: IngredientStore().ingredients.first!)
+    IngredientRowView(ingredient: IngredientStore().ingredients.randomElement()!)
         .environmentObject(UserModel())
 }

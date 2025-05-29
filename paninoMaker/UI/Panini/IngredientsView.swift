@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct IngredientsView: View {
-    @Environment(\.ingredientStore) var ingredientStore
+    var ingredients: [Ingredient] = []
+    
     var groupedIngredients: [(key: String, value: [Ingredient])] {
-        Dictionary(grouping: ingredientStore.ingredients, by: \.category)
+        Dictionary(grouping: ingredients, by: \.category)
             .sorted(by: { $0.key < $1.key })
     }
 
@@ -19,7 +20,7 @@ struct IngredientsView: View {
             ForEach(groupedIngredients, id: \.key) { category, ingredients in
                 Section(header: Text(category)) {
                     ForEach(ingredients) { ingredient in
-                        IngredientRow(ingredient: ingredient)
+                        IngredientRowView(ingredient: ingredient)
                     }
                 }
             }
@@ -29,5 +30,6 @@ struct IngredientsView: View {
 
 
 #Preview {
-    IngredientsView().environmentObject(UserModel())
+    let ingredients = IngredientStore().ingredients
+    IngredientsView(ingredients: ingredients).environmentObject(UserModel())
 }

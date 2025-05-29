@@ -27,7 +27,7 @@ struct HomeView: View {
                     }
                     .padding(.trailing, 20)
                     
-                    NavigationLink(destination: PaninoView()) {
+                    NavigationLink(destination: PaninoDetailsView()) {
                         Image(systemName: "plus")
                             .font(.title)
                     }
@@ -50,5 +50,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView().environmentObject(UserModel())
 }

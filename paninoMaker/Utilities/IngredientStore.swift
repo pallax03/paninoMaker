@@ -9,8 +9,8 @@ import Foundation
 import SwiftUICore
 
 
-final class IngredientStore: ObservableObject {
-    @Published private(set) var ingredients: [Ingredient] = []
+final class IngredientStore {
+    private(set) var ingredients: [Ingredient] = []
     
     init() {
         ingredients = decodeJSON("ingredients")
@@ -26,6 +26,12 @@ final class IngredientStore: ObservableObject {
     
     func random() -> Ingredient? {
         ingredients.randomElement()
+    }
+    
+    func generateRandoms(count: Int) -> [Ingredient] {
+        (0..<count).compactMap { _ in
+            ingredients.randomElement()
+        }
     }
 }
 

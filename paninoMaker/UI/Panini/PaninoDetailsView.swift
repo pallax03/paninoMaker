@@ -8,7 +8,7 @@
 import SwiftUI
 import PhotosUI
 
-struct PaninoView: View {
+struct PaninoDetailsView: View {
     
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var showComposer: Bool = false
@@ -65,7 +65,7 @@ struct PaninoView: View {
                             Text("Composer")
                         }
                         .sheet(isPresented: $showComposer, content: {
-                            ComposerSheet()
+                            ComposerSheetView()
                         })
                     }
                     
@@ -128,5 +128,5 @@ struct PaninoView: View {
 }
 
 #Preview {
-    PaninoView()
+    PaninoDetailsView()
 }

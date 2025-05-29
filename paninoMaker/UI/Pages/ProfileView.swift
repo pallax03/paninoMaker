@@ -19,7 +19,7 @@ struct ProfileView: View {
                     Circle().stroke(.black, lineWidth: 2)
                 }
             
-            Text(user.username ?? "Error")
+            Text(user.username)
                 .font(.title)
             
             ZStack {

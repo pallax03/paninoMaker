@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ComposerSheet: View {
+struct ComposerSheetView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -40,5 +40,5 @@ struct ComposerSheet: View {
 }
 
 #Preview {
-    ComposerSheet()
+    ComposerSheetView()
 }
