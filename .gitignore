@@ -1,0 +1,9 @@
+# Ignora i file di stato di Xcode
+*.xcuserstate
+*.xcuserdatad
+*.xcscmblueprint
+*.DS_Store
+
+# Ignora file temporanei
+DerivedData/
+build/

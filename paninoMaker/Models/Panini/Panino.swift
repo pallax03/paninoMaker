@@ -11,7 +11,7 @@ import SwiftUI
 import SwiftData
 
 @Model
-class Panino: Identifiable, ObservableObject {
+class Panino: Identifiable, ObservableObject, Hashable {
     // MARK: - Properties
     var id: UUID
     var name: String
@@ -125,4 +125,13 @@ class Panino: Identifiable, ObservableObject {
 //        return Int(Double(points) * badges.reduce(1.0) { $0 * $1.mult })
         return points
     }
+    
+    // MARK: - Conformità a Hashable
+        static func == (lhs: Panino, rhs: Panino) -> Bool {
+            lhs.id == rhs.id
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Ingredient: Codable, Identifiable {
+struct Ingredient: Codable, Identifiable, Hashable {
     var id: String
     var name: String
     var imageName: String
