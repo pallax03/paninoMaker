@@ -37,8 +37,8 @@ struct PaninoContent: View {
     }
 }
 
-//#Preview {
-//    @State var panini = PreviewData.samplePanini
-//    let menuTest = Menu(name: "Test", panini: panini)
-//    PaninoContent(selectedPanino: $panini.first, menu: menuTest).modelContainer(PreviewData.makeModelContainer(withSampleData: true)).environmentObject(UserModel())
-//}
+#Preview {
+    let panini = PreviewData.samplePanini
+    let menuTest = Menu(name: "Test", panini: panini)
+    PaninoContent(selectedPanino: .constant(nil), menu: menuTest)
+}

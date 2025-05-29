@@ -134,4 +134,5 @@ struct PaninoDetail: View {
     let menu = model.menus.first!
     let panino = menu.panini.first!
     PaninoDetail(panino: panino)
+        .environmentObject(UserModel())
 }

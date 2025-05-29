@@ -116,5 +116,6 @@ struct Bread: View {
 }
 
 #Preview {
-    ComposerSheet().environmentObject(UserModel())
+    ComposerSheet()
+        .environmentObject(UserModel())
 }

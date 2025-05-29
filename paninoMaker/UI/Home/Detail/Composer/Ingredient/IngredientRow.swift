@@ -58,7 +58,7 @@ struct IngredientRow: View {
     }
 }
 
-//#Preview {
-//    IngredientRow(ingredient: IngredientStore().ingredients.randomElement()!)
-//        .environmentObject(UserModel())
-//}
+#Preview {
+    IngredientRow(ingredient: IngredientStore().ingredients.randomElement()!, onSelect: { _ in })
+        .environmentObject(UserModel())
+}

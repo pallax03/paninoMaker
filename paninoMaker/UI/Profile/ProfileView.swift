@@ -75,5 +75,6 @@ struct BadgeView: View {
 }
 
 #Preview {
-    ProfileView().environmentObject(UserModel())
+    ProfileView()
+        .environmentObject(UserModel())
 }
