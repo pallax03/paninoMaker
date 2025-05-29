@@ -10,7 +10,7 @@ import SwiftData
 
 struct HomeView: View {
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
-    @Query(sort: \Menu.title, order: .forward) var allMenus: [Menu]
+    @Query(sort: \Menu.title, order: .reverse) var allMenus: [Menu]
     @State var selectedMenu: SidebarSection?
     @State var selectedPanino: Panino?
     
@@ -22,6 +22,10 @@ struct HomeView: View {
                 switch section {
                     case .all:
                     PaninoContent(title: "All Panini", panini: allPanini, selectedPanino: $selectedPanino, selectedMenu: nil)
+                    case .map:
+                    MapView()
+                    case .imported:
+                    PaninoContent(title: "Imported Panini", panini: allPanini, selectedPanino: $selectedPanino, selectedMenu: nil)
                     case .menus(let menu):
                         PaninoContent(title: menu.title, panini: menu.panini, selectedPanino: $selectedPanino, selectedMenu: menu)
                     }
