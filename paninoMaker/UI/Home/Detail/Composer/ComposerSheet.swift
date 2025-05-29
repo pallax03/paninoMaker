@@ -11,14 +11,14 @@ struct ComposerSheet: View {
     @Environment(\.ingredientStore) var ingredientStore
     @Environment(\.dismiss) private var dismiss
     @State private var isShown = false
-    @State private var isShownBread = false
     @State private var ingredientList: [Ingredient] = []
+    @Binding var panino: Panino?
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    Bread(isShownBread: $isShownBread, ingredientList: $ingredientList)
+                    Bread(ingredientList: $ingredientList)
                     
                     if !ingredientList.isEmpty {
                         ForEach(ingredientList) { ingredient in
@@ -58,7 +58,7 @@ struct ComposerSheet: View {
                         }
                     }
                     
-                    Bread(isShownBread: $isShownBread, ingredientList: $ingredientList)
+                    Bread(ingredientList: $ingredientList)
                 }
                 .padding()
                 .navigationTitle("Panino #N")
@@ -88,7 +88,7 @@ struct ComposerSheet: View {
 
 struct Bread: View {
     @Environment(\.ingredientStore) var ingredientStore
-    @Binding var isShownBread: Bool
+    @State private var isShownBread = false
     @Binding var ingredientList: [Ingredient]
     
     var body: some View {
@@ -103,11 +103,10 @@ struct Bread: View {
         }
         .sheet(isPresented: $isShownBread) {
             NavigationStack {
-                IngredientList(ingredients: ingredientStore.ingredients(ofCategory:    IngredientCategory.buns),
+                IngredientList(
+                    ingredients: ingredientStore.ingredients(ofCategory: IngredientCategory.buns),
                     onIngredientSelected: { ingredient in
-                        if !ingredientList.contains(ingredient) {
-                            ingredientList.append(ingredient)
-                        }
+                        ingredientList.append(ingredient)
                 })
                 .navigationTitle("Ingredients")
             }
@@ -116,6 +115,6 @@ struct Bread: View {
 }
 
 #Preview {
-    ComposerSheet()
+    ComposerSheet(panino: .constant(nil))
         .environmentObject(UserModel())
 }
