@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUICore
 
-
 final class IngredientStore {
     private(set) var ingredients: [Ingredient] = []
     

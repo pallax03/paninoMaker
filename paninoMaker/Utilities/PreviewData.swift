@@ -13,7 +13,7 @@ enum PreviewData {
         Panino(
             name: "Hamburger",
             owner: "Preview User",
-            ingredients: IngredientStore().generateRandoms(count: 10)
+            composer: Composer(ingredients: IngredientStore().generateRandoms(count: 10))
         )
     ]
     
@@ -21,12 +21,12 @@ enum PreviewData {
         Panino(
             name: "CheeseBurger",
             owner: "Preview User",
-            ingredients: IngredientStore().generateRandoms(count: 3)
+            composer: Composer(ingredients: IngredientStore().generateRandoms(count: 3))
         ),
         Panino(
             name: "Bacon Burger",
             owner: "Preview User",
-            ingredients: IngredientStore().generateRandoms(count: 5)
+            composer: Composer(ingredients: IngredientStore().generateRandoms(count: 5))
         )
     ]
     

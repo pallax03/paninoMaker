@@ -27,7 +27,7 @@ struct PaninoContent: View {
                 Button(action: {
                     let panino = Panino(
                         name: "Panino \(panini.count+1)",
-                        ingredients: IngredientStore().generateRandoms(count: Int.random(in: 1...10)),
+                        composer: Composer(ingredients: IngredientStore().generateRandoms(count: Int.random(in: 1...10))),
                         menu: selectedMenu
                     )
                     modelContext.insert(panino)

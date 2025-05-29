@@ -13,7 +13,6 @@ import SwiftData
 @Model
 class Panino {
     // MARK: - Properties
-//    var id: UUID
     var name: String
     var isFavorite: Bool
     var creationDate: Date
@@ -24,13 +23,10 @@ class Panino {
     var rating: Int?
     var ratingDescription: String?
     
-    var top: Ingredient
-    var ingredients: [Ingredient]
-    var bottom: Ingredient
-    
+    var composer: Composer
     var menu: Menu?
 
-    //    var badges: [Badge] = []
+//    var badges: [Badge] = []
     
     // MARK: - Computed
     
@@ -51,9 +47,7 @@ class Panino {
         images: [UIImage] = [],
         rating: Int? = nil,
         ratingDescription: String? = nil,
-        top: Ingredient = IngredientStore().firstBun()!,
-        ingredients: [Ingredient] = [],
-        bottom: Ingredient = IngredientStore().firstBun()!,
+        composer: Composer = .init(),
         menu: Menu? = nil
     ) {
 //        self.id = UUID()
@@ -72,10 +66,7 @@ class Panino {
         self.rating = rating
         self.ratingDescription = ratingDescription
         
-        self.top = top
-        self.ingredients = ingredients
-        self.bottom = bottom
-        
+        self.composer = composer
         self.menu = menu
     }
     
@@ -89,29 +80,6 @@ class Panino {
     func setCoordinates(_ coordinate: CLLocationCoordinate2D) {
         latitude = coordinate.latitude
         longitude = coordinate.longitude
-    }
-    
-    // MARK: - Ingredients
-    func setTop(_ ingredient: Ingredient) {
-        guard ingredient.category == IngredientCategory.buns else { return }
-        self.top = ingredient
-    }
-    
-    func setBottom(_ ingredient: Ingredient) {
-        guard ingredient.category == IngredientCategory.buns else { return }
-        self.bottom = ingredient
-    }
-    
-    func addIngredient(_ ingredient: Ingredient) {
-        ingredients.append(ingredient)
-    }
-    
-    func removeIngredient(at index: Int) {
-        ingredients.remove(at: index)
-    }
-    
-    func searchIngredient(by name: String) -> Ingredient? {
-        ingredients.first { $0.name == name }
     }
     
     // MARK: - Gamifications
