@@ -66,7 +66,7 @@ struct PaninoDetail: View {
                             Text("Composer")
                         }
                         .sheet(isPresented: $showComposer, content: {
-                            ComposerSheet(panino: $panino)
+                            ComposerSheet(composer: $panino.composer, draftComposer: panino.composer.copy())
                         })
                     }
                     

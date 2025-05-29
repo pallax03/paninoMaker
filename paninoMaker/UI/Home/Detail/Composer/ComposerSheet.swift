@@ -11,17 +11,17 @@ struct ComposerSheet: View {
     @Environment(\.ingredientStore) var ingredientStore
     @Environment(\.dismiss) private var dismiss
     @State private var isShown = false
-    @State private var ingredientList: [Ingredient] = []
-    @Binding var panino: Panino?
+    @Binding var composer: Composer
+    @State var draftComposer: Composer
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack {
-                    Bread(ingredientList: $ingredientList)
+                    Bread(draftComposer: $draftComposer.top)
                     
-                    if !ingredientList.isEmpty {
-                        ForEach(ingredientList) { ingredient in
+                    if !draftComposer.ingredients.isEmpty {
+                        ForEach(draftComposer.ingredients) { ingredient in
                             ZStack {
                                 Rectangle()
                                     .fill(.green)
@@ -34,7 +34,7 @@ struct ComposerSheet: View {
                             .contextMenu {
                                 Button("Delete ingredient", role: .destructive) {
                                     // Deleting Task
-                                    ingredientList.removeAll { $0.id == ingredient.id }
+                                    draftComposer.ingredients.removeAll { $0.id == ingredient.id }
                                 }
                             }
                             .offset(y: -8)
@@ -52,13 +52,13 @@ struct ComposerSheet: View {
                         NavigationStack {
                             IngredientList(ingredients: ingredientStore.ingredients,
                                 onIngredientSelected: { ingredient in
-                                ingredientList.append(ingredient)
+                                draftComposer.ingredients.append(ingredient)
                             })
                             .navigationTitle("Ingredients")
                         }
                     }
                     
-                    Bread(ingredientList: $ingredientList)
+                    Bread(draftComposer: $draftComposer.bottom)
                 }
                 .padding()
                 .navigationTitle("Panino #N")
@@ -75,6 +75,7 @@ struct ComposerSheet: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             // Fare qualcosa poi chiudere lo sheet
+                            composer = draftComposer
                             dismiss()
                         } label: {
                             Text("Save")
@@ -89,24 +90,29 @@ struct ComposerSheet: View {
 struct Bread: View {
     @Environment(\.ingredientStore) var ingredientStore
     @State private var isShownBread = false
-    @Binding var ingredientList: [Ingredient]
+    @Binding var draftComposer: Ingredient
     
     var body: some View {
         Button {
             isShownBread = true
         } label: {
-            Rectangle()
-                .fill(.brown)
-                .frame(width: .infinity, height: 80)
-                .cornerRadius(10)
-                .padding()
+            ZStack {
+                Rectangle()
+                    .fill(.brown)
+                    .frame(width: .infinity, height: 80)
+                    .cornerRadius(10)
+                    .padding()
+                
+                Text(draftComposer.name)
+            }
+            .foregroundStyle(.black)
         }
         .sheet(isPresented: $isShownBread) {
             NavigationStack {
                 IngredientList(
                     ingredients: ingredientStore.ingredients(ofCategory: IngredientCategory.buns),
                     onIngredientSelected: { ingredient in
-                        ingredientList.append(ingredient)
+                        draftComposer = ingredient
                 })
                 .navigationTitle("Ingredients")
             }
@@ -115,6 +121,6 @@ struct Bread: View {
 }
 
 #Preview {
-    ComposerSheet(panino: .constant(nil))
+    ComposerSheet(composer: .constant(Composer()), draftComposer: Composer())
         .environmentObject(UserModel())
 }

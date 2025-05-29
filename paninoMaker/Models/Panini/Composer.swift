@@ -46,4 +46,8 @@ class Composer {
     func searchIngredient(by name: String) -> Ingredient? {
         ingredients.first { $0.name == name }
     }
+    
+    func copy() -> Composer {
+        return Composer(top: self.top, ingredients: self.ingredients, bottom: self.bottom)
+    }
 }
