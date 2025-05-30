@@ -26,6 +26,8 @@ class Panino {
     var composer: Composer
     var menu: Menu?
 
+    var isDeleted: Bool = false
+    
 //    var badges: [Badge] = []
     
     // MARK: - Computed

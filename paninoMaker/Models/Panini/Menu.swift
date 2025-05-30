@@ -13,6 +13,7 @@ import SwiftData
 class Menu {
     var title: String
     var panini: [Panino] = []
+    var position: Int = 0
     
     init(title: String, panini: [Panino] = []) {
         self.title = title

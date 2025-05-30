@@ -14,10 +14,15 @@ struct PaninoContent: View {
     var panini: [Panino]
     @Binding var selectedPanino: Panino?
     var selectedMenu: Menu?  // opzionale, per assegnare al nuovo panino
+    var isTrash: Bool = false
+    
+    var visiblePanini: [Panino] {
+        panini.filter { $0.isDeleted == isTrash }
+    }
     
     var body: some View {
         VStack(spacing: 0 ) {
-            List(panini, selection: $selectedPanino) { panino in
+            List(visiblePanini, selection: $selectedPanino) { panino in
                 NavigationLink(value: panino) {
                     PaninoRow(panino: panino)
                 }
