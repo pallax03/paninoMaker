@@ -16,7 +16,7 @@ struct PaninoDetail: View {
     @State private var showMap: Bool = false
     @State private var isReviewing: Bool = false
     @State private var reviewDescription: String = ""
-    @State private var isFavorite: Bool = false
+    @State private var selectedRating = 0
     
     var body: some View {
         NavigationStack {
@@ -29,9 +29,9 @@ struct PaninoDetail: View {
                         Spacer()
                         
                         Button {
-                            isFavorite.toggle()
+                            panino.isFavorite.toggle()
                         } label: {
-                            Image(systemName: isFavorite ? "heart.fill" : "heart")
+                            Image(systemName: panino.isFavorite ? "heart.fill" : "heart")
                                 .foregroundStyle(.red)
                         }
                     }
@@ -78,11 +78,12 @@ struct PaninoDetail: View {
                                 .padding(.bottom, 5)
                             
                             HStack {
-                                ForEach(0..<5) { _ in
+                                ForEach(1...5, id: \.self) { index in
                                     Button {
+                                        selectedRating = index
                                         isReviewing = true
                                     } label: {
-                                        Image(systemName: "star")
+                                        Image(systemName: index <= selectedRating ? "star.fill" : "star")
                                             .font(.title)
                                     }
                                 }
