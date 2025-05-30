@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct paninoMakerApp: App {
@@ -16,6 +17,6 @@ struct paninoMakerApp: App {
         WindowGroup {
             ContentView().environment(\.ingredientStore, ingredientStore).environmentObject(user)
         }
-        .modelContainer(for: Menu.self)
+        .modelContainer(for: [Menu.self, Panino.self])
     }
 }

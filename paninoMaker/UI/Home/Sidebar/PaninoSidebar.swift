@@ -44,18 +44,6 @@ struct PaninoSidebar: View {
             }
         }
         .navigationTitle("Menu's")
-        .toolbar {
-            ToolbarItem {
-                Button(action: {
-                    let menu = Menu(
-                        title: "Menu \(allMenus.count+1)"
-                    )
-                    modelContext.insert(menu)
-                }) {
-                    Label("Add Menu", systemImage: "folder.badge.plus")
-                }
-            }
-        }
     }
 }
 

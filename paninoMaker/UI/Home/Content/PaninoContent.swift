@@ -14,27 +14,15 @@ struct PaninoContent: View {
     var panini: [Panino]
     @Binding var selectedPanino: Panino?
     var selectedMenu: Menu?  // opzionale, per assegnare al nuovo panino
-
+    
     var body: some View {
-        List(panini, selection: $selectedPanino) { panino in
-            NavigationLink(value: panino) {
-                PaninoRow(panino: panino)
-            }
-        }
-        .navigationTitle(title)
-        .toolbar {
-            ToolbarItem {
-                Button(action: {
-                    let panino = Panino(
-                        name: "Panino \(panini.count+1)",
-                        composer: Composer(ingredients: IngredientStore().generateRandoms(count: Int.random(in: 1...10))),
-                        menu: selectedMenu
-                    )
-                    modelContext.insert(panino)
-                }) {
-                    Label("Add panino", systemImage: "plus")
+        VStack(spacing: 0 ) {
+            List(panini, selection: $selectedPanino) { panino in
+                NavigationLink(value: panino) {
+                    PaninoRow(panino: panino)
                 }
             }
+            .navigationTitle(title)
         }
     }
 }

@@ -14,7 +14,6 @@ func decodeJSON<T: Decodable>(_ filename: String) -> T {
 
     do {
         let data = try Data(contentsOf: url)
-        print(String(data: data, encoding: .utf8)!)
         let decoded = try JSONDecoder().decode(T.self, from: data)
         return decoded
     } catch {
