@@ -79,6 +79,10 @@ class Panino {
         }
     }
     
+    func resetImages() {
+        imageData.removeAll()
+    }
+    
     func setCoordinates(_ coordinate: CLLocationCoordinate2D) {
         latitude = coordinate.latitude
         longitude = coordinate.longitude
