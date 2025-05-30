@@ -10,11 +10,9 @@ import PhotosUI
 
 struct PaninoDetail: View {
     @State var panino: Panino
-    @State private var showComposer: Bool = false
-    @State private var showMap: Bool = false
+    @State private var isComposing: Bool = false
+    @State private var isMapOpen: Bool = false
     @State private var isReviewing: Bool = false
-    @State private var reviewDescription: String = ""
-    @State private var selectedRating = 0
     
     var body: some View {
         NavigationStack {
@@ -37,11 +35,14 @@ struct PaninoDetail: View {
                     Divider()
                     
                     HStack {
-                        Text("27/05/2025")
-                            .font(.footnote)
+                        Text(panino.creationDate.formatted(date: .numeric, time: .omitted))
                         
                         Spacer()
+                        
+                        Text(panino.owner ?? "No owner")
                     }
+                    .font(.footnote)
+
                 }
                 
                 ScrollView {
@@ -53,11 +54,11 @@ struct PaninoDetail: View {
                     
                     CardWrapper {
                         Button {
-                            showComposer = true
+                            isComposing = true
                         } label: {
                             Text("Composer")
                         }
-                        .sheet(isPresented: $showComposer, content: {
+                        .sheet(isPresented: $isComposing, content: {
                             ComposerSheet(composer: $panino.composer, draftComposer: panino.composer.copy())
                         })
                     }
@@ -75,33 +76,37 @@ struct PaninoDetail: View {
                             HStack {
                                 ForEach(1...5, id: \.self) { index in
                                     Button {
-                                        selectedRating = index
+                                        panino.rating = index
                                         isReviewing = true
                                     } label: {
-                                        Image(systemName: index <= selectedRating ? "star.fill" : "star")
+                                        Image(systemName: index <= panino.rating ?? 0 ? "star.fill" : "star")
                                             .font(.title)
                                     }
                                 }
                             }
                             .padding(.bottom, 5)
                             
-                            if isReviewing {
+                            if panino.rating != nil {
                                 Divider()
                                 
-                                TextField(text: $reviewDescription) {
-                                    Text("Aggiungi una descrizione...")
-                                }
+                                TextField(
+                                    text: Binding(
+                                        get: { panino.ratingDescription ?? "" },
+                                        set: { panino.ratingDescription = $0.isEmpty ? nil : $0 }
+                                    )) {
+                                        Text("Aggiungi una descrizione...")
+                                    }
                             }
                         }
                     }
                     
                     CardWrapper {
                         Button {
-                            showMap = true
+                            isMapOpen = true
                         } label: {
                             Text("Pin Mappa")
                         }
-                        .sheet(isPresented: $showMap, content: {
+                        .sheet(isPresented: $isMapOpen, content: {
                             
                         })
                     }
