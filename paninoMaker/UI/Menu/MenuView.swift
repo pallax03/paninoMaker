@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  MenuView.swift
 //  paninoMaker
 //
 //  Created by Nicola Graziotin on 27/05/25.
@@ -8,14 +8,35 @@
 import SwiftUI
 import SwiftData
 
-struct HomeView: View {
+extension SidebarSection {
+    @ViewBuilder
+    func makeContentView(
+        panini: [Panino],
+        selectedPanino: Binding<Panino?>,
+        allPanini: [Panino]
+    ) -> some View {
+        switch self {
+        case .all:
+            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: nil, isTrash: false)
+        case .map:
+            MapView()
+        case .imported:
+            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: nil, isTrash: false)
+        case .trash:
+            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: nil, isTrash: true)
+        case .menus(let menu):
+            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: menu, isTrash: false)
+        }
+    }
+}
+
+struct MenuView: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
     @State var selectedMenu: SidebarSection?
     @State var selectedPanino: Panino?
 
-    @State private var isShowingProfileSheet = false
     @State private var isShowingNewMenuAlert = false
     @State private var newMenuTitle = ""
     
@@ -27,10 +48,18 @@ struct HomeView: View {
     var body: some View {
         NavigationSplitView {
             VStack(spacing: 0) {
-                PaninoSidebar(selectedMenu: $selectedMenu)
+                MenuSidebar(selectedMenu: $selectedMenu)
             }
         } content: {
-            contentForSelectedSection()
+                if let section = selectedMenu {
+                    section.makeContentView(
+                        panini: panini,
+                        selectedPanino: $selectedPanino,
+                        allPanini: allPanini
+                    )
+                } else {
+                    Text("Select a menu")
+                }
         } detail: {
             VStack {
                 if let panino = selectedPanino {
@@ -43,26 +72,6 @@ struct HomeView: View {
         }
         .overlay(alignment: .bottom) {
             bottomBar()
-        }
-    }
-    
-    @ViewBuilder
-    private func contentForSelectedSection() -> some View {
-        VStack(spacing: 0) {
-            switch selectedMenu {
-            case .all:
-                PaninoContent(title: "All Panini", panini: panini, selectedPanino: $selectedPanino, selectedMenu: nil, isTrash: false)
-            case .map:
-                MapView()
-            case .imported:
-                PaninoContent(title: "Imported Panini", panini: panini, selectedPanino: $selectedPanino, selectedMenu: nil, isTrash: false)
-            case .trash:
-                PaninoContent(title: "Recycle Bin", panini: panini, selectedPanino: $selectedPanino, selectedMenu: nil, isTrash: true)
-            case .menus(let menu):
-                PaninoContent(title: menu.title, panini: panini, selectedPanino: $selectedPanino, selectedMenu: menu, isTrash: false)
-            case .none:
-                Text("Select a menu")
-            }
         }
     }
     
@@ -163,7 +172,7 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    MenuView()
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
         .environmentObject(UserModel())
 }

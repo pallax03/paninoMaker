@@ -1,5 +1,5 @@
 //
-//  PaninoSidebar.swift
+//  MenuSidebar.swift
 //  paninoMaker
 //
 //  Created by Nicola Graziotin on 29/05/25.
@@ -58,10 +58,9 @@ enum SidebarSection: Hashable {
     func paniniCount(allPanini: [Panino]) -> Int {
         filteredPanini(allPanini: allPanini).count
     }
-    
 }
 
-struct PaninoSidebar: View {
+struct MenuSidebar: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
@@ -90,10 +89,11 @@ struct PaninoSidebar: View {
                     .contextMenu {
                         Button(role: .destructive) {
                             // Cancellazione a cascata manuale
-                            for panino in menu.panini {
-                                modelContext.delete(panino)
-                            }
-                            modelContext.delete(menu)
+                            
+//                            for panino in menu.panini {
+//                                modelContext.delete(panino)
+//                            }
+                            modelContext.delete(menu.deletePanini())
                             try? modelContext.save()
                         } label: {
                             Label("Delete Menu", systemImage: "trash")
@@ -108,10 +108,10 @@ struct PaninoSidebar: View {
                 .onDelete { indexSet in
                     for index in indexSet {
                         let menu = allMenus[index]
-                        for panino in menu.panini {
-                            modelContext.delete(panino)
-                        }
-                        modelContext.delete(menu)
+//                        for panino in menu.panini {
+//                            modelContext.delete(panino)
+//                        }
+                        modelContext.delete(menu.deletePanini())
                     }
                     try? modelContext.save()
                 }
@@ -135,6 +135,6 @@ struct PaninoSidebar: View {
 }
 
 #Preview {
-    PaninoSidebar(selectedMenu: .constant(nil))
+    MenuSidebar(selectedMenu: .constant(nil))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
 }
