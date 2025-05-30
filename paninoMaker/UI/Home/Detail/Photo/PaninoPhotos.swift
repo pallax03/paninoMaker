@@ -14,39 +14,26 @@ struct PaninoPhotos: View {
 
     var body: some View {
         VStack {
-            // Mostra le immagini selezionate
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(selectedImages, id: \.self) { image in
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 150)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .shadow(radius: 3)
-                    }
+            if selectedImages.isEmpty {
+                PaninoPicker(selectedItems: $selectedItems, selectedImages: $selectedImages) {
+                    Label("Seleziona immagini", systemImage: "photo.on.rectangle.angled")
+                        .padding()
+                        .background(Color.blue.opacity(0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
-            }
-            
-            // Picker per selezionare immagini
-            PhotosPicker(
-                selection: $selectedItems,
-                maxSelectionCount: 10,  // Numero massimo di immagini selezionabili
-                matching: .images,
-                photoLibrary: .shared()
-            ) {
-                Label("Seleziona immagini", systemImage: "photo.on.rectangle.angled")
-                    .padding()
-                    .background(Color.blue.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-            }
-            .onChange(of: selectedItems) { oldValue, newValue in
-                Task {
-                    selectedImages = []
-                    for item in newValue {
-                        if let data = try? await item.loadTransferable(type: Data.self),
-                           let uiImage = UIImage(data: data) {
-                            selectedImages.append(uiImage)
+            } else {
+                // Mostra le immagini selezionate
+                ScrollView(.horizontal) {
+                    HStack {
+                        PaninoPicker(selectedItems: $selectedItems, selectedImages: $selectedImages) {
+                            ForEach(selectedImages, id: \.self) { image in
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 150, height: 150)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .shadow(radius: 3)
+                            }
                         }
                     }
                 }
@@ -55,6 +42,34 @@ struct PaninoPhotos: View {
             Spacer()
         }
         .padding()
+    }
+}
+
+struct PaninoPicker<Content: View>: View {
+    @Binding var selectedItems: [PhotosPickerItem]
+    @Binding var selectedImages: [UIImage]
+    let content: () -> Content
+    
+    var body: some View {
+        PhotosPicker(
+            selection: $selectedItems,
+            maxSelectionCount: 10,  // Numero massimo di immagini selezionabili
+            matching: .images,
+            photoLibrary: .shared()
+        ) {
+            content()
+        }
+        .onChange(of: selectedItems) { oldValue, newValue in
+            Task {
+                selectedImages = []
+                for item in newValue {
+                    if let data = try? await item.loadTransferable(type: Data.self),
+                       let uiImage = UIImage(data: data) {
+                        selectedImages.append(uiImage)
+                    }
+                }
+            }
+        }
     }
 }
 
