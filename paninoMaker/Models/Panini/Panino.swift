@@ -100,4 +100,5 @@ class Panino {
 //        return Int(Double(points) * badges.reduce(1.0) { $0 * $1.mult })
         return points
     }
+    
 }

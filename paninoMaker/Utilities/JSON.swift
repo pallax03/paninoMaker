@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
 
 func decodeJSON<T: Decodable>(_ filename: String) -> T {
     guard let url = Bundle.main.url(forResource: filename, withExtension: "json") else {
         fatalError("❌ File not found: \(filename).json")
     }
-
+    
     do {
         let data = try Data(contentsOf: url)
         let decoded = try JSONDecoder().decode(T.self, from: data)
