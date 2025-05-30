@@ -11,7 +11,7 @@ import SwiftData
 struct HomeView: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
-    @Query(sort: \Menu.position, order: .reverse) var allMenus: [Menu]
+    @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
     @State var selectedMenu: SidebarSection?
     @State var selectedPanino: Panino?
 
@@ -19,46 +19,20 @@ struct HomeView: View {
     @State private var isShowingNewMenuAlert = false
     @State private var newMenuTitle = ""
     
-    var panini: [Panino] { switch selectedMenu {
-        case .all, .map:
-            return allPanini
-        case .imported:
-            return []
-        case .trash:
-            return allPanini
-        case .menus(let menu):
-            return menu.panini
-        default:
-            return []
-        }
+    var panini: [Panino] {
+        guard let selectedMenu = selectedMenu else { return [] }
+        return selectedMenu.filteredPanini(allPanini: allPanini)
     }
     
     var body: some View {
-        NavigationSplitView(/*preferredCompactColumn: .constant(.content)*/) {
+        NavigationSplitView {
             VStack(spacing: 0) {
                 PaninoSidebar(selectedMenu: $selectedMenu)
             }
         } content: {
-            VStack(spacing:0) {
-                if let section = selectedMenu {
-                    switch section {
-                    case .all:
-                        PaninoContent(title: "All Panini", panini: panini, selectedPanino: $selectedPanino, selectedMenu: nil, isTrash: false)
-                    case .map:
-                        MapView()
-                    case .imported:
-                        PaninoContent(title: "Imported Panini", panini: panini, selectedPanino: $selectedPanino, selectedMenu: nil, isTrash: false)
-                    case .trash:
-                        PaninoContent(title: "Recycle Bin", panini: panini, selectedPanino: $selectedPanino, selectedMenu: nil, isTrash: true)
-                    case .menus(let menu):
-                        PaninoContent(title: menu.title, panini: panini, selectedPanino: $selectedPanino, selectedMenu: menu, isTrash: false)
-                    }
-                } else {
-                    Text("Select a menu")
-                }
-            }
+            contentForSelectedSection()
         } detail: {
-            VStack(spacing: 0) {
+            VStack {
                 if let panino = selectedPanino {
                     PaninoDetail(panino: panino)
                         .padding()
@@ -66,8 +40,29 @@ struct HomeView: View {
                     Text("Select an item")
                 }
             }
-        }.safeAreaInset(edge: .bottom) {
+        }
+        .overlay(alignment: .bottom) {
             bottomBar()
+        }
+    }
+    
+    @ViewBuilder
+    private func contentForSelectedSection() -> some View {
+        VStack(spacing: 0) {
+            switch selectedMenu {
+            case .all:
+                PaninoContent(title: "All Panini", panini: panini, selectedPanino: $selectedPanino, selectedMenu: nil, isTrash: false)
+            case .map:
+                MapView()
+            case .imported:
+                PaninoContent(title: "Imported Panini", panini: panini, selectedPanino: $selectedPanino, selectedMenu: nil, isTrash: false)
+            case .trash:
+                PaninoContent(title: "Recycle Bin", panini: panini, selectedPanino: $selectedPanino, selectedMenu: nil, isTrash: true)
+            case .menus(let menu):
+                PaninoContent(title: menu.title, panini: panini, selectedPanino: $selectedPanino, selectedMenu: menu, isTrash: false)
+            case .none:
+                Text("Select a menu")
+            }
         }
     }
     
@@ -75,7 +70,9 @@ struct HomeView: View {
     func bottomBar() -> some View {
         if isBottomBarVisible {
             VStack(spacing: 0) {
-                HStack {
+                Divider()
+                HStack(alignment: .center) {
+                    
                     if showNewMenuButton {
                         Button {
                             isShowingNewMenuAlert = true
@@ -98,7 +95,7 @@ struct HomeView: View {
                         Button {
                             selectedMenu = selectedMenu ?? .all
                             let panino = Panino(name: "", menu: selectedMenu?.menu)
-                            selectedPanino = panino
+                            modelContext.insert(panino)
                         } label: {
                             Image(systemName: "plus")
                                 .imageScale(.large)
@@ -106,10 +103,10 @@ struct HomeView: View {
                     }
                 }
                 .padding()
-                .background(.clear)
+                .background(.ultraThinMaterial)
                 .alert("New Menu", isPresented: $isShowingNewMenuAlert) {
                     TextField("Title of the new menu", text: $newMenuTitle)
-                    Button("Crea", action: {
+                    Button("Create", action: {
                         let menu = Menu(title: newMenuTitle.isEmpty ? "No title" : newMenuTitle, panini: [])
                         modelContext.insert(menu)
                         selectedMenu = .menus(menu)
@@ -126,14 +123,13 @@ struct HomeView: View {
     }
 
     var isBottomBarVisible: Bool {
-//        guard let section = selectedMenu else { return true }
-//        switch section {
-//        case .trash:
-//            return false
-//        default:
-//            return true
-//        }
-        true
+        guard let section = selectedMenu else { return true }
+        switch section {
+        case .trash, .map:
+            return false
+        default:
+            return true
+        }
     }
 
     var showNewMenuButton: Bool {
@@ -161,21 +157,10 @@ struct HomeView: View {
     }
 
     var visiblePaniniCount: Int {
-        switch selectedMenu {
-        case .all, .map:
-            return allPanini.filter { !$0.isDeleted }.count
-        case .menus(let menu):
-            return menu.panini.filter { !$0.isDeleted }.count
-        case .imported:
-            return allPanini.filter { !$0.isDeleted }.count
-        case .trash:
-            return allPanini.filter { $0.isDeleted }.count
-        default:
-            return 0
-        }
+        guard let selectedMenu = selectedMenu else { return 0 }
+        return selectedMenu.paniniCount(allPanini: allPanini)
     }
 }
-
 
 #Preview {
     HomeView()
