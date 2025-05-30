@@ -51,14 +51,22 @@ struct PaninoSidebar: View {
                     Button(action: {selectedMenu = .menus(menu) }) {
                         Label(menu.title, systemImage: "folder")
                     }
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            modelContext.delete(menu.deletePanini())
+                        } label: {
+                            Label("Delete Menu", systemImage: "trash")
+                        }
+                        Button() {
+                            
+                        } label: {
+                            Label("Share Menu", systemImage: "square.and.arrow.up")
+                        }
+                    }
                 }
                 .onDelete { indexSet in
                     for index in indexSet {
-                        let menu = allMenus[index]
-                        for panino in menu.panini {
-                            panino.isDeleted = true
-                        }
-                        modelContext.delete(menu)
+                        modelContext.delete(allMenus[index].deletePanini())
                     }
                 }
                 .onMove { from, to in

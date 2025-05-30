@@ -15,6 +15,7 @@ struct HomeView: View {
     @State var selectedMenu: SidebarSection?
     @State var selectedPanino: Panino?
 
+    @State private var isShowingProfileSheet = false
     @State private var isShowingNewMenuAlert = false
     @State private var newMenuTitle = ""
     
@@ -114,7 +115,7 @@ struct HomeView: View {
                         selectedMenu = .menus(menu)
                         newMenuTitle = ""
                     })
-                    Button("Undo", role: .cancel) {
+                    Button("Cancel", role: .cancel) {
                         newMenuTitle = ""
                     }
                 } message: {
@@ -152,10 +153,10 @@ struct HomeView: View {
     var showPaniniCount: Bool {
         guard let section = selectedMenu else { return false }
         switch section {
-        case .all, .imported, .menus:
-            return true
-        default:
+        case .map:
             return false
+        default:
+            return true
         }
     }
 
@@ -167,6 +168,8 @@ struct HomeView: View {
             return menu.panini.filter { !$0.isDeleted }.count
         case .imported:
             return allPanini.filter { !$0.isDeleted }.count
+        case .trash:
+            return allPanini.filter { $0.isDeleted }.count
         default:
             return 0
         }
