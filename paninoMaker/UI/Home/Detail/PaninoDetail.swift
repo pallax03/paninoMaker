@@ -10,7 +10,8 @@ import PhotosUI
 
 struct PaninoDetail: View {
     @State var panino: Panino
-    @State private var selectedPhoto: PhotosPickerItem? = nil
+    @State private var selectedItems: [PhotosPickerItem] = []
+    @State private var selectedImages: [UIImage] = []
     @State private var showComposer: Bool = false
     @State private var showMap: Bool = false
     @State private var isReviewing: Bool = false
@@ -47,15 +48,11 @@ struct PaninoDetail: View {
                 
                 ScrollView {
                     CardWrapper {
-                        PhotosPicker(
-                            selection: $selectedPhoto,
-                            matching: .images,
-                            photoLibrary: .shared()
-                        ) {
-                            Text("Seleziona foto")
-                        }
+                        PaninoPhotos(
+                            selectedItems: $selectedItems,
+                            selectedImages: $selectedImages
+                        )
                     }
-                    
                     
                     Spacer()
                     
