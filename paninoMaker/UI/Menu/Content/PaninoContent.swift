@@ -22,9 +22,18 @@ struct PaninoContent: View {
     
     var body: some View {
         VStack(spacing: 0 ) {
-            List(visiblePanini, selection: $selectedPanino) { panino in
-                NavigationLink(value: panino) {
-                    PaninoRow(panino: panino)
+            List {
+                ForEach(visiblePanini, id: \.self) { panino in
+                    NavigationLink(value: panino) {
+                        PaninoRow(panino: panino)
+                    }
+                    .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            panino.isDeleted = true
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
                 }
             }
             .navigationTitle(title)

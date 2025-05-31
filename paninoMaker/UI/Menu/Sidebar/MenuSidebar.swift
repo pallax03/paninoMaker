@@ -10,8 +10,8 @@ import SwiftData
 
 enum SidebarSection: Hashable {
     case all
+    case favorite
     case map
-    case imported
     case trash
     case menus(Menu)
     
@@ -25,8 +25,8 @@ enum SidebarSection: Hashable {
     var title: String {
         switch self {
         case .all: return "All Panini"
+        case .favorite: return "Favorites"
         case .map: return "Map"
-        case .imported: return "Imported"
         case .trash: return "Recycle Bin"
         case .menus(let menu): return menu.title
         }
@@ -35,8 +35,8 @@ enum SidebarSection: Hashable {
     var systemImageName: String {
         switch self {
         case .all: return "folder"
+        case .favorite: return "heart"
         case .map: return "map"
-        case .imported: return "square.and.arrow.down"
         case .trash: return "trash"
         case .menus: return "folder"
         }
@@ -44,8 +44,10 @@ enum SidebarSection: Hashable {
 
     func filteredPanini(allPanini: [Panino]) -> [Panino] {
         switch self {
-        case .all, .imported:
+        case .all:
             return allPanini.filter { !$0.isDeleted }
+        case .favorite:
+            return allPanini.filter { !$0.isDeleted && $0.isFavorite }
         case .map:
             return allPanini.filter { $0.coordinates != nil && !$0.isDeleted }
         case .trash:
@@ -69,7 +71,7 @@ struct MenuSidebar: View {
     var body: some View {
         List(selection: $selectedMenu) {
             Section {
-                ForEach([SidebarSection.all, .map, .imported, .trash], id: \.self) { section in
+                ForEach([SidebarSection.all, .favorite, .map, .trash], id: \.self) { section in
                         MenuRow(
                             title: section.title,
                             systemImageName: section.systemImageName,
@@ -107,11 +109,10 @@ struct MenuSidebar: View {
                 }
                 .onDelete { indexSet in
                     for index in indexSet {
-                        let menu = allMenus[index]
 //                        for panino in menu.panini {
 //                            modelContext.delete(panino)
 //                        }
-                        modelContext.delete(menu.deletePanini())
+                        modelContext.delete(allMenus[index].deletePanini())
                     }
                     try? modelContext.save()
                 }

@@ -18,17 +18,3 @@ enum PaninoGamifications {
     static let pointsPerMap: Int = 5
 }
 
-enum BadgesLibrary {
-    static let all: [Badge] = [
-        HeartBadge(),
-        VeganBadge(),
-        VegetarianBadge(),
-        GlutenFreeBadge(),
-        DairyFreeBadge(),
-        BigPortionBadge(),
-        SmallPortionBadge(),
-        HealthyBadge(),
-        SpicyBadge(),
-        TheChosenOne()
-    ]
-}

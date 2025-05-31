@@ -20,7 +20,7 @@ extension SidebarSection {
             PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: nil, isTrash: false)
         case .map:
             MapView()
-        case .imported:
+        case .favorite:
             PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: nil, isTrash: false)
         case .trash:
             PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: nil, isTrash: true)

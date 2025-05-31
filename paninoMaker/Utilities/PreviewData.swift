@@ -13,7 +13,8 @@ enum PreviewData {
         Panino(
             name: "Hamburger",
             owner: "Preview User",
-            composer: Composer(ingredients: IngredientStore().generateRandoms(count: 10))
+            composer: Composer(ingredients: IngredientStore().generateRandoms(count: 10)),
+            badges: Array(BadgesLibrary.randomBadges(count: 2))
         )
     ]
     
@@ -21,12 +22,14 @@ enum PreviewData {
         Panino(
             name: "CheeseBurger",
             owner: "Preview User",
-            composer: Composer(ingredients: IngredientStore().generateRandoms(count: 3))
+            composer: Composer(ingredients: IngredientStore().generateRandoms(count: 3)),
+            badges: Array(BadgesLibrary.randomBadges(count: 2))
         ),
         Panino(
             name: "Bacon Burger",
             owner: "Preview User",
-            composer: Composer(ingredients: IngredientStore().generateRandoms(count: 5))
+            composer: Composer(ingredients: IngredientStore().generateRandoms(count: 5)),
+            badges: Array(BadgesLibrary.randomBadges(count: 2))
         )
     ]
     
@@ -34,6 +37,8 @@ enum PreviewData {
         Menu(title: "Preview Menu 1", panini: samplePanino),
         Menu(title: "Preview Menu 2", panini: samplePanini)
     ]
+    
+    
 
     static func makeModelContainer(
         for entities: [any PersistentModel.Type] = [Menu.self],

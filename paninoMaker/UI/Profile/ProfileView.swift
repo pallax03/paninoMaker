@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ProfileView: View {
+    @Environment(\.modelContext) var modelContext
+    @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @EnvironmentObject var user: UserModel
+    
     
     var body: some View {
         VStack {
@@ -50,12 +54,15 @@ struct ProfileView: View {
             .foregroundStyle(.red)
             .padding()
             
-            HStack {
-                ForEach(0..<6) { _ in
-                    VStack {
-                        BadgeView()
-                        
-                        Text("x 0")
+            VStack {
+                ForEach(BadgesLibrary.all, id: \.title) { badge in
+                    HStack {
+                        let count = allPanini.filter {
+                            $0.badges.contains {$0.title == badge.title}
+                        }.count
+                        badge.view
+                            .opacity( count > 0 ? 1.0 : 0.3)
+                        Text("\(count)x")
                     }
                 }
             }
@@ -64,17 +71,8 @@ struct ProfileView: View {
     }
 }
 
-struct BadgeView: View {
-    var body: some View {
-        Circle()
-            .fill(Color.white)
-            .overlay {
-                Circle().stroke(Color.green, lineWidth: 2)
-        }
-    }
-}
-
 #Preview {
     ProfileView()
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
         .environmentObject(UserModel())
 }
