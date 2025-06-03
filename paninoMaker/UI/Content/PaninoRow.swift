@@ -13,18 +13,24 @@ struct PaninoRow: View {
     let panino: Panino
     
     var body: some View {
-        HStack(alignment: .firstTextBaseline) {
-            VStack(alignment: .leading) {
-                Text(panino.name)
-                Text(panino.creationDate.formatted(date: .numeric, time: .standard))
-                    .font(.caption)
-                    .fontWeight(.light)
-                    .foregroundStyle(.secondary)
+        VStack(alignment: .leading) {
+            ComposerPreview(panino: panino)
+            
+            HStack {
+                VStack(alignment: .leading) {
+                    
+                    Text(panino.name)
+                    
+                    Text(panino.creationDate.formatted(date: .numeric, time: .standard))
+                        .font(.caption)
+                        .fontWeight(.light)
+                        .foregroundStyle(.secondary)
+                }
+                
+                Spacer()
+                
+                Text(panino.owner ?? "no user")
             }
-            
-            Spacer()
-            
-            Text(panino.owner ?? "no user")
         }
     }
 }

@@ -56,7 +56,9 @@ struct PaninoDetail: View {
                         Button {
                             isComposing = true
                         } label: {
-                            Text("Composer")
+                            ComposerPreview(panino: panino)
+
+                            //Text("Composer")
                         }
                         .sheet(isPresented: $isComposing, content: {
                             ComposerSheet(composer: $panino.composer, draftComposer: panino.composer.copy())
