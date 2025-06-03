@@ -20,7 +20,7 @@ struct CardWrapper<Content: View>: View {
             .frame(maxWidth: .infinity)
             .background(Color.gray.opacity(0.2))
             .cornerRadius(16)
-            .shadow(color: .black.opacity(0.2), radius: 4, x: 5, y: 5)
+            .shadow(color: .black.opacity(0.3), radius: 3, x: 5, y: 5)
             .padding(.bottom, 5)
     }
 }

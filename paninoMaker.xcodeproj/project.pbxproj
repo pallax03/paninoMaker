@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DC87C7CE2DEF91BB00F2AE4C /* MapItemPicker in Frameworks */ = {isa = PBXBuildFile; productRef = DC87C7CD2DEF91BB00F2AE4C /* MapItemPicker */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		880A3BD12DE5C1E800DB0BA5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC87C7CE2DEF91BB00F2AE4C /* MapItemPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +96,7 @@
 				880A3BC52DE5C1E700DB0BA5 /* paninoMaker */,
 				880A3BD32DE5C1E800DB0BA5 /* paninoMakerTests */,
 				880A3BDD2DE5C1E800DB0BA5 /* paninoMakerUITests */,
+				DC87C7CC2DEF91B400F2AE4C /* Frameworks */,
 				880A3BC42DE5C1E700DB0BA5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +109,13 @@
 				880A3BDA2DE5C1E800DB0BA5 /* paninoMakerUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DC87C7CC2DEF91B400F2AE4C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +138,7 @@
 			);
 			name = paninoMaker;
 			packageProductDependencies = (
+				DC87C7CD2DEF91BB00F2AE4C /* MapItemPicker */,
 			);
 			productName = paninoMaker;
 			productReference = 880A3BC32DE5C1E700DB0BA5 /* paninoMaker.app */;
@@ -208,6 +222,9 @@
 			);
 			mainGroup = 880A3BBA2DE5C1E700DB0BA5;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				DC58A33D2DEF8F47009BA367 /* XCRemoteSwiftPackageReference "MapItemPicker" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 880A3BC42DE5C1E700DB0BA5 /* Products */;
 			projectDirPath = "";
@@ -577,6 +594,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DC58A33D2DEF8F47009BA367 /* XCRemoteSwiftPackageReference "MapItemPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/FiveSheepCo/MapItemPicker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.7;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DC87C7CD2DEF91BB00F2AE4C /* MapItemPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC58A33D2DEF8F47009BA367 /* XCRemoteSwiftPackageReference "MapItemPicker" */;
+			productName = MapItemPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 880A3BBB2DE5C1E700DB0BA5 /* Project object */;
 }

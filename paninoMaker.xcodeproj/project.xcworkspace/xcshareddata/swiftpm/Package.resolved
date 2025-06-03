@@ -1,0 +1,24 @@
+{
+  "originHash" : "0b858082474c2c5fa1c58e13209ecd1e4f16e274e6664b9978ca57ddf3cff23e",
+  "pins" : [
+    {
+      "identity" : "mapitempicker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/FiveSheepCo/MapItemPicker",
+      "state" : {
+        "revision" : "1c607d5047bebad6db0cf28c6c44cdd9ef5a7ff0",
+        "version" : "1.0.7"
+      }
+    },
+    {
+      "identity" : "schafkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/FiveSheepCo/SchafKit.git",
+      "state" : {
+        "revision" : "543b2d8dba7069c638e526d71b0701a730c09994",
+        "version" : "1.3.0"
+      }
+    }
+  ],
+  "version" : 3
+}

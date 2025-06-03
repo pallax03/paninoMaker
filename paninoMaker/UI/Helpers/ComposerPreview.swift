@@ -8,21 +8,28 @@
 import SwiftUI
 
 struct ComposerPreview: View {
-    let panino: Panino
+    let composer: Composer
     
     var body: some View {
-        VStack {
-            Image("bread_texture")
+        VStack(spacing: 2) {
+            Image(composer.top.imageName)
             .resizable()
             .cornerRadius(10)
             
-            ForEach(panino.composer.ingredients) { ingredient in
-                Rectangle()
-                .fill(.green)
-                .cornerRadius(10)
+            ForEach(composer.ingredients) { ingredient in
+                if let img = UIImage(named: ingredient.imageName) {
+                    Image(uiImage: img)
+                    .resizable()
+                    .cornerRadius(10)
+                } else {
+                    Rectangle()
+                    .fill(.green)
+                    .cornerRadius(10)
+                }
             }
             
-            Image("bread_texture")
+            
+            Image(composer.bottom.imageName)
             .resizable()
             .cornerRadius(10)
         }
@@ -31,5 +38,5 @@ struct ComposerPreview: View {
 }
 
 #Preview {
-    ComposerPreview(panino: PreviewData.samplePanino)
+    ComposerPreview(composer: PreviewData.samplePanini[0].composer)
 }

@@ -7,6 +7,8 @@
 
 import SwiftUI
 import PhotosUI
+import MapItemPicker
+import MapKit
 
 struct PaninoDetail: View {
     @State var panino: Panino
@@ -56,9 +58,7 @@ struct PaninoDetail: View {
                         Button {
                             isComposing = true
                         } label: {
-                            ComposerPreview(panino: panino)
-
-                            //Text("Composer")
+                            ComposerPreview(composer: panino.composer)
                         }
                         .sheet(isPresented: $isComposing, content: {
                             ComposerSheet(composer: $panino.composer, draftComposer: panino.composer.copy())
@@ -115,11 +115,28 @@ struct PaninoDetail: View {
                         Button {
                             isMapOpen = true
                         } label: {
-                            Text("Pin Mappa")
+                            if panino.coordinates != nil {
+                                let coordinate = panino.coordinates!
+                                let region = MKCoordinateRegion(
+                                    center: coordinate,
+                                    span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+                                )
+
+                                let pin = MapPin(coordinate: coordinate)
+
+                                Map(coordinateRegion: .constant(region), annotationItems: [pin]) { pin in
+                                    MapMarker(coordinate: pin.coordinate, tint: .red)
+                                }
+                                .frame(height: 150)
+                                .cornerRadius(10)
+                            } else {
+                                Text("Pin Mappa")
+                            }
                         }
-                        .sheet(isPresented: $isMapOpen, content: {
-                            
-                        })
+                        .mapItemPickerSheet(isPresented: $isMapOpen) { mapItem in
+                            panino.setCoordinates(mapItem.location)
+                            print("Map Item:", mapItem)
+                        }
                     }
                 }
             }
@@ -137,6 +154,11 @@ struct PaninoDetail: View {
             }
         }
     }
+}
+
+struct MapPin: Identifiable {
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
 }
 
 #Preview {

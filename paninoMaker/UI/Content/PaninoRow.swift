@@ -14,7 +14,13 @@ struct PaninoRow: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            ComposerPreview(panino: panino)
+            HStack {
+                ComposerPreview(composer: panino.composer)
+                
+//                Image(uiImage: panino.images.first!)
+//                    .resizable()
+//                    .scaledToFit()
+            }
             
             HStack {
                 VStack(alignment: .leading) {
@@ -35,7 +41,13 @@ struct PaninoRow: View {
     }
 }
 
-#Preview {
-    PaninoRow(panino: Panino(name: "Test"))
-        .environmentObject(UserModel())
-}
+//#Preview {
+//    PaninoRow(
+//            panino: {
+//                let panino = Panino(name: "Test")
+//                panino.addImage(UIImage(imageLiteralResourceName: "token"))
+//                return panino
+//            }()
+//        )
+//        .environmentObject(UserModel())
+//}

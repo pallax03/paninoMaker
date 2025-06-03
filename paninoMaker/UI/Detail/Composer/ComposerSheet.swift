@@ -23,12 +23,21 @@ struct ComposerSheet: View {
                     if !draftComposer.ingredients.isEmpty {
                         ForEach(draftComposer.ingredients) { ingredient in
                             ZStack {
-                                Rectangle()
+                                if let img = UIImage(named: ingredient.imageName) {
+                                    Image(uiImage: img)
+                                    .resizable()
+                                    .frame(width: 300, height: 80)
+                                    .cornerRadius(10)
+                                } else {
+                                    Rectangle()
                                     .fill(.green)
                                     .frame(width: 300, height: 80)
                                     .cornerRadius(10)
+                                }
                                 
                                 Text(ingredient.name)
+                                    .foregroundStyle(.white)
+                                    .font(.title)
                             }
                             .contentShape(.contextMenuPreview, .rect(cornerRadius: 15))
                             .contextMenu {
@@ -97,7 +106,7 @@ struct Bread: View {
             isShownBread = true
         } label: {
             ZStack {
-                Image("bread_texture")
+                Image(draftComposer.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: .infinity, height: 80)

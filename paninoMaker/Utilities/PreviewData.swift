@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftData
+import SwiftUICore
+import UIKit
 
 enum PreviewData {
     static let samplePanino: Panino =
