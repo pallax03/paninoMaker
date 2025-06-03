@@ -22,7 +22,8 @@ class Menu {
     
     func deletePanini() {
         for panino in panini {
-            panino.isDeleted = true
+            panino.inTrash = true
+            panino.menu = nil
         }
     }
 }

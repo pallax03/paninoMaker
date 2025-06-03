@@ -69,11 +69,12 @@ struct ContentView: View {
                 modelContext.insert(menu)
                 if let panino = paninoToMove {
                     panino.menu = menu
-                    panino.isDeleted = false
+                    panino.inTrash = false
                     paninoToMove = nil
                 }
                 selectedMenu = .menus(menu)
                 newMenuTitle = ""
+                try? modelContext.save() 
             })
             Button("Cancel", role: .cancel) {
                 newMenuTitle = ""

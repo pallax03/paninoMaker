@@ -22,7 +22,7 @@ struct PaninoContent: View {
     var isTrash: Bool = false
     
     var visiblePanini: [Panino] {
-        panini.filter { $0.isDeleted == isTrash }
+        panini.filter { $0.inTrash == isTrash }
     }
     
     var body: some View {
@@ -42,7 +42,8 @@ struct PaninoContent: View {
                     }
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
-                            panino.isDeleted = true
+                            panino.inTrash = true
+                            try? modelContext.save()
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
@@ -54,7 +55,7 @@ struct PaninoContent: View {
                         }
                         .tint(.indigo)
                         Button {
-                            // move sheet
+                            #warning("todo")
                         } label: {
                             Label("Share", systemImage: "square.and.arrow.up")
                         }
@@ -75,8 +76,9 @@ struct PaninoContent: View {
                 MovePaniniSheet(
                     onSelect: {menu in
                         if let panino = paninoToMove {
-                            panino.isDeleted = false
+                            panino.inTrash = false
                             panino.menu = menu
+                            try? modelContext.save()
                         }
                     },
                     onNewMenu: {

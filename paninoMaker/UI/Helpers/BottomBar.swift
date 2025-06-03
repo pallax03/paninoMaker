@@ -76,7 +76,7 @@ struct BottomBar: View {
                     }
                     if showRecycleBinButton {
                         Button {
-                            for panino in allPanini where panino.isDeleted {
+                            for panino in allPanini where panino.inTrash {
                                 modelContext.delete(panino)
                             }
                         } label: {
@@ -89,10 +89,11 @@ struct BottomBar: View {
                 .sheet(isPresented: $isShowingMoveAllSheet) {
                     MovePaniniSheet(
                         onSelect: { menu in
-                            for panino in allPanini where panino.isDeleted {
-                                panino.isDeleted = false
+                            for panino in allPanini where panino.inTrash {
+                                panino.inTrash = false
                                 panino.menu = menu
                             }
+                            try? modelContext.save()
                         },
                         onNewMenu: {
                             isShowingNewMenuAlert = true
@@ -132,7 +133,7 @@ struct BottomBar: View {
         guard let section = selectedMenu else { return false }
         switch section {
         case .trash:
-            return !allPanini.filter { $0.isDeleted }.isEmpty
+            return !allPanini.filter { $0.inTrash }.isEmpty
         default:
             return false
         }
