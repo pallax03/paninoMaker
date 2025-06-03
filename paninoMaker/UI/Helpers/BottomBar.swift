@@ -14,11 +14,11 @@ struct BottomBar: View {
     @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
     @Binding var selectedMenu: SidebarSection?
     @Binding var selectedPanino: Panino?
+    @Binding var isShowingNewMenuAlert: Bool
+    @Binding var newMenuTitle: String
     
     @State private var selectedMenuForRestore: Menu?
     @State private var isShowingMoveAllSheet = false
-    @State private var isShowingNewMenuAlert = false
-    @State private var newMenuTitle = ""
     
     var body: some View {
         if isBottomBarVisible {
@@ -154,45 +154,47 @@ struct BottomBar: View {
 #Preview {
     let panino = PreviewData.samplePanino
     let menu = PreviewData.sampleMenu
+    let isShowingNewMenuAlert = true
+    let newMenuTitle = "New Menu"
     
     Text("Menu Sidebar")
-    BottomBar(selectedMenu: .constant(nil), selectedPanino: .constant(nil))
+    BottomBar(selectedMenu: .constant(nil), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
     Text("Profile")
-    BottomBar(selectedMenu: .constant(.profile), selectedPanino: .constant(nil))
+    BottomBar(selectedMenu: .constant(.profile), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
     Text("Map")
-    BottomBar(selectedMenu: .constant(.map), selectedPanino: .constant(panino))
+    BottomBar(selectedMenu: .constant(.map), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
     Text("Saved - no panino")
-    BottomBar(selectedMenu: .constant(.saved), selectedPanino: .constant(nil))
+    BottomBar(selectedMenu: .constant(.saved), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
     Text("PaninoContent all - nopanino")
-    BottomBar(selectedMenu: .constant(.all), selectedPanino: .constant(nil))
+    BottomBar(selectedMenu: .constant(.all), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
     Text("PaninoContent menu - nopanino")
-    BottomBar(selectedMenu: .constant(.menus(menu)), selectedPanino: .constant(nil))
+    BottomBar(selectedMenu: .constant(.menus(menu)), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
     Text("PaninoDetail")
-    BottomBar(selectedMenu: .constant(.menus(menu)), selectedPanino: .constant(panino))
+    BottomBar(selectedMenu: .constant(.menus(menu)), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
     Text("Saved - panino")
-    BottomBar(selectedMenu: .constant(.saved), selectedPanino: .constant(panino))
+    BottomBar(selectedMenu: .constant(.saved), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
     Text("Recycle Bin")
-    BottomBar(selectedMenu: .constant(.trash), selectedPanino: .constant(nil))
+    BottomBar(selectedMenu: .constant(.trash), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
     Text("Recycle Bin - panino")
-    BottomBar(selectedMenu: .constant(.trash), selectedPanino: .constant(panino))
+    BottomBar(selectedMenu: .constant(.trash), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
 }

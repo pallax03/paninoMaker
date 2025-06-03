@@ -55,7 +55,12 @@ struct ContentView: View {
             }
         }
         .overlay(alignment: .bottom) {
-            BottomBar(selectedMenu: $selectedMenu, selectedPanino: $selectedPanino)
+            BottomBar(
+                selectedMenu: $selectedMenu,
+                selectedPanino: $selectedPanino,
+                isShowingNewMenuAlert: $isShowingNewMenuAlert,
+                newMenuTitle: $newMenuTitle
+            )
         }
         .alert("New Menu", isPresented: $isShowingNewMenuAlert) {
             TextField("Title of the new menu", text: $newMenuTitle)
