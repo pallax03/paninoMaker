@@ -10,10 +10,15 @@ import SwiftData
 
 struct PaninoContent: View {
     @Environment(\.modelContext) var modelContext
+    @Binding var paninoToMove: Panino?
+    @State var isShowingMoveSheet: Bool = false
     var title: String
     var panini: [Panino]
     @Binding var selectedPanino: Panino?
     @Binding var selectedMenu: SidebarSection?
+    @Binding var isShowingNewMenuAlert: Bool
+    @Binding var newMenuTitle: String
+    
     var isTrash: Bool = false
     
     var visiblePanini: [Panino] {
@@ -27,12 +32,33 @@ struct PaninoContent: View {
                     NavigationLink(value: panino) {
                         PaninoRow(panino: panino)
                     }
+                    .swipeActions(edge: .leading) {
+                        Button {
+                            panino.isSaved.toggle()
+                        } label: {
+                            Label("Saved", systemImage: panino.isSaved ? "bookmark.slash.fill" : "bookmark.fill")
+                        }
+                        .tint(.orange)
+                    }
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
                             panino.isDeleted = true
                         } label: {
                             Label("Delete", systemImage: "trash")
                         }
+                        Button {
+                            paninoToMove = panino
+                            isShowingMoveSheet = true
+                        } label: {
+                            Label("Move", systemImage: "folder.fill")
+                        }
+                        .tint(.indigo)
+                        Button {
+                            // move sheet
+                        } label: {
+                            Label("Share", systemImage: "square.and.arrow.up")
+                        }
+                        .tint(.blue)
                     }
                 }
             }
@@ -45,6 +71,21 @@ struct PaninoContent: View {
                     }
                 }
             }
+            .sheet(isPresented: $isShowingMoveSheet) {
+                MovePaniniSheet(
+                    onSelect: {menu in
+                        if let panino = paninoToMove {
+                            panino.isDeleted = false
+                            panino.menu = menu
+                        }
+                    },
+                    onNewMenu: {
+                        isShowingMoveSheet = false
+                        isShowingNewMenuAlert = true
+                    },
+                    isPresented: $isShowingMoveSheet
+                )
+            }
         }
     }
 }
@@ -52,5 +93,5 @@ struct PaninoContent: View {
 #Preview {
     let panini = PreviewData.samplePanini
     let menu = Menu(title: "Test", panini: panini)
-    PaninoContent(title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: .constant(nil))
+    PaninoContent(paninoToMove: .constant(nil), title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: .constant(nil), isShowingNewMenuAlert: .constant(false), newMenuTitle: .constant(""))
 }

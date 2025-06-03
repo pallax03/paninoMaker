@@ -19,7 +19,7 @@ struct MenuSidebar: View {
     var body: some View {
         List(selection: $selectedMenu) {
             Section {
-                ForEach([SidebarSection.all, .favorite, .map, .trash], id: \.self) { section in
+                ForEach([SidebarSection.all, .saved, .map, .trash], id: \.self) { section in
                     MenuRow(
                         title: section.title,
                         systemImageName: section.systemImageName,
@@ -38,18 +38,13 @@ struct MenuSidebar: View {
                     ).tag(section)
                         .contextMenu {
                             Button(role: .destructive) {
-                                // Cancellazione a cascata manuale
-                                
-                                //                            for panino in menu.panini {
-                                //                                modelContext.delete(panino)
-                                //                            }
-                                modelContext.delete(menu.deletePanini())
-                                try? modelContext.save()
+                                menu.deletePanini()
+                                modelContext.delete(menu)
                             } label: {
                                 Label("Delete Menu", systemImage: "trash")
                             }
                             Button() {
-                                // Azione di condivisione
+                                
                             } label: {
                                 Label("Share Menu", systemImage: "square.and.arrow.up")
                             }
@@ -57,9 +52,10 @@ struct MenuSidebar: View {
                 }
                 .onDelete { indexSet in
                     for index in indexSet {
-                        modelContext.delete(allMenus[index].deletePanini())
+                            let menu = allMenus[index]
+                            menu.deletePanini()
+                            modelContext.delete(menu)
                     }
-                    try? modelContext.save()
                 }
                 .onMove { fromOffsets, toOffset in
                     var reordered = allMenus

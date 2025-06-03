@@ -15,6 +15,8 @@ struct BottomBar: View {
     @Binding var selectedMenu: SidebarSection?
     @Binding var selectedPanino: Panino?
     
+    @State private var selectedMenuForRestore: Menu?
+    @State private var isShowingMoveAllSheet = false
     @State private var isShowingNewMenuAlert = false
     @State private var newMenuTitle = ""
     
@@ -30,6 +32,14 @@ struct BottomBar: View {
                         } label: {
                             Image(systemName: "folder.badge.plus")
                                 .imageScale(.large)
+                        }
+                    }
+                    
+                    if showRecycleBinButton {
+                        Button {
+                            isShowingMoveAllSheet = true
+                        } label: {
+                            Text("Move All")
                         }
                     }
                     
@@ -61,22 +71,30 @@ struct BottomBar: View {
                                 .imageScale(.large)
                         }
                     }
+                    if showRecycleBinButton {
+                        Button {
+                            for panino in allPanini where panino.isDeleted {
+                                modelContext.delete(panino)
+                            }
+                        } label: {
+                            Text("Delete All")
+                        }
+                    }
                 }
                 .padding()
                 .background(.ultraThinMaterial)
-                .alert("New Menu", isPresented: $isShowingNewMenuAlert) {
-                    TextField("Title of the new menu", text: $newMenuTitle)
-                    Button("Create", action: {
-                        let menu = Menu(title: newMenuTitle.isEmpty ? "No title" : newMenuTitle, panini: [])
-                        modelContext.insert(menu)
-                        selectedMenu = .menus(menu)
-                        newMenuTitle = ""
-                    })
-                    Button("Cancel", role: .cancel) {
-                        newMenuTitle = ""
-                    }
-                } message: {
-                    Text("Insert a new menu title.")
+                .sheet(isPresented: $isShowingMoveAllSheet) {
+                    MovePaniniSheet(
+                        onSelect: { menu in
+                            for panino in allPanini where panino.isDeleted {
+                                panino.isDeleted = false
+                                panino.menu = menu
+                            }
+                        },
+                        onNewMenu: {
+                            isShowingNewMenuAlert = true
+                        },
+                        isPresented: $isShowingMoveAllSheet)
                 }
             }
         }
@@ -86,27 +104,37 @@ struct BottomBar: View {
         if selectedPanino != nil { return false }
         guard let section = selectedMenu else { return true }
         switch section {
-        case .trash, .map, .profile:
+        case .map, .profile:
             return false
         default:
             return true
         }
     }
-
+    
     var showNewMenuButton: Bool {
         selectedMenu == nil
     }
-
+    
     var showPlusButton: Bool {
         guard let section = selectedMenu else { return true }
         switch section {
-        case .map:
+        case .map, .trash:
             return false
         default:
             return true
         }
     }
-
+    
+    var showRecycleBinButton: Bool {
+        guard let section = selectedMenu else { return false }
+        switch section {
+        case .trash:
+            return !allPanini.filter { $0.isDeleted }.isEmpty
+        default:
+            return false
+        }
+    }
+    
     var showPaniniCount: Bool {
         guard let section = selectedMenu else { return false }
         switch section {
@@ -116,7 +144,7 @@ struct BottomBar: View {
             return true
         }
     }
-
+    
     var visiblePaniniCount: Int {
         guard let selectedMenu = selectedMenu else { return 0 }
         return selectedMenu.paniniCount(allPanini: allPanini)
@@ -139,8 +167,8 @@ struct BottomBar: View {
     BottomBar(selectedMenu: .constant(.map), selectedPanino: .constant(panino))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
-    Text("Favorite - no panino")
-    BottomBar(selectedMenu: .constant(.favorite), selectedPanino: .constant(nil))
+    Text("Saved - no panino")
+    BottomBar(selectedMenu: .constant(.saved), selectedPanino: .constant(nil))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
     Text("PaninoContent all - nopanino")
@@ -155,8 +183,8 @@ struct BottomBar: View {
     BottomBar(selectedMenu: .constant(.menus(menu)), selectedPanino: .constant(panino))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
-    Text("Favorite - panino")
-    BottomBar(selectedMenu: .constant(.favorite), selectedPanino: .constant(panino))
+    Text("Saved - panino")
+    BottomBar(selectedMenu: .constant(.saved), selectedPanino: .constant(panino))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
     
     Text("Recycle Bin")

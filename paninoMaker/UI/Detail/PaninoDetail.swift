@@ -25,10 +25,10 @@ struct PaninoDetail: View {
                         Spacer()
                         
                         Button {
-                            panino.isFavorite.toggle()
+                            panino.isSaved.toggle()
                         } label: {
-                            Image(systemName: panino.isFavorite ? "heart.fill" : "heart")
-                                .foregroundStyle(.red)
+                            Image(systemName: panino.isSaved ? "bookmark.fill" : "bookmark")
+                                .foregroundStyle(.orange)
                         }
                     }
                     

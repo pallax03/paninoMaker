@@ -11,7 +11,7 @@ import SwiftData
 
 enum SidebarSection: Hashable {
     case all
-    case favorite
+    case saved
     case map
     case trash
     case profile
@@ -27,7 +27,7 @@ enum SidebarSection: Hashable {
     var title: String {
         switch self {
         case .all: return "All Panini"
-        case .favorite: return "Favorites"
+        case .saved: return "Saved"
         case .map: return "Map"
         case .trash: return "Recycle Bin"
         case .menus(let menu): return menu.title
@@ -38,7 +38,7 @@ enum SidebarSection: Hashable {
     var systemImageName: String {
         switch self {
         case .all: return "folder"
-        case .favorite: return "heart"
+        case .saved: return "bookmark"
         case .map: return "map"
         case .trash: return "trash"
         case .menus: return "folder"
@@ -50,8 +50,8 @@ enum SidebarSection: Hashable {
         switch self {
         case .all:
             return allPanini.filter { !$0.isDeleted }
-        case .favorite:
-            return allPanini.filter { !$0.isDeleted && $0.isFavorite }
+        case .saved:
+            return allPanini.filter { !$0.isDeleted && $0.isSaved }
         case .map:
             return allPanini.filter { $0.coordinates != nil && !$0.isDeleted }
         case .trash:
@@ -72,21 +72,27 @@ enum SidebarSection: Hashable {
         panini: [Panino],
         selectedPanino: Binding<Panino?>,
         selectedMenu: Binding<SidebarSection?>,
-        allPanini: [Panino]
+        isShowingNewMenuAlert: Binding<Bool>,
+        newMenuTitle: Binding<String>,
+        paninoToMove: Binding<Panino?>
     ) -> some View {
         switch self {
-        case .all:
-            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: selectedMenu, isTrash: false)
         case .map:
             MapView()
-        case .favorite:
-            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: selectedMenu, isTrash: false)
-        case .trash:
-            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: selectedMenu, isTrash: true)
-        case .menus(_):
-            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: selectedMenu, isTrash: false)
         case .profile:
             ProfileView()
+        default:
+            let isTrashView = (self == .trash)
+            PaninoContent(
+                paninoToMove: paninoToMove,
+                title: title,
+                panini: panini,
+                selectedPanino: selectedPanino,
+                selectedMenu: selectedMenu,
+                isShowingNewMenuAlert: isShowingNewMenuAlert,
+                newMenuTitle: newMenuTitle,
+                isTrash: isTrashView
+            )
         }
     }
 }

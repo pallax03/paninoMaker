@@ -20,10 +20,9 @@ class Menu {
         self.panini = panini
     }
     
-    func deletePanini() -> Menu {
+    func deletePanini() {
         for panino in panini {
             panino.isDeleted = true
         }
-        return self
     }
 }

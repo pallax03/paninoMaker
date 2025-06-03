@@ -96,14 +96,14 @@ enum BadgesLibrary {
 
 struct HeartBadge: Badge {
     var title: String = "Heart"
-    var description: String = "Your Favorite Panino"
+    var description: String = "Your Saved Paninos"
     var color: Color = .red
     var mult: Double = 1.2
     var view: AnyView {
-        defaultView(icon: "heart.fill")
+        defaultView(icon: "bookmark.fill")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
-        return panino.isFavorite
+        return panino.isSaved
     }
 }
 

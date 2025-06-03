@@ -17,6 +17,8 @@ struct ContentView: View {
 
     @State private var isShowingNewMenuAlert = false
     @State private var newMenuTitle = ""
+    @State private var selectedPanini: Set<Panino> = []
+    @State private var paninoToMove: Panino? = nil
     
     var panini: [Panino] {
         guard let selectedMenu = selectedMenu else { return [] }
@@ -34,7 +36,9 @@ struct ContentView: View {
                         panini: panini,
                         selectedPanino: $selectedPanino,
                         selectedMenu: $selectedMenu,
-                        allPanini: allPanini
+                        isShowingNewMenuAlert: $isShowingNewMenuAlert,
+                        newMenuTitle: $newMenuTitle,
+                        paninoToMove: $paninoToMove
                     )
                 } else {
                     Text("Select a menu")
@@ -52,6 +56,26 @@ struct ContentView: View {
         }
         .overlay(alignment: .bottom) {
             BottomBar(selectedMenu: $selectedMenu, selectedPanino: $selectedPanino)
+        }
+        .alert("New Menu", isPresented: $isShowingNewMenuAlert) {
+            TextField("Title of the new menu", text: $newMenuTitle)
+            Button("Create", action: {
+                let menu = Menu(title: newMenuTitle.isEmpty ? "No title" : newMenuTitle, panini: [])
+                modelContext.insert(menu)
+                if let panino = paninoToMove {
+                    panino.menu = menu
+                    panino.isDeleted = false
+                    paninoToMove = nil
+                }
+                selectedMenu = .menus(menu)
+                newMenuTitle = ""
+            })
+            Button("Cancel", role: .cancel) {
+                newMenuTitle = ""
+                paninoToMove = nil
+            }
+        } message: {
+            Text("Insert a new menu title.")
         }
     }
 }

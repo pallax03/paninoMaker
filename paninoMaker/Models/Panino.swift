@@ -14,7 +14,7 @@ import SwiftData
 class Panino {
     // MARK: - Properties
     var name: String
-    var isFavorite: Bool
+    var isSaved: Bool
     var creationDate: Date
     var owner: String?
     var latitude: Double?
@@ -51,7 +51,7 @@ class Panino {
         badges: [BadgeEntity] = []
     ) {
         self.name = name
-        self.isFavorite = false
+        self.isSaved = false
         self.isDeleted = false
         self.creationDate = Date()
         self.owner = owner

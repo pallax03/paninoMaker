@@ -32,7 +32,7 @@ struct IngredientList: View {
     IngredientList(
         ingredients: IngredientStore().ingredients,
         onIngredientSelected: { ingredient in
-            print("Preview selected: \(ingredient.name)")
+//            print("Preview selected: \(ingredient.name)")
         }
     )
     .environmentObject(UserModel())
