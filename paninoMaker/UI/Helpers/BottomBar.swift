@@ -1,82 +1,24 @@
 //
-//  MenuView.swift
+//  BottomBar.swift
 //  paninoMaker
 //
-//  Created by Nicola Graziotin on 27/05/25.
+//  Created by alex mazzoni on 03/06/25.
 //
 
 import SwiftUI
 import SwiftData
 
-extension SidebarSection {
-    @ViewBuilder
-    func makeContentView(
-        panini: [Panino],
-        selectedPanino: Binding<Panino?>,
-        allPanini: [Panino]
-    ) -> some View {
-        switch self {
-        case .all:
-            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: nil, isTrash: false)
-        case .map:
-            MapView()
-        case .favorite:
-            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: nil, isTrash: false)
-        case .trash:
-            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: nil, isTrash: true)
-        case .menus(let menu):
-            PaninoContent(title: title, panini: panini, selectedPanino: selectedPanino, selectedMenu: menu, isTrash: false)
-        }
-    }
-}
-
-struct MenuView: View {
+struct BottomBar: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
-    @State var selectedMenu: SidebarSection?
-    @State var selectedPanino: Panino?
-
+    @Binding var selectedMenu: SidebarSection?
+    @Binding var selectedPanino: Panino?
+    
     @State private var isShowingNewMenuAlert = false
     @State private var newMenuTitle = ""
     
-    var panini: [Panino] {
-        guard let selectedMenu = selectedMenu else { return [] }
-        return selectedMenu.filteredPanini(allPanini: allPanini)
-    }
-    
     var body: some View {
-        NavigationSplitView {
-            VStack(spacing: 0) {
-                MenuSidebar(selectedMenu: $selectedMenu)
-            }
-        } content: {
-                if let section = selectedMenu {
-                    section.makeContentView(
-                        panini: panini,
-                        selectedPanino: $selectedPanino,
-                        allPanini: allPanini
-                    )
-                } else {
-                    Text("Select a menu")
-                }
-        } detail: {
-            VStack {
-                if let panino = selectedPanino {
-                    PaninoDetail(panino: panino)
-                        .padding()
-                } else {
-                    Text("Select an item")
-                }
-            }
-        }
-        .overlay(alignment: .bottom) {
-            bottomBar()
-        }
-    }
-    
-    @ViewBuilder
-    func bottomBar() -> some View {
         if isBottomBarVisible {
             VStack(spacing: 0) {
                 Divider()
@@ -96,6 +38,11 @@ struct MenuView: View {
                         Text("\(visiblePaniniCount) Panini")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
+                    } else {
+                        Spacer()
+                        Text("\(allMenus.count) Menu")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
                     }
                     
                     Spacer()
@@ -103,7 +50,10 @@ struct MenuView: View {
                     if showPlusButton {
                         Button {
                             selectedMenu = selectedMenu ?? .all
-                            let panino = Panino(name: "", menu: selectedMenu?.menu)
+                            let panino = Panino(
+                                name: "New Panino \(allPanini.count + 1)",
+                                menu: selectedMenu?.menu
+                            )
                             selectedPanino = panino
                             modelContext.insert(panino)
                         } label: {
@@ -131,11 +81,12 @@ struct MenuView: View {
             }
         }
     }
-
+    
     var isBottomBarVisible: Bool {
+        if selectedPanino != nil { return false }
         guard let section = selectedMenu else { return true }
         switch section {
-        case .trash, .map:
+        case .trash, .map, .profile:
             return false
         default:
             return true
@@ -173,7 +124,47 @@ struct MenuView: View {
 }
 
 #Preview {
-    MenuView()
+    let panino = PreviewData.samplePanino
+    let menu = PreviewData.sampleMenu
+    
+    Text("Menu Sidebar")
+    BottomBar(selectedMenu: .constant(nil), selectedPanino: .constant(nil))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
+    
+    Text("Profile")
+    BottomBar(selectedMenu: .constant(.profile), selectedPanino: .constant(nil))
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    
+    Text("Map")
+    BottomBar(selectedMenu: .constant(.map), selectedPanino: .constant(panino))
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    
+    Text("Favorite - no panino")
+    BottomBar(selectedMenu: .constant(.favorite), selectedPanino: .constant(nil))
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    
+    Text("PaninoContent all - nopanino")
+    BottomBar(selectedMenu: .constant(.all), selectedPanino: .constant(nil))
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    
+    Text("PaninoContent menu - nopanino")
+    BottomBar(selectedMenu: .constant(.menus(menu)), selectedPanino: .constant(nil))
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    
+    Text("PaninoDetail")
+    BottomBar(selectedMenu: .constant(.menus(menu)), selectedPanino: .constant(panino))
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    
+    Text("Favorite - panino")
+    BottomBar(selectedMenu: .constant(.favorite), selectedPanino: .constant(panino))
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    
+    Text("Recycle Bin")
+    BottomBar(selectedMenu: .constant(.trash), selectedPanino: .constant(nil))
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    
+    Text("Recycle Bin - panino")
+    BottomBar(selectedMenu: .constant(.trash), selectedPanino: .constant(panino))
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    
 }

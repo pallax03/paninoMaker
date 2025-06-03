@@ -15,6 +15,6 @@ struct BadgeView: View {
 }
 
 #Preview {
-    var badge: any Badge = BadgesLibrary.randomBadges(count: 1).first!.resolvedBadge!
+    let badge: any Badge = BadgesLibrary.randomBadges(count: 1).first!.resolvedBadge!
     BadgeView(badge: badge)
 }

@@ -16,7 +16,7 @@ struct PaninoDetail: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 0) {
                 VStack {
                     HStack {
                         Text(panino.name)
@@ -121,9 +121,10 @@ struct PaninoDetail: View {
                     }
                 }
             }
+            .padding()
+            .frame(maxHeight: .infinity)
+            .ignoresSafeArea(.all, edges: .bottom)
         }
-        .edgesIgnoringSafeArea(.all)
-        .padding()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {

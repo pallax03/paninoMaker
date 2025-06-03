@@ -13,7 +13,7 @@ struct PaninoContent: View {
     var title: String
     var panini: [Panino]
     @Binding var selectedPanino: Panino?
-    var selectedMenu: Menu?
+    @Binding var selectedMenu: SidebarSection?
     var isTrash: Bool = false
     
     var visiblePanini: [Panino] {
@@ -27,7 +27,6 @@ struct PaninoContent: View {
                     NavigationLink(value: panino) {
                         PaninoRow(panino: panino)
                     }
-                    .tag(panino)
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
                             panino.isDeleted = true
@@ -38,6 +37,14 @@ struct PaninoContent: View {
                 }
             }
             .navigationTitle(title)
+            .toolbar {
+                ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
+                    Button(action: { selectedMenu = .profile }) {
+                        Label("Profile", systemImage: "person.crop.circle")
+                            .font(.title)
+                    }
+                }
+            }
         }
     }
 }
@@ -45,5 +52,5 @@ struct PaninoContent: View {
 #Preview {
     let panini = PreviewData.samplePanini
     let menu = Menu(title: "Test", panini: panini)
-    PaninoContent(title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: menu)
+    PaninoContent(title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: .constant(nil))
 }

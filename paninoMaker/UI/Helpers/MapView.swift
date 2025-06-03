@@ -15,6 +15,14 @@ struct MapView: View {
             Map(position: $locationManager.position) {
                 UserAnnotation()
             }
+            .toolbar {
+                ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
+                    NavigationLink(destination: ProfileView()) {
+                        Label("Profile", systemImage: "person.crop.circle")
+                            .font(.title)
+                    }
+                }
+            }
         }
 }
 
