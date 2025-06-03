@@ -13,7 +13,7 @@ struct PaninoContent: View {
     var title: String
     var panini: [Panino]
     @Binding var selectedPanino: Panino?
-    var selectedMenu: Menu?  // opzionale, per assegnare al nuovo panino
+    var selectedMenu: Menu?
     var isTrash: Bool = false
     
     var visiblePanini: [Panino] {
@@ -22,11 +22,12 @@ struct PaninoContent: View {
     
     var body: some View {
         VStack(spacing: 0 ) {
-            List {
+            List(selection: $selectedPanino) {
                 ForEach(visiblePanini, id: \.self) { panino in
                     NavigationLink(value: panino) {
                         PaninoRow(panino: panino)
                     }
+                    .tag(panino)
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
                             panino.isDeleted = true
@@ -44,5 +45,5 @@ struct PaninoContent: View {
 #Preview {
     let panini = PreviewData.samplePanini
     let menu = Menu(title: "Test", panini: panini)
-    PaninoContent(title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: nil)
+    PaninoContent(title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: menu)
 }

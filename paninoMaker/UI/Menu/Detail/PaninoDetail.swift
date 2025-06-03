@@ -70,7 +70,7 @@ struct PaninoDetail: View {
                                     .font(.title)
                                     .fontWeight(.bold)
                                 Spacer()
-                            }
+                                }
                             ForEach(Array(panino.badges).sorted { $0.title < $1.title }, id: \.title) { entity in
                                 BadgeView(badge: entity.resolvedBadge!)
                             }

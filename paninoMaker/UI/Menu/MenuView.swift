@@ -104,6 +104,7 @@ struct MenuView: View {
                         Button {
                             selectedMenu = selectedMenu ?? .all
                             let panino = Panino(name: "", menu: selectedMenu?.menu)
+                            selectedPanino = panino
                             modelContext.insert(panino)
                         } label: {
                             Image(systemName: "plus")
