@@ -12,25 +12,19 @@ struct ComposerPreview: View {
     
     var body: some View {
         VStack {
-            ZStack {
-                Rectangle()
-                    .fill(.brown)
-                    .cornerRadius(10)
-            }
+            Image("bread_texture")
+            .resizable()
+            .cornerRadius(10)
             
             ForEach(panino.composer.ingredients) { ingredient in
-                ZStack {
-                    Rectangle()
-                    .fill(.green)
-                    .cornerRadius(10)
-                }
+                Rectangle()
+                .fill(.green)
+                .cornerRadius(10)
             }
             
-            ZStack {
-                Rectangle()
-                    .fill(.brown)
-                    .cornerRadius(10)
-            }
+            Image("bread_texture")
+            .resizable()
+            .cornerRadius(10)
         }
         .frame(width: 150, height: 150)
     }

@@ -97,15 +97,17 @@ struct Bread: View {
             isShownBread = true
         } label: {
             ZStack {
-                Rectangle()
-                    .fill(.brown)
-                    .frame(width: .infinity, height: 80)
-                    .cornerRadius(10)
-                    .padding()
+                Image("bread_texture")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: .infinity, height: 80)
+                .cornerRadius(10)
+                .padding()
                 
                 Text(draftComposer.name)
             }
-            .foregroundStyle(.black)
+            .foregroundStyle(.white)
+            .font(.title)
         }
         .sheet(isPresented: $isShownBread) {
             NavigationStack {
