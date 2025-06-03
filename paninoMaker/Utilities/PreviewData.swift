@@ -7,8 +7,7 @@
 
 import Foundation
 import SwiftData
-import SwiftUICore
-import UIKit
+import CoreLocation
 
 enum PreviewData {
     static let samplePanino: Panino =
@@ -16,7 +15,7 @@ enum PreviewData {
         name: "Hamburger",
         owner: "Preview User",
         composer: Composer(ingredients: IngredientStore().generateRandoms(count: 10)),
-        badges: Array(BadgesLibrary.randomBadges(count: 2))
+        coordinates: CLLocationCoordinate2D(latitude: 44.1483115, longitude: 12.2357904)
     )
     
     static let samplePanini: [Panino] = [
@@ -24,13 +23,13 @@ enum PreviewData {
             name: "CheeseBurger",
             owner: "Preview User",
             composer: Composer(ingredients: IngredientStore().generateRandoms(count: 3)),
-            badges: Array(BadgesLibrary.randomBadges(count: 4))
+            coordinates: CLLocationCoordinate2D(latitude: 37.334606, longitude: -122.009102)
         ),
         Panino(
             name: "Bacon Burger",
             owner: "Preview User",
             composer: Composer(ingredients: IngredientStore().generateRandoms(count: 5)),
-            badges: Array(BadgesLibrary.randomBadges(count: 6))
+            coordinates: CLLocationCoordinate2D(latitude: 44.067547, longitude: 12.5788244)
         )
     ]
     

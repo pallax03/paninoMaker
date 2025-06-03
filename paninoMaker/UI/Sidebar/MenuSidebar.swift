@@ -11,6 +11,7 @@ import SwiftData
 
 
 struct MenuSidebar: View {
+    @EnvironmentObject var user: UserModel
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
@@ -41,6 +42,7 @@ struct MenuSidebar: View {
                                 menu.deletePanini()
                                 modelContext.delete(menu)
                                 try? modelContext.save()
+                                
                             } label: {
                                 Label("Delete Menu", systemImage: "trash")
                             }
@@ -66,8 +68,6 @@ struct MenuSidebar: View {
                         menu.position = index
                     }
                     try? modelContext.save()
-//                    print(allMenus.map { ($0.title, $0.position, $0.panini.count ?? "0") })
-                    print(allPanini.map { ($0.name, $0.inTrash, $0.menu?.title ?? "nil") })
                 }
             }
         }
@@ -89,4 +89,5 @@ struct MenuSidebar: View {
 #Preview {
     MenuSidebar(selectedMenu: .constant(nil))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+        .environmentObject(UserModel())
 }

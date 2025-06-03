@@ -28,43 +28,19 @@ extension Badge {
                 .clipShape(RoundedRectangle(cornerRadius: 8))
         )
     }
+    func entity() -> BadgeEntity {
+        BadgeEntity(title: title, mult: mult)
+    }
 }
 
 @Model
-class BadgeEntity: Codable, Hashable {
+class BadgeEntity {
     var title: String
     var mult: Double
     
     init(title: String, mult: Double) {
         self.title = title
         self.mult = mult
-    }
-    
-    static func == (lhs: BadgeEntity, rhs: BadgeEntity) -> Bool {
-        return lhs.title == rhs.title
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(title)
-    }
-    
-    // MARK: - Codable
-    enum CodingKeys: String, CodingKey {
-        case title
-        case mult
-    }
-
-    required convenience init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let title = try container.decode(String.self, forKey: .title)
-        let mult = try container.decode(Double.self, forKey: .mult)
-        self.init(title: title, mult: mult)
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(title, forKey: .title)
-        try container.encode(mult, forKey: .mult)
     }
     
     // Collegamento logico con la libreria badge
@@ -90,7 +66,7 @@ enum BadgesLibrary {
     static func randomBadges(count: Int?) -> Set<BadgeEntity> {
         let allBadges = BadgesLibrary.all.shuffled()
         let limit = min(count ?? Int.random(in: 1...allBadges.count), allBadges.count)
-        return Set(allBadges.prefix(limit).map { BadgeEntity(title: $0.title, mult: $0.mult) })
+        return Set(allBadges.prefix(limit).map { $0.entity() })
     }
 }
 

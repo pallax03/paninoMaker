@@ -78,7 +78,7 @@ enum SidebarSection: Hashable {
     ) -> some View {
         switch self {
         case .map:
-            MapView()
+            MapView(panini: panini)
         case .profile:
             ProfileView()
         default:

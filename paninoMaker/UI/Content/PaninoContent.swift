@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct PaninoContent: View {
+    @EnvironmentObject var user: UserModel
     @Environment(\.modelContext) var modelContext
     @Binding var paninoToMove: Panino?
     @State var isShowingMoveSheet: Bool = false
@@ -42,7 +43,7 @@ struct PaninoContent: View {
                     }
                     .swipeActions(edge: .trailing) {
                         Button(role: .destructive) {
-                            panino.inTrash = true
+                            panino.sendToTrash()
                             try? modelContext.save()
                         } label: {
                             Label("Delete", systemImage: "trash")
@@ -76,8 +77,7 @@ struct PaninoContent: View {
                 MovePaniniSheet(
                     onSelect: {menu in
                         if let panino = paninoToMove {
-                            panino.inTrash = false
-                            panino.menu = menu
+                            panino.restoreFromTrash(menu: menu)
                             try? modelContext.save()
                         }
                     },
@@ -96,4 +96,5 @@ struct PaninoContent: View {
     let panini = PreviewData.samplePanini
     let menu = Menu(title: "Test", panini: panini)
     PaninoContent(paninoToMove: .constant(nil), title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: .constant(nil), isShowingNewMenuAlert: .constant(false), newMenuTitle: .constant(""))
+        .environmentObject(UserModel())
 }

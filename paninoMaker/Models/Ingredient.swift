@@ -19,7 +19,7 @@ struct Ingredient: Codable, Identifiable, Hashable {
 
 
 enum IngredientTag: String, Codable {
-    case vegan, veg, egg, dairy, gluten, fat, spicy
+    case vegan, veg, gluten, dairy, fat, spicy
 }
 
 enum IngredientCategory: String, Codable {

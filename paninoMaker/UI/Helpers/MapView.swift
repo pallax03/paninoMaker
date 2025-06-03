@@ -10,7 +10,9 @@ import MapKit
 
 struct MapView: View {
     @StateObject private var locationManager = LocationManager()
-
+    var panini: [Panino] = []
+    
+    
         var body: some View {
             Map(position: $locationManager.position) {
                 UserAnnotation()
@@ -27,5 +29,5 @@ struct MapView: View {
 }
 
 #Preview {
-    MapView()
+    MapView(panini: PreviewData.samplePanini)
 }

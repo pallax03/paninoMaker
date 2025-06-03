@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    @EnvironmentObject var user: UserModel
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
@@ -54,6 +55,9 @@ struct ContentView: View {
                 }
             }
         }
+        .task {
+            GamificationManager.shared.recalculateAll(panini: allPanini, user: user)
+        }
         .overlay(alignment: .bottom) {
             BottomBar(
                 selectedMenu: $selectedMenu,
@@ -68,8 +72,7 @@ struct ContentView: View {
                 let menu = Menu(title: newMenuTitle.isEmpty ? "No title" : newMenuTitle, panini: [])
                 modelContext.insert(menu)
                 if let panino = paninoToMove {
-                    panino.menu = menu
-                    panino.inTrash = false
+                    panino.restoreFromTrash(menu: menu)
                     paninoToMove = nil
                 }
                 selectedMenu = .menus(menu)
