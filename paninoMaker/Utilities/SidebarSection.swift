@@ -49,15 +49,15 @@ enum SidebarSection: Hashable {
     func filteredPanini(allPanini: [Panino]) -> [Panino] {
         switch self {
         case .all:
-            return allPanini.filter { !$0.isDeleted }
+            return allPanini.filter { !$0.inTrash }
         case .saved:
-            return allPanini.filter { !$0.isDeleted && $0.isSaved }
+            return allPanini.filter { !$0.inTrash && $0.isSaved }
         case .map:
-            return allPanini.filter { $0.coordinates != nil && !$0.isDeleted }
+            return allPanini.filter { $0.coordinates != nil && !$0.inTrash }
         case .trash:
-            return allPanini.filter { $0.isDeleted }
+            return allPanini.filter { $0.inTrash }
         case .menus(let menu):
-            return allPanini.filter { $0.menu == menu && !$0.isDeleted }
+            return allPanini.filter { $0.menu == menu && !$0.inTrash }
         default:
             return []
         }

@@ -40,6 +40,7 @@ struct MenuSidebar: View {
                             Button(role: .destructive) {
                                 menu.deletePanini()
                                 modelContext.delete(menu)
+                                try? modelContext.save()
                             } label: {
                                 Label("Delete Menu", systemImage: "trash")
                             }
@@ -52,10 +53,11 @@ struct MenuSidebar: View {
                 }
                 .onDelete { indexSet in
                     for index in indexSet {
-                            let menu = allMenus[index]
-                            menu.deletePanini()
-                            modelContext.delete(menu)
+                        let menu = allMenus[index]
+                        menu.deletePanini()
+                        modelContext.delete(menu)
                     }
+                    try? modelContext.save()
                 }
                 .onMove { fromOffsets, toOffset in
                     var reordered = allMenus
@@ -64,6 +66,8 @@ struct MenuSidebar: View {
                         menu.position = index
                     }
                     try? modelContext.save()
+//                    print(allMenus.map { ($0.title, $0.position, $0.panini.count ?? "0") })
+                    print(allPanini.map { ($0.name, $0.inTrash, $0.menu?.title ?? "nil") })
                 }
             }
         }

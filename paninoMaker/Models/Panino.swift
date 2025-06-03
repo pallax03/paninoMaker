@@ -24,7 +24,7 @@ class Panino {
     var ratingDescription: String?
     var composer: Composer
     var menu: Menu?
-    var isDeleted: Bool
+    var inTrash: Bool
     var badges: [BadgeEntity]
     
     // MARK: - Computed
@@ -52,7 +52,7 @@ class Panino {
     ) {
         self.name = name
         self.isSaved = false
-        self.isDeleted = false
+        self.inTrash = false
         self.creationDate = Date()
         self.owner = owner
         
