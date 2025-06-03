@@ -17,7 +17,7 @@ enum UserGamifications {
 
 class UserModel: ObservableObject {
     @Published var username: String = "Guest"
-    @Published var level: Int = 3
+    @Published var level: Int = 0
     @Published var pex: Int = 0
     @Published var isLogged: Bool = UserGamifications.enableGamification
     
@@ -33,6 +33,7 @@ class UserModel: ObservableObject {
     func setLevel(byTotalPoints total: Int) {
         level = min(UserGamifications.levelCap, (total / UserGamifications.pointsPerLevelUp) + 1)
         pex = total
+        print("[DEBUG] Level set to \(level)")
     }
     
 }

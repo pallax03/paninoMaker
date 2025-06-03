@@ -15,6 +15,7 @@ enum PaninoGamifications {
     static let pointsPerRating: Int = 1
     static let pointsPerDescription: Int = 2
     static let pointsPerMap: Int = 5
+    static let pointsPerIngredients: Int = 1
 }
 
 @Model
@@ -105,6 +106,7 @@ class Panino {
     func calculatePoints() -> Int {
         var points: Int = 0
         
+        self.composer.ingredients.forEach { _ in points += PaninoGamifications.pointsPerIngredients }
         self.images.forEach { _ in points += PaninoGamifications.pointsPerImage }
         if self.rating != nil { points += PaninoGamifications.pointsPerRating }
         if self.ratingDescription != nil { points += PaninoGamifications.pointsPerDescription }

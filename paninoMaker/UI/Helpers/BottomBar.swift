@@ -69,9 +69,9 @@ struct BottomBar: View {
                                 panino.isSaved = true
                             }
                             selectedPanino = panino
-                            GamificationManager.shared.update(panino: panino, allPanini: allPanini, user: user)
                             modelContext.insert(panino)
                             try? modelContext.save()
+                            GamificationManager.shared.update(panino: panino, allPanini: allPanini, user: user)
                         } label: {
                             Image(systemName: "plus")
                                 .imageScale(.large)
@@ -82,6 +82,8 @@ struct BottomBar: View {
                             for panino in allPanini where panino.inTrash {
                                 modelContext.delete(panino)
                             }
+                            try? modelContext.save()
+                            GamificationManager.shared.recalculateAll(panini: allPanini, user: user)
                         } label: {
                             Text("Delete All")
                         }
