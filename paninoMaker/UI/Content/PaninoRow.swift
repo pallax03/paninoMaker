@@ -27,7 +27,7 @@ struct PaninoRow: View {
                     
                     Text(panino.name)
                     
-                    Text(panino.creationDate.formatted(date: .numeric, time: .standard))
+                    Label(panino.menu?.title ?? SidebarSection.all.title, systemImage: "folder.fill")
                         .font(.caption)
                         .fontWeight(.light)
                         .foregroundStyle(.secondary)
@@ -35,19 +35,20 @@ struct PaninoRow: View {
                 
                 Spacer()
                 
-                Text(panino.owner ?? "no user")
+                VStack(alignment: .trailing) {
+                    Text(panino.owner ?? "no user")
+                    Text("\(panino.calculatePoints()) points")
+                        .font(.caption)
+                        .fontWeight(.light)
+                        .foregroundStyle(.secondary)
+                }
             }
+            .padding()
         }
     }
 }
 
-//#Preview {
-//    PaninoRow(
-//            panino: {
-//                let panino = Panino(name: "Test")
-//                panino.addImage(UIImage(imageLiteralResourceName: "token"))
-//                return panino
-//            }()
-//        )
-//        .environmentObject(UserModel())
-//}
+#Preview {
+    PaninoRow(panino: PreviewData.samplePanino)
+        .environmentObject(UserModel())
+}

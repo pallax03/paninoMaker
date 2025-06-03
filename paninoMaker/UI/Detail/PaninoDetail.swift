@@ -16,14 +16,23 @@ struct PaninoDetail: View {
     @State private var isMapOpen: Bool = false
     @State private var isReviewing: Bool = false
     @State private var cameraPosition: MapCameraPosition = .automatic
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 VStack {
                     HStack {
-                        Text(panino.name)
+                        TextField(
+                            text: Binding(
+                                get: { panino.name ?? "" },
+                                set: { panino.name = $0.isEmpty ? "" : $0 }
+                            )) {
+                                Text("New Panino")
+                            }
                             .font(.title)
+                            .focused($isFocused)
+                            
                         
                         Spacer()
                         
@@ -62,7 +71,7 @@ struct PaninoDetail: View {
                             ComposerPreview(composer: panino.composer)
                         }
                         .sheet(isPresented: $isComposing, content: {
-                            ComposerSheet(composer: $panino.composer, draftComposer: panino.composer.copy())
+                            ComposerSheet(panino: $panino, draftComposer: panino.composer.copy())
                         })
                     }
                     
@@ -108,6 +117,7 @@ struct PaninoDetail: View {
                                     )) {
                                         Text("Aggiungi una descrizione...")
                                     }
+                                    .focused($isFocused)
                             }
                         }
                     }

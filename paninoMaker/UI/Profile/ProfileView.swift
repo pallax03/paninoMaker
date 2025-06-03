@@ -38,8 +38,7 @@ struct ProfileView: View {
                     Text("LVL. \(user.level)")
                         .font(.title)
                         .fontWeight(.bold)
-                    
-                    Text("Titolo")
+                    Text("\(user.pex) PEX")
                         .fontWeight(.bold)
                 }
                 

@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct BottomBar: View {
+    @EnvironmentObject var user: UserModel
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
@@ -62,13 +63,15 @@ struct BottomBar: View {
                             selectedMenu = selectedMenu ?? .all
                             let panino = Panino(
                                 name: "New Panino \(allPanini.count + 1)",
-                                menu: selectedMenu?.menu
+                                owner: user.username, menu: selectedMenu?.menu
                             )
                             if selectedMenu == .saved {
                                 panino.isSaved = true
                             }
                             selectedPanino = panino
                             modelContext.insert(panino)
+                            try? modelContext.save()
+                            GamificationManager.shared.update(panino: panino, allPanini: allPanini, user: user)
                         } label: {
                             Image(systemName: "plus")
                                 .imageScale(.large)
@@ -79,6 +82,8 @@ struct BottomBar: View {
                             for panino in allPanini where panino.inTrash {
                                 modelContext.delete(panino)
                             }
+                            try? modelContext.save()
+                            GamificationManager.shared.recalculateAll(panini: allPanini, user: user)
                         } label: {
                             Text("Delete All")
                         }
@@ -90,8 +95,7 @@ struct BottomBar: View {
                     MovePaniniSheet(
                         onSelect: { menu in
                             for panino in allPanini where panino.inTrash {
-                                panino.inTrash = false
-                                panino.menu = menu
+                                panino.restoreFromTrash(menu: menu)
                             }
                             try? modelContext.save()
                         },
@@ -164,41 +168,51 @@ struct BottomBar: View {
     Text("Menu Sidebar")
     BottomBar(selectedMenu: .constant(nil), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+        .environmentObject(UserModel())
     
     Text("Profile")
     BottomBar(selectedMenu: .constant(.profile), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+        .environmentObject(UserModel())
     
     Text("Map")
     BottomBar(selectedMenu: .constant(.map), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+        .environmentObject(UserModel())
     
     Text("Saved - no panino")
     BottomBar(selectedMenu: .constant(.saved), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+        .environmentObject(UserModel())
     
     Text("PaninoContent all - nopanino")
     BottomBar(selectedMenu: .constant(.all), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+        .environmentObject(UserModel())
     
     Text("PaninoContent menu - nopanino")
     BottomBar(selectedMenu: .constant(.menus(menu)), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+        .environmentObject(UserModel())
     
     Text("PaninoDetail")
     BottomBar(selectedMenu: .constant(.menus(menu)), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+        .environmentObject(UserModel())
     
     Text("Saved - panino")
     BottomBar(selectedMenu: .constant(.saved), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+        .environmentObject(UserModel())
     
     Text("Recycle Bin")
     BottomBar(selectedMenu: .constant(.trash), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+        .environmentObject(UserModel())
     
     Text("Recycle Bin - panino")
     BottomBar(selectedMenu: .constant(.trash), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+        .environmentObject(UserModel())
     
 }
