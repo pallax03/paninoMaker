@@ -64,6 +64,9 @@ struct BottomBar: View {
                                 name: "New Panino \(allPanini.count + 1)",
                                 menu: selectedMenu?.menu
                             )
+                            if selectedMenu == .saved {
+                                panino.isSaved = true
+                            }
                             selectedPanino = panino
                             modelContext.insert(panino)
                         } label: {
