@@ -9,11 +9,27 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
+    var panini: [Panino]
+    @Binding var selectedPanino: Panino?
     @StateObject private var locationManager = LocationManager()
 
         var body: some View {
             Map(position: $locationManager.position) {
                 UserAnnotation()
+                
+                ForEach(panini) { panino in
+//                    Marker(panino.name, coordinate: panino.coordinates!)
+//                            .tint(.orange)
+                    Annotation(panino.name, coordinate: panino.coordinates!) {
+                        Button {
+                            selectedPanino = panino
+                        } label: {
+                            Image(systemName: "mappin.circle.fill")
+                                .font(.title)
+                                .foregroundColor(.orange)
+                        }
+                    }
+                }
             }
             .toolbar {
                 ToolbarItem(placement: ToolbarItemPlacement.topBarTrailing) {
@@ -26,6 +42,6 @@ struct MapView: View {
         }
 }
 
-#Preview {
-    MapView()
-}
+//#Preview {
+//    MapView(panini: PreviewData.samplePanini)
+//}

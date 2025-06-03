@@ -15,6 +15,7 @@ struct PaninoDetail: View {
     @State private var isComposing: Bool = false
     @State private var isMapOpen: Bool = false
     @State private var isReviewing: Bool = false
+    @State private var cameraPosition: MapCameraPosition = .automatic
     
     var body: some View {
         NavigationStack {
@@ -117,15 +118,10 @@ struct PaninoDetail: View {
                         } label: {
                             if panino.coordinates != nil {
                                 let coordinate = panino.coordinates!
-                                let region = MKCoordinateRegion(
-                                    center: coordinate,
-                                    span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
-                                )
 
-                                let pin = MapPin(coordinate: coordinate)
-
-                                Map(coordinateRegion: .constant(region), annotationItems: [pin]) { pin in
-                                    MapMarker(coordinate: pin.coordinate, tint: .red)
+                                Map(position: $cameraPosition) {
+                                    Marker(panino.name, coordinate: coordinate)
+                                        .tint(.red)
                                 }
                                 .frame(height: 150)
                                 .cornerRadius(10)
@@ -154,11 +150,6 @@ struct PaninoDetail: View {
             }
         }
     }
-}
-
-struct MapPin: Identifiable {
-    let id = UUID()
-    let coordinate: CLLocationCoordinate2D
 }
 
 #Preview {

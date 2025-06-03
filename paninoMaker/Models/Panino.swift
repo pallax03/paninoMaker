@@ -13,6 +13,7 @@ import SwiftData
 @Model
 class Panino {
     // MARK: - Properties
+    var id = UUID()
     var name: String
     var isSaved: Bool
     var creationDate: Date
