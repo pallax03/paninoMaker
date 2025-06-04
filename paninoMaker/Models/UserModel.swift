@@ -15,10 +15,10 @@ enum UserGamifications {
 }
 
 class UserModel: ObservableObject {
-    @Published var username: String = "Guest"
-    @Published var level: Int = 0
-    @Published var pex: Int = 0
-    @Published var isLogged: Bool = UserGamifications.enableGamification
+    var username: String = "Guest"
+    var level: Int = 0
+    var pex: Int = 0
+    var isLogged: Bool = UserGamifications.enableGamification
     
     func unlockAll() {
         username = "Master User"

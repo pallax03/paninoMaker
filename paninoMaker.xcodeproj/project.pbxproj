@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		885149AC2DF09FDC004597BF /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 885149AB2DF09FDC004597BF /* FirebaseAnalytics */; };
+		885149AE2DF09FDC004597BF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 885149AD2DF09FDC004597BF /* FirebaseAuth */; };
+		885149B02DF09FDC004597BF /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 885149AF2DF09FDC004597BF /* FirebaseCore */; };
+		885149B22DF09FDC004597BF /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 885149B12DF09FDC004597BF /* FirebaseCrashlytics */; };
+		885149B42DF09FDC004597BF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 885149B32DF09FDC004597BF /* FirebaseFirestore */; };
+		885149B62DF09FDC004597BF /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 885149B52DF09FDC004597BF /* FirebaseFunctions */; };
+		885149B82DF09FDC004597BF /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 885149B72DF09FDC004597BF /* FirebaseMessaging */; };
+		885149BA2DF09FDC004597BF /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 885149B92DF09FDC004597BF /* FirebaseStorage */; };
 		DC87C7CE2DEF91BB00F2AE4C /* MapItemPicker in Frameworks */ = {isa = PBXBuildFile; productRef = DC87C7CD2DEF91BB00F2AE4C /* MapItemPicker */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +49,22 @@
 			);
 			target = 880A3BC22DE5C1E700DB0BA5 /* paninoMaker */;
 		};
+		885149A82DF09AF3004597BF /* Exceptions for "paninoMaker" folder in "paninoMakerTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info 2.plist",
+				"GoogleService-Info.plist",
+			);
+			target = 880A3BCF2DE5C1E800DB0BA5 /* paninoMakerTests */;
+		};
+		885149A92DF09AF3004597BF /* Exceptions for "paninoMaker" folder in "paninoMakerUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info 2.plist",
+				"GoogleService-Info.plist",
+			);
+			target = 880A3BD92DE5C1E800DB0BA5 /* paninoMakerUITests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -48,6 +72,8 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				880A3DF62DE7282500DB0BA5 /* Exceptions for "paninoMaker" folder in "paninoMaker" target */,
+				885149A82DF09AF3004597BF /* Exceptions for "paninoMaker" folder in "paninoMakerTests" target */,
+				885149A92DF09AF3004597BF /* Exceptions for "paninoMaker" folder in "paninoMakerUITests" target */,
 			);
 			path = paninoMaker;
 			sourceTree = "<group>";
@@ -69,7 +95,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				885149B82DF09FDC004597BF /* FirebaseMessaging in Frameworks */,
+				885149AC2DF09FDC004597BF /* FirebaseAnalytics in Frameworks */,
+				885149BA2DF09FDC004597BF /* FirebaseStorage in Frameworks */,
+				885149B62DF09FDC004597BF /* FirebaseFunctions in Frameworks */,
+				885149AE2DF09FDC004597BF /* FirebaseAuth in Frameworks */,
+				885149B22DF09FDC004597BF /* FirebaseCrashlytics in Frameworks */,
+				885149B02DF09FDC004597BF /* FirebaseCore in Frameworks */,
 				DC87C7CE2DEF91BB00F2AE4C /* MapItemPicker in Frameworks */,
+				885149B42DF09FDC004597BF /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +173,14 @@
 			name = paninoMaker;
 			packageProductDependencies = (
 				DC87C7CD2DEF91BB00F2AE4C /* MapItemPicker */,
+				885149AB2DF09FDC004597BF /* FirebaseAnalytics */,
+				885149AD2DF09FDC004597BF /* FirebaseAuth */,
+				885149AF2DF09FDC004597BF /* FirebaseCore */,
+				885149B12DF09FDC004597BF /* FirebaseCrashlytics */,
+				885149B32DF09FDC004597BF /* FirebaseFirestore */,
+				885149B52DF09FDC004597BF /* FirebaseFunctions */,
+				885149B72DF09FDC004597BF /* FirebaseMessaging */,
+				885149B92DF09FDC004597BF /* FirebaseStorage */,
 			);
 			productName = paninoMaker;
 			productReference = 880A3BC32DE5C1E700DB0BA5 /* paninoMaker.app */;
@@ -224,6 +266,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				DC58A33D2DEF8F47009BA367 /* XCRemoteSwiftPackageReference "MapItemPicker" */,
+				885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 880A3BC42DE5C1E700DB0BA5 /* Products */;
@@ -596,6 +639,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.14.0;
+			};
+		};
 		DC58A33D2DEF8F47009BA367 /* XCRemoteSwiftPackageReference "MapItemPicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/FiveSheepCo/MapItemPicker";
@@ -607,6 +658,46 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		885149AB2DF09FDC004597BF /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		885149AD2DF09FDC004597BF /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		885149AF2DF09FDC004597BF /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		885149B12DF09FDC004597BF /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		885149B32DF09FDC004597BF /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		885149B52DF09FDC004597BF /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		885149B72DF09FDC004597BF /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		885149B92DF09FDC004597BF /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		DC87C7CD2DEF91BB00F2AE4C /* MapItemPicker */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DC58A33D2DEF8F47009BA367 /* XCRemoteSwiftPackageReference "MapItemPicker" */;
