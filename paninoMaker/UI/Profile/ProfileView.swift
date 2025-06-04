@@ -12,7 +12,7 @@ struct ProfileView: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @EnvironmentObject var user: UserModel
-    
+    @EnvironmentObject var themeManager: ThemeManager
     
     var body: some View {
         VStack {
@@ -67,6 +67,16 @@ struct ProfileView: View {
             }
         }
         .padding()
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    themeManager.toggleTheme()
+                } label: {
+                    Image(systemName: themeManager.iconName)
+                }
+                .animation(.easeInOut, value: themeManager.selectedColorScheme)
+            }
+        }
     }
 }
 
@@ -74,4 +84,5 @@ struct ProfileView: View {
     ProfileView()
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
         .environmentObject(UserModel())
+        .environmentObject(ThemeManager())
 }

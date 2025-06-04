@@ -18,11 +18,9 @@ struct MapView: View {
                 UserAnnotation()
                 
                 ForEach(panini) { panino in
-//                    Marker(panino.name, coordinate: panino.coordinates!)
-//                            .tint(.orange)
                     Annotation(panino.name, coordinate: panino.coordinates!) {
-                        Button {
-                            selectedPanino = panino
+                        NavigationLink {
+                            PaninoDetail(panino: panino)
                         } label: {
                             Image(systemName: "mappin.circle.fill")
                                 .font(.title)

@@ -25,7 +25,7 @@ struct PaninoDetail: View {
                     HStack {
                         TextField(
                             text: Binding(
-                                get: { panino.name ?? "" },
+                                get: { panino.name },
                                 set: { panino.name = $0.isEmpty ? "" : $0 }
                             )) {
                                 Text("New Panino")
