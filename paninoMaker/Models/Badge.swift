@@ -87,7 +87,7 @@ struct VeganBadge: Badge {
     var title: String = "100% Vegan 🌱"
     var description: String = "For the Earth"
     var color: Color = .green
-    var mult: Double = 1.2
+    var mult: Double = 2.0
     var view: AnyView {
         defaultView(icon: "heart.fill")
     }
@@ -100,7 +100,7 @@ struct VegetarianBadge: Badge {
     var title: String = "100% Vegetarian 🌿"
     var description: String = "For the Animals"
     var color: Color = .purple
-    var mult: Double = 1.2
+    var mult: Double = 1.9
     var view: AnyView {
         defaultView(icon: "heart.fill")
     }
@@ -113,7 +113,7 @@ struct GlutenFreeBadge: Badge {
     var title: String = "Gluten Free"
     var description: String = "Tu sei come superman, hai i super poteri!"
     var color: Color = .yellow
-    var mult: Double = 1.2
+    var mult: Double = 1.4
     var view: AnyView {
         defaultView(icon: "heart.fill")
     }
@@ -126,7 +126,7 @@ struct DairyFreeBadge: Badge {
     var title: String = "No Lattosio"
     var description: String = "Rispettiamo le mucche 🐮"
     var color: Color = .blue
-    var mult: Double = 1.2
+    var mult: Double = 1.5
     var view: AnyView {
         defaultView(icon: "heart.fill")
     }
@@ -139,7 +139,7 @@ struct BigPortionBadge: Badge {
     var title: String = "BIGGGGG"
     var description: String = "Non ti annoierai più con i prezzi!"
     var color: Color = .orange
-    var mult: Double = 1.2
+    var mult: Double = 1.1
     var view: AnyView {
         defaultView(icon: "heart.fill")
     }
@@ -152,7 +152,7 @@ struct SmallPortionBadge: Badge {
     var title: String = "MINI SIZE"
     var description: String = "Mi hanno prescritto una gastroscopia 😅"
     var color: Color = .gray
-    var mult: Double = 1.2
+    var mult: Double = 1.6
     var view: AnyView {
         defaultView(icon: "heart.fill")
     }
@@ -165,7 +165,7 @@ struct HealthyBadge: Badge {
     var title: String = "Healthy"
     var description: String = "Try finger but hole"
     var color: Color = .green
-    var mult: Double = 1.2
+    var mult: Double = 1.7
     var view: AnyView {
         defaultView(icon: "heart.fill")
     }
@@ -191,7 +191,7 @@ struct TheChosenOne: Badge {
     var title: String = "CHOSEN ONE"
     var description: String = "Il più vecchio è il migliore!"
     var color: Color = .pink
-    var mult: Double = 1.2
+    var mult: Double = 1.1
     var view: AnyView {
         defaultView(icon: "heart.fill")
     }

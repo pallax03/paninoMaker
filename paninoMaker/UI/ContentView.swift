@@ -56,7 +56,7 @@ struct ContentView: View {
             }
         }
         .task {
-            GamificationManager.shared.recalculateAll(panini: allPanini, user: user)
+            GamificationManager.shared.prepareForUser(user, panini: allPanini)
         }
         .overlay(alignment: .bottom) {
             BottomBar(

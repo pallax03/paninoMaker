@@ -11,6 +11,7 @@ import SwiftData
 @main
 struct paninoMakerApp: App {
     @StateObject private var user = UserModel()
+//    let gamificationStore = GamificationStore(user: user)
     let ingredientStore = IngredientStore()
     
     var body: some Scene {

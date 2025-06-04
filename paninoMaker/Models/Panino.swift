@@ -113,7 +113,10 @@ class Panino {
         if self.ratingDescription != nil { points += PaninoGamifications.pointsPerDescription }
         if self.coordinates != nil { points += PaninoGamifications.pointsPerMap }
         
-        return Int(Double(points) * badges.map{ $0.mult }.reduce(1.0, *))
+        let divisor = pow(10.0, 2.0)
+        let mult = (badges.map{ $0.mult }.reduce(1.0, *) * divisor).rounded() / divisor
+        
+        return Int(Double(points) * mult)
     }
     
     func refreshBadges(using allPanini: [Panino]) {
