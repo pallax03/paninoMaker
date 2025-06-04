@@ -2,13 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<<<<<<< HEAD
 	<key>CLIENT_ID</key>
 	<string>609183418542-l8jpj3rrqs3lrosvkpv93388j6utbclo.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.609183418542-l8jpj3rrqs3lrosvkpv93388j6utbclo</string>
-=======
->>>>>>> 9f80bb5 (init firebase)
 	<key>API_KEY</key>
 	<string>AIzaSyDQ4mFLjCJD2wDPnp-JyCsn3T2-qq9dYbU</string>
 	<key>GCM_SENDER_ID</key>

@@ -52,6 +52,10 @@
 		885149A82DF09AF3004597BF /* Exceptions for "paninoMaker" folder in "paninoMakerTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+<<<<<<< HEAD
+=======
+				"GoogleService-Info 2.plist",
+>>>>>>> 9f80bb5 (init firebase)
 				"GoogleService-Info.plist",
 			);
 			target = 880A3BCF2DE5C1E800DB0BA5 /* paninoMakerTests */;
@@ -59,6 +63,10 @@
 		885149A92DF09AF3004597BF /* Exceptions for "paninoMaker" folder in "paninoMakerUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+<<<<<<< HEAD
+=======
+				"GoogleService-Info 2.plist",
+>>>>>>> 9f80bb5 (init firebase)
 				"GoogleService-Info.plist",
 			);
 			target = 880A3BD92DE5C1E800DB0BA5 /* paninoMakerUITests */;
