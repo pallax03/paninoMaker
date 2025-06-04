@@ -13,7 +13,7 @@ struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
-    @State var selectedMenu: SidebarSection?
+    @State var selectedMenu: SidebarSection? = .all
     @State var selectedPanino: Panino?
 
     @State private var isShowingNewMenuAlert = false
@@ -93,4 +93,5 @@ struct ContentView: View {
     ContentView()
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
         .environmentObject(UserModel())
+        .environmentObject(ThemeManager())
 }
