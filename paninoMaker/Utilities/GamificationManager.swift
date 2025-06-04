@@ -7,10 +7,16 @@
 
 import Foundation
 
-class GamificationManager {
+final class GamificationManager {
     static let shared = GamificationManager()
 
-    private init() {}
+    func prepareForUser(_ user: UserModel, panini: [Panino]) {
+            if !user.isLogged {
+                user.unlockAll()
+            } else {
+                recalculateAll(panini: panini, user: user)
+            }
+        }
 
     func update(panino: Panino, allPanini: [Panino], user: UserModel) {
         panino.refreshBadges(using: allPanini)

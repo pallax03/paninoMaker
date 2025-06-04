@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import CloudKit
 
 enum UserGamifications {
     static let enableGamification: Bool = false
@@ -22,18 +21,22 @@ class UserModel: ObservableObject {
     @Published var isLogged: Bool = UserGamifications.enableGamification
     
     func unlockAll() {
+        username = "Master User"
+        pex = 2405
         level = UserGamifications.levelCap
     }
     
     func levelUp(points: Int) {
         pex += points
-        level = min(UserGamifications.levelCap, (pex / UserGamifications.pointsPerLevelUp) + 1)
+        level = min(UserGamifications.levelCap, (pex / UserGamifications.pointsPerLevelUp))
     }
     
     func setLevel(byTotalPoints total: Int) {
-        level = min(UserGamifications.levelCap, (total / UserGamifications.pointsPerLevelUp) + 1)
+        level = min(UserGamifications.levelCap, (total / UserGamifications.pointsPerLevelUp))
         pex = total
-        print("[DEBUG] Level set to \(level)")
     }
+    
+    // MARK: - LOGIN
+    
     
 }
