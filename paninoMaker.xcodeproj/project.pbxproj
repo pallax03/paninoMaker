@@ -15,8 +15,8 @@
 		885149B62DF09FDC004597BF /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 885149B52DF09FDC004597BF /* FirebaseFunctions */; };
 		885149B82DF09FDC004597BF /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 885149B72DF09FDC004597BF /* FirebaseMessaging */; };
 		885149BA2DF09FDC004597BF /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 885149B92DF09FDC004597BF /* FirebaseStorage */; };
-		88514AE82DF19379004597BF /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 88514AE72DF19379004597BF /* GoogleSignIn */; };
-		88514AEA2DF19379004597BF /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 88514AE92DF19379004597BF /* GoogleSignInSwift */; };
+		8882B5462DF19BA700B471F4 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 8882B5452DF19BA700B471F4 /* GoogleSignIn */; };
+		8882B5482DF19BA700B471F4 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8882B5472DF19BA700B471F4 /* GoogleSignInSwift */; };
 		DC87C7CE2DEF91BB00F2AE4C /* MapItemPicker in Frameworks */ = {isa = PBXBuildFile; productRef = DC87C7CD2DEF91BB00F2AE4C /* MapItemPicker */; };
 /* End PBXBuildFile section */
 
@@ -51,31 +51,6 @@
 			);
 			target = 880A3BC22DE5C1E700DB0BA5 /* paninoMaker */;
 		};
-<<<<<<< HEAD
-		885149A82DF09AF3004597BF /* Exceptions for "paninoMaker" folder in "paninoMakerTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-<<<<<<< HEAD
-=======
-				"GoogleService-Info 2.plist",
->>>>>>> 9f80bb5 (init firebase)
-				"GoogleService-Info.plist",
-			);
-			target = 880A3BCF2DE5C1E800DB0BA5 /* paninoMakerTests */;
-		};
-		885149A92DF09AF3004597BF /* Exceptions for "paninoMaker" folder in "paninoMakerUITests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-<<<<<<< HEAD
-=======
-				"GoogleService-Info 2.plist",
->>>>>>> 9f80bb5 (init firebase)
-				"GoogleService-Info.plist",
-			);
-			target = 880A3BD92DE5C1E800DB0BA5 /* paninoMakerUITests */;
-		};
-=======
->>>>>>> 3c3f919 (adding google auth (preparing for merge with models branch))
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -109,12 +84,12 @@
 				885149BA2DF09FDC004597BF /* FirebaseStorage in Frameworks */,
 				885149B62DF09FDC004597BF /* FirebaseFunctions in Frameworks */,
 				885149AE2DF09FDC004597BF /* FirebaseAuth in Frameworks */,
-				88514AE82DF19379004597BF /* GoogleSignIn in Frameworks */,
+				8882B5462DF19BA700B471F4 /* GoogleSignIn in Frameworks */,
 				885149B22DF09FDC004597BF /* FirebaseCrashlytics in Frameworks */,
 				885149B02DF09FDC004597BF /* FirebaseCore in Frameworks */,
 				DC87C7CE2DEF91BB00F2AE4C /* MapItemPicker in Frameworks */,
 				885149B42DF09FDC004597BF /* FirebaseFirestore in Frameworks */,
-				88514AEA2DF19379004597BF /* GoogleSignInSwift in Frameworks */,
+				8882B5482DF19BA700B471F4 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,8 +167,8 @@
 				885149B52DF09FDC004597BF /* FirebaseFunctions */,
 				885149B72DF09FDC004597BF /* FirebaseMessaging */,
 				885149B92DF09FDC004597BF /* FirebaseStorage */,
-				88514AE72DF19379004597BF /* GoogleSignIn */,
-				88514AE92DF19379004597BF /* GoogleSignInSwift */,
+				8882B5452DF19BA700B471F4 /* GoogleSignIn */,
+				8882B5472DF19BA700B471F4 /* GoogleSignInSwift */,
 			);
 			productName = paninoMaker;
 			productReference = 880A3BC32DE5C1E700DB0BA5 /* paninoMaker.app */;
@@ -280,7 +255,7 @@
 			packageReferences = (
 				DC58A33D2DEF8F47009BA367 /* XCRemoteSwiftPackageReference "MapItemPicker" */,
 				885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				88514AE62DF19379004597BF /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				8882B5442DF19BA700B471F4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 880A3BC42DE5C1E700DB0BA5 /* Products */;
@@ -661,7 +636,7 @@
 				minimumVersion = 11.14.0;
 			};
 		};
-		88514AE62DF19379004597BF /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+		8882B5442DF19BA700B471F4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
 			requirement = {
@@ -720,14 +695,14 @@
 			package = 885149AA2DF09FDC004597BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
 		};
-		88514AE72DF19379004597BF /* GoogleSignIn */ = {
+		8882B5452DF19BA700B471F4 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 88514AE62DF19379004597BF /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			package = 8882B5442DF19BA700B471F4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
 		};
-		88514AE92DF19379004597BF /* GoogleSignInSwift */ = {
+		8882B5472DF19BA700B471F4 /* GoogleSignInSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 88514AE62DF19379004597BF /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			package = 8882B5442DF19BA700B471F4 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
 		};
 		DC87C7CD2DEF91BB00F2AE4C /* MapItemPicker */ = {
