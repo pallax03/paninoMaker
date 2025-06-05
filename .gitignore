@@ -7,3 +7,5 @@
 # Ignora file temporanei
 DerivedData/
 build/
+
+./paninoMaker/GoogleService-Info.plist

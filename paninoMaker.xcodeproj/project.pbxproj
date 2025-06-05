@@ -49,6 +49,7 @@
 			);
 			target = 880A3BC22DE5C1E700DB0BA5 /* paninoMaker */;
 		};
+<<<<<<< HEAD
 		885149A82DF09AF3004597BF /* Exceptions for "paninoMaker" folder in "paninoMakerTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -71,6 +72,8 @@
 			);
 			target = 880A3BD92DE5C1E800DB0BA5 /* paninoMakerUITests */;
 		};
+=======
+>>>>>>> 3c3f919 (adding google auth (preparing for merge with models branch))
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -78,8 +81,6 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				880A3DF62DE7282500DB0BA5 /* Exceptions for "paninoMaker" folder in "paninoMaker" target */,
-				885149A82DF09AF3004597BF /* Exceptions for "paninoMaker" folder in "paninoMakerTests" target */,
-				885149A92DF09AF3004597BF /* Exceptions for "paninoMaker" folder in "paninoMakerUITests" target */,
 			);
 			path = paninoMaker;
 			sourceTree = "<group>";
