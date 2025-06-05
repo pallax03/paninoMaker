@@ -97,6 +97,10 @@ struct ProfileView: View {
                     }
                 }
             }
+            NavigationLink(destination: LoginView()) {
+                Label("Accedi", systemImage: "faceid")
+                    .foregroundStyle(Color.blue)
+            }
         }
         .padding()
         .toolbar {

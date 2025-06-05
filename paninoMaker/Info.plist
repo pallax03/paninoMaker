@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict/>
+<dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string></string>
+			<key>CFBundleURLName</key>
+			<string>com.googleusercontent</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.609183418542-l8jpj3rrqs3lrosvkpv93388j6utbclo</string>
+			</array>
+		</dict>
+	</array>
+	<key>GIDClientID</key>
+	<string>609183418542-l8jpj3rrqs3lrosvkpv93388j6utbclo.apps.googleusercontent.com</string>
+</dict>
 </plist>

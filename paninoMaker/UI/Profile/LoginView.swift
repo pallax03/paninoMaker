@@ -36,6 +36,15 @@ struct LoginView: View {
                 }
             }
             .buttonStyle(.borderedProminent)
+            
+            Button {
+                Task {
+                    await viewModel.signInWithGoogle()
+                }
+            } label: {
+                Label("Continua con Google", systemImage: "globe")
+            }
+            .buttonStyle(.borderedProminent)
         }
         .padding()
     }
