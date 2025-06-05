@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct LoginView: View {
     @StateObject var viewModel = AuthModel()
 
@@ -36,6 +35,15 @@ struct LoginView: View {
                 }
             }
             .buttonStyle(.borderedProminent)
+            
+            ZStack {
+                Divider()
+                
+                Text("or")
+                    .padding()
+                    .background(.background)
+                    .foregroundStyle(.gray)
+            }
             
             Button {
                 Task {
