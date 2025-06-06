@@ -19,40 +19,43 @@ struct ProfileView: View {
     @State private var selectedImage: UIImage? = nil
     @State private var showActionSheet = false
     @State private var propic: UIImage?
+    @State private var badgeSelezionato: String?
     
     var body: some View {
-        VStack {
-            Button {
-                showActionSheet = true
-            } label: {
-                if let image = propic {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 120, height: 120)
-                        .clipShape(Circle())
-                } else {
-                    Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 120, height: 120)
-                        .foregroundColor(.gray)
+        ScrollView {
+            VStack {
+                Button {
+                    showActionSheet = true
+                } label: {
+                    if let image = propic {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 120, height: 120)
+                            .clipShape(Circle())
+                    } else {
+                        Image(systemName: "person.crop.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 120, height: 120)
+                            .foregroundColor(.gray)
+                    }
                 }
-            }
-            .actionSheet(isPresented: $showActionSheet) {
-                ActionSheet(
-                    title: Text("Scegli immagine profilo"),
-                    buttons: [
-                        .default(Text("Scatta foto")) { showCameraPicker = true },
-                        .default(Text("Seleziona dalla libreria")) { showingImagePicker = true },
-                        .cancel()
-                    ]
-                )
-            }
-            .sheet(isPresented: $showingImagePicker) {
-            }
-            .sheet(isPresented: $showCameraPicker) {
-                CameraPicker(image: $propic)
+                .actionSheet(isPresented: $showActionSheet) {
+                    ActionSheet(
+                        title: Text("Scegli immagine profilo"),
+                        buttons: [
+                            .default(Text("Scatta foto")) { showCameraPicker = true },
+                            .default(Text("Seleziona dalla libreria")) { showingImagePicker = true },
+                            .cancel()
+                        ]
+                    )
+                }
+                .sheet(isPresented: $showingImagePicker) {
+                }
+                .sheet(isPresented: $showCameraPicker) {
+                    CameraPicker(image: $propic)
+                }
             }
             
             Text(user.username)
@@ -85,18 +88,43 @@ struct ProfileView: View {
             .foregroundStyle(.red)
             .padding()
             
-            VStack {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 20) {
                 ForEach(BadgesLibrary.all, id: \.title) { badge in
-                    HStack {
+                    VStack {
                         let count = allPanini.filter {
-                            $0.badges.contains {$0.title == badge.title}
+                            $0.badges.contains { $0.title == badge.title }
                         }.count
-                        badge.view
-                            .opacity( count > 0 ? 1.0 : 0.3)
+                        
+                        Button {
+                            badgeSelezionato = badge.title
+                        } label: {
+                            badge.view
+                                .opacity(count > 0 ? 1.0 : 0.3)
+                        }
+                        .popover(
+                            isPresented: .init(
+                                get: { badgeSelezionato == badge.title },
+                                set: { if !$0 { badgeSelezionato = nil } }
+                            ),
+                            arrowEdge: .bottom) {
+                                
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(badge.title)
+                                    .font(.headline)
+                                
+                                Text(badge.description)
+                                    .font(.body)
+                            }
+                            .padding()
+                            .presentationCompactAdaptation(.popover)
+                        }
                         Text("\(count)x")
                     }
                 }
             }
+            
+            Spacer()
+            
             NavigationLink(destination: LoginView()) {
                 Label("Accedi", systemImage: "faceid")
                     .foregroundStyle(Color.blue)

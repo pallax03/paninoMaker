@@ -21,11 +21,12 @@ protocol Badge: Hashable {
 extension Badge {
     func defaultView(icon: String) -> AnyView {
         AnyView(
-            Label(title, systemImage: icon)
+            Image(systemName: icon)
+                .font(.title)
                 .foregroundColor(color)
-                .padding(6)
+                .padding(15)
                 .background(color.opacity(0.2))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .clipShape(Circle())
         )
     }
     func entity() -> BadgeEntity {

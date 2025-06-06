@@ -77,14 +77,17 @@ struct PaninoDetail: View {
                     
                     CardWrapper {
                         VStack {
-                            HStack(alignment: .firstTextBaseline) {
+                            HStack {
                                 Text("Badges")
                                     .font(.title)
                                     .fontWeight(.bold)
                                 Spacer()
                                 }
-                            ForEach(Array(panino.badges).sorted { $0.title < $1.title }, id: \.title) { entity in
-                                BadgeView(badge: entity.resolvedBadge!)
+                            
+                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 20) {
+                                ForEach(Array(panino.badges).sorted { $0.title < $1.title }, id: \.title) { entity in
+                                    BadgeView(badge: entity.resolvedBadge!)
+                                }
                             }
                         }
                     }
