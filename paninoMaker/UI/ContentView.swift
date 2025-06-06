@@ -21,10 +21,19 @@ struct ContentView: View {
     @State private var newMenuTitle = ""
     @State private var selectedPanini: Set<Panino> = []
     @State private var paninoToMove: Panino? = nil
+    @State private var searchText: String = ""
     
     var panini: [Panino] {
         guard let selectedMenu = selectedMenu else { return [] }
         return selectedMenu.filteredPanini(allPanini: allPanini)
+    }
+    
+    var filteredPanini: [Panino] {
+        if searchText.isEmpty {
+            return panini
+        } else {
+            return panini.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
     }
     
     var body: some View {
@@ -36,12 +45,16 @@ struct ContentView: View {
             
             if let section = selectedMenu {
                 section.makeContentView(
-                    panini: panini,
+                    panini: filteredPanini,
                     selectedPanino: $selectedPanino,
                     selectedMenu: $selectedMenu,
                     isShowingNewMenuAlert: $isShowingNewMenuAlert,
                     newMenuTitle: $newMenuTitle,
                     paninoToMove: $paninoToMove
+                )
+                .searchable(
+                    text: $searchText,
+                    placement: .navigationBarDrawer
                 )
             } else {
                 Text("Select a menu")
