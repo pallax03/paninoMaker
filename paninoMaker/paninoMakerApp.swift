@@ -23,6 +23,12 @@ struct paninoMakerApp: App {
     @StateObject private var user = UserModel()
     @StateObject private var themeManager = ThemeManager()
     let ingredientStore = IngredientStore()
+    private let notificationDelegate = NotificationDelegate()
+    
+    init() {
+        requestNotificationPermission()
+        UNUserNotificationCenter.current().delegate = notificationDelegate
+    }
     
     var body: some Scene {
         WindowGroup {

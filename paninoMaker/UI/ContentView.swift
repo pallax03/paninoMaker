@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 struct ContentView: View {
     @EnvironmentObject var user: UserModel
@@ -32,18 +33,19 @@ struct ContentView: View {
                 MenuSidebar(selectedMenu: $selectedMenu)
             }
         } content: {
-                if let section = selectedMenu {
-                    section.makeContentView(
-                        panini: panini,
-                        selectedPanino: $selectedPanino,
-                        selectedMenu: $selectedMenu,
-                        isShowingNewMenuAlert: $isShowingNewMenuAlert,
-                        newMenuTitle: $newMenuTitle,
-                        paninoToMove: $paninoToMove
-                    )
-                } else {
-                    Text("Select a menu")
-                }
+            
+            if let section = selectedMenu {
+                section.makeContentView(
+                    panini: panini,
+                    selectedPanino: $selectedPanino,
+                    selectedMenu: $selectedMenu,
+                    isShowingNewMenuAlert: $isShowingNewMenuAlert,
+                    newMenuTitle: $newMenuTitle,
+                    paninoToMove: $paninoToMove
+                )
+            } else {
+                Text("Select a menu")
+            }
         } detail: {
             ZStack {
                 if let panino = selectedPanino {
