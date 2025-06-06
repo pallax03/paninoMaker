@@ -38,15 +38,16 @@ struct ComposerSheet: View {
                                         .frame(width: 300, height: 80)
                                         .cornerRadius(10)
                                 }
+                                
                                 VStack {
                                     
                                     Text(ingredient.name)
-                                        .foregroundStyle(.white)
                                         .font(.title)
                                     
                                     Text(ingredient.tags.map { $0.rawValue.capitalized }.joined(separator: ", "))
                                         .font(.caption)
                                 }
+                                .foregroundStyle(.white)
                             }
                             .contentShape(.contextMenuPreview, .rect(cornerRadius: 15))
                             .contextMenu {
