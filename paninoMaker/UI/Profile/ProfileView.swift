@@ -61,6 +61,13 @@ struct ProfileView: View {
             Text(user.username)
                 .font(.title)
             
+            if (!user.isLogged) {
+                NavigationLink(destination: LoginView()) {
+                    Text("Accedi")
+                        .foregroundStyle(Color.blue)
+                }
+            }
+            
             ZStack {
                 Circle()
                     .fill(Color.white)
@@ -95,40 +102,15 @@ struct ProfileView: View {
                             $0.badges.contains { $0.title == badge.title }
                         }.count
                         
-                        Button {
-                            badgeSelezionato = badge.title
-                        } label: {
-                            badge.view
-                                .opacity(count > 0 ? 1.0 : 0.3)
-                        }
-                        .popover(
-                            isPresented: .init(
-                                get: { badgeSelezionato == badge.title },
-                                set: { if !$0 { badgeSelezionato = nil } }
-                            ),
-                            arrowEdge: .bottom) {
-                                
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text(badge.title)
-                                    .font(.headline)
-                                
-                                Text(badge.description)
-                                    .font(.body)
-                            }
-                            .padding()
-                            .presentationCompactAdaptation(.popover)
-                        }
+                        BadgeView(badge: badge)
+                            .opacity(count > 0 ? 1.0 : 0.3)
+
                         Text("\(count)x")
                     }
                 }
             }
             
-            Spacer()
-            
-            NavigationLink(destination: LoginView()) {
-                Label("Accedi", systemImage: "faceid")
-                    .foregroundStyle(Color.blue)
-            }
+            PaninoChart(allPanini: allPanini)
         }
         .padding()
         .toolbar {

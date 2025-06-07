@@ -9,8 +9,27 @@ import SwiftUI
 
 struct BadgeView: View {
     var badge: any Badge
+    @State var showPopover: Bool = false
+
     var body: some View {
-        badge.view
+        Button {
+            showPopover.toggle()
+        } label: {
+            badge.view
+        }
+        .popover(
+            isPresented: $showPopover,
+            arrowEdge: .bottom) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(badge.title)
+                    .font(.headline)
+                
+                Text(badge.description)
+                    .font(.body)
+            }
+            .padding()
+            .presentationCompactAdaptation(.popover)
+        }
     }
 }
 
