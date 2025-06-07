@@ -101,7 +101,6 @@ struct ComposerSheet: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        // Fare qualcosa poi chiudere lo sheet
                         panino.composer = draftComposer
                         GamificationManager.shared.recalculateAll(panini: allPanini, user: user)
                         try? modelContext.save()

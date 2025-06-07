@@ -46,18 +46,18 @@ enum SidebarSection: Hashable {
         }
     }
     
-    func filteredPanini(allPanini: [Panino]) -> [Panino] {
+    func filteredPanini(allPanini: [Panino], searchPanino: String = "") -> [Panino] {
         switch self {
         case .all:
-            return allPanini.filter { !$0.inTrash }
+            return allPanini.filter { !$0.inTrash && ( searchPanino.isEmpty || $0.name.localizedCaseInsensitiveContains(searchPanino) ) }
         case .saved:
-            return allPanini.filter { !$0.inTrash && $0.isSaved }
+            return allPanini.filter { !$0.inTrash && $0.isSaved && ( searchPanino.isEmpty || $0.name.localizedCaseInsensitiveContains(searchPanino) ) }
         case .map:
             return allPanini.filter { $0.coordinates != nil && !$0.inTrash }
         case .trash:
-            return allPanini.filter { $0.inTrash }
+            return allPanini.filter { $0.inTrash && ( searchPanino.isEmpty || $0.name.localizedCaseInsensitiveContains(searchPanino) ) }
         case .menus(let menu):
-            return allPanini.filter { $0.menu == menu && !$0.inTrash }
+            return allPanini.filter { $0.menu == menu && !$0.inTrash && ( searchPanino.isEmpty || $0.name.localizedCaseInsensitiveContains(searchPanino) ) }
         default:
             return []
         }
@@ -74,7 +74,8 @@ enum SidebarSection: Hashable {
         selectedMenu: Binding<SidebarSection?>,
         isShowingNewMenuAlert: Binding<Bool>,
         newMenuTitle: Binding<String>,
-        paninoToMove: Binding<Panino?>
+        paninoToMove: Binding<Panino?>,
+        searchPanino: Binding<String>,
     ) -> some View {
         switch self {
         case .map:
@@ -92,6 +93,10 @@ enum SidebarSection: Hashable {
                 isShowingNewMenuAlert: isShowingNewMenuAlert,
                 newMenuTitle: newMenuTitle,
                 isTrash: isTrashView
+            )
+            .searchable(
+                text: searchPanino,
+                placement: .navigationBarDrawer
             )
         }
     }

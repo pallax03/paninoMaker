@@ -144,7 +144,6 @@ struct PaninoDetail: View {
                         }
                         .mapItemPickerSheet(isPresented: $isMapOpen) { mapItem in
                             panino.setCoordinates(mapItem.location)
-                            print("Map Item:", mapItem)
                         }
                     }
                 }

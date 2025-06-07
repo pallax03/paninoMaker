@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject var viewModel = AuthModel()
+    @EnvironmentObject var user: UserModel
 
     var body: some View {
         VStack(spacing: 20) {
@@ -31,7 +32,7 @@ struct LoginView: View {
 
             Button("Login") {
                 Task {
-                    await viewModel.login()
+                    await viewModel.login(user)
                 }
             }
             .buttonStyle(.borderedProminent)
@@ -47,7 +48,7 @@ struct LoginView: View {
             
             Button {
                 Task {
-                    await viewModel.signInWithGoogle()
+                    await viewModel.signInWithGoogle(user)
                 }
             } label: {
                 Label("Continua con Google", systemImage: "globe")
@@ -60,4 +61,5 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
+        .environmentObject(UserModel())
 }

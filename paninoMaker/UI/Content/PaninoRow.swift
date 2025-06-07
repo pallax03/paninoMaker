@@ -37,13 +37,12 @@ struct PaninoRow: View {
                 
                 VStack(alignment: .trailing) {
                     Text(panino.owner ?? "no user")
-                    Text("\(panino.calculatePoints()) points")
+                    Text("\(panino.calculatePoints()) points \(!user.isLogged ? "⚠️" : "")")
                         .font(.caption)
                         .fontWeight(.light)
                         .foregroundStyle(.secondary)
                 }
             }
-            .padding()
         }
     }
 }

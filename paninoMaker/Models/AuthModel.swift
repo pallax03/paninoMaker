@@ -18,24 +18,24 @@ class AuthModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isLoggedIn: Bool = false
     
-    func login() async {
+    func login(_ user: UserModel) async {
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             print("✅ Login riuscito per:", result.user.email ?? "-")
-            isLoggedIn = true
+            user.isLogged = true
         } catch {
             errorMessage = error.localizedDescription
-            isLoggedIn = false
+            user.isLogged = false
         }
     }
     
-    func signInWithGoogle() async {
+    func signInWithGoogle(_ user: UserModel) async {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
             errorMessage = "Errore configurazione Firebase"
             return
         }
         
-        let config = GIDConfiguration(clientID: clientID)
+        _ = GIDConfiguration(clientID: clientID)
         
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let rootVC = scene.windows.first?.rootViewController else {
@@ -51,10 +51,10 @@ class AuthModel: ObservableObject {
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
             
             _ = try await Auth.auth().signIn(with: credential)
-            isLoggedIn = true
+            user.isLogged = true
         } catch {
             errorMessage = error.localizedDescription
-            isLoggedIn = false
+            user.isLogged = false
         }
     }
 }

@@ -27,20 +27,16 @@ class UserModel: ObservableObject {
     }
     
     func levelUp(points: Int) {
-        pex += points
-        level = isLevelUpAvailable(pex / UserGamifications.pointsPerLevelUp)
-    }
-    
-    func setLevel(byTotalPoints total: Int) {
-        level = isLevelUpAvailable(total / UserGamifications.pointsPerLevelUp)
-        pex = total
+        if isLogged {
+            pex += points
+            level = isLevelUpAvailable(pex / UserGamifications.pointsPerLevelUp)
+        }
     }
     
     func isLevelUpAvailable(_ lvl: Int) -> Int {
         let newLevel = min(UserGamifications.levelCap, lvl)
         if level != newLevel {
             sendNotification(newLevel)
-            print("sei salito di livello")
         }
         return newLevel
     }
