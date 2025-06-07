@@ -42,12 +42,17 @@ struct PaninoContent: View {
                         .tint(.orange)
                     }
                     .swipeActions(edge: .trailing) {
-                        Button(role: .destructive) {
-                            panino.sendToTrash()
+                        Button {
+                            if selectedMenu == .trash {
+                                panino.restoreFromTrash(menu: nil)
+                            } else {
+                                panino.sendToTrash()
+                            }
                             try? modelContext.save()
                         } label: {
-                            Label("Delete", systemImage: "trash")
+                            Label(selectedMenu == .trash ? "Restore" : "Delete", systemImage: selectedMenu == .trash ? "trash.slash.fill" : "trash.fill")
                         }
+                        .tint(selectedMenu == .trash ? .cyan : .red)
                         Button {
                             paninoToMove = panino
                             isShowingMoveSheet = true
@@ -55,12 +60,12 @@ struct PaninoContent: View {
                             Label("Move", systemImage: "folder.fill")
                         }
                         .tint(.indigo)
-                        Button {
-                            #warning("todo")
-                        } label: {
-                            Label("Share", systemImage: "square.and.arrow.up")
-                        }
-                        .tint(.blue)
+//                        Button {
+//                            #warning("todo")
+//                        } label: {
+//                            Label("Share", systemImage: "square.and.arrow.up")
+//                        }
+//                        .tint(.blue)
                     }
                 }
             }
