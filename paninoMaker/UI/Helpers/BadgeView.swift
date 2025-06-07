@@ -16,6 +16,11 @@ struct BadgeView: View {
             showPopover.toggle()
         } label: {
             badge.view
+                .font(.title)
+                .foregroundColor(badge.color)
+                .padding(15)
+                .background(badge.color.opacity(0.2))
+                .clipShape(Circle())
         }
         .popover(
             isPresented: $showPopover,
@@ -35,5 +40,5 @@ struct BadgeView: View {
 
 #Preview {
     let badge: any Badge = BadgesLibrary.randomBadges(count: 1).first!.resolvedBadge!
-    BadgeView(badge: badge)
+    BadgeView(badge: BunBadge())
 }

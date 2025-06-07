@@ -16,8 +16,8 @@ enum UserGamifications {
 
 class UserModel: ObservableObject {
     var username: String = "Guest"
-    var level: Int = 0
-    var pex: Int = 0
+    var level: Int = 4
+    var pex: Int = 456
     var isLogged: Bool = UserGamifications.enableGamification
     
     func unlockAll() {
@@ -40,7 +40,6 @@ class UserModel: ObservableObject {
         }
         return newLevel
     }
-    
     // MARK: - LOGIN
     
     

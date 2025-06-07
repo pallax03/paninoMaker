@@ -54,36 +54,26 @@ struct PaninoDetail: View {
                         Text(panino.owner ?? "No owner")
                     }
                     .font(.footnote)
-
-                }
+                }.padding(.bottom)
                 
                 ScrollView {
                     CardWrapper {
                         PaninoPhotos(panino: panino)
                     }
+                        .background(Color.indigo.opacity(0.2))
                     
                     Spacer()
                     
                     CardWrapper {
-                        Button {
-                            isComposing = true
-                        } label: {
-                            ComposerPreview(composer: panino.composer)
-                        }
-                        .sheet(isPresented: $isComposing, content: {
-                            ComposerSheet(panino: $panino, draftComposer: panino.composer.copy())
-                        })
-                    }
-                    
-                    CardWrapper {
                         VStack {
-                            HStack {
-                                Text("Badges")
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                Spacer()
-                                }
-                            
+                            Button {
+                                isComposing = true
+                            } label: {
+                                ComposerPreview(composer: panino.composer)
+                            }
+                            .sheet(isPresented: $isComposing, content: {
+                                ComposerSheet(panino: $panino, draftComposer: panino.composer.copy())
+                            })
                             LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 20) {
                                 ForEach(Array(panino.badges).sorted { $0.title < $1.title }, id: \.title) { entity in
                                     BadgeView(badge: entity.resolvedBadge!)
@@ -91,6 +81,8 @@ struct PaninoDetail: View {
                             }
                         }
                     }
+                        .background(Color.yellow.opacity(0.2))
+                    
                     
                     CardWrapper {
                         VStack {
@@ -124,7 +116,7 @@ struct PaninoDetail: View {
                             }
                         }
                     }
-                    
+                        .background(Color.blue.opacity(0.2))
                     CardWrapper {
                         Button {
                             isMapOpen = true
@@ -146,6 +138,7 @@ struct PaninoDetail: View {
                             panino.setCoordinates(mapItem.location)
                         }
                     }
+                        .background(Color.green.opacity(0.2))
                 }
             }
             .padding()

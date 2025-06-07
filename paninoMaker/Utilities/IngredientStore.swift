@@ -19,6 +19,10 @@ final class IngredientStore {
         ingredients.first(where: { $0.id == id })
     }
     
+    func ingredients(wantedLevel: Int)-> [Ingredient] {
+        ingredients.filter { $0.unlockLevel == wantedLevel }
+    }
+    
     func firstBun() -> Ingredient? {
         ingredients(ofCategory: IngredientCategory.buns).first
     }

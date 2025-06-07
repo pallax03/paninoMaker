@@ -19,15 +19,13 @@ protocol Badge: Hashable {
 }
 
 extension Badge {
-    func defaultView(icon: String) -> AnyView {
-        AnyView(
-            Image(systemName: icon)
-                .font(.title)
-                .foregroundColor(color)
-                .padding(15)
-                .background(color.opacity(0.2))
-                .clipShape(Circle())
-        )
+    func defaultView(icon: String? = nil, text: String? = nil) -> AnyView {
+        if icon != nil {
+            return AnyView(
+                Image(systemName: icon ?? "questionmark")
+            )
+        }
+        return AnyView(Text(text ?? ""))
     }
     func entity() -> BadgeEntity {
         BadgeEntity(title: title, mult: mult)
@@ -52,7 +50,7 @@ class BadgeEntity {
 
 enum BadgesLibrary {
     static let all: [any Badge] = [
-        HeartBadge(),
+        BunBadge(),
         VeganBadge(),
         VegetarianBadge(),
         GlutenFreeBadge(),
@@ -71,16 +69,16 @@ enum BadgesLibrary {
     }
 }
 
-struct HeartBadge: Badge {
-    var title: String = "Heart"
-    var description: String = "Your Saved Paninos"
-    var color: Color = .red
-    var mult: Double = 1.2
+struct BunBadge: Badge {
+    var title: String = "Bun"
+    var description: String = "Ai tempi della guerra!"
+    var color: Color = .orange
+    var mult: Double = 2.4
     var view: AnyView {
-        defaultView(icon: "bookmark.fill")
+        defaultView(text: "🍞")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
-        return panino.isSaved
+        return panino.composer.ingredients.allSatisfy({ $0.category == .buns })
     }
 }
 
@@ -90,7 +88,7 @@ struct VeganBadge: Badge {
     var color: Color = .green
     var mult: Double = 2.0
     var view: AnyView {
-        defaultView(icon: "heart.fill")
+        defaultView(text: "🌱")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
         return panino.composer.ingredients.allSatisfy {$0.tags.contains(.vegan)}
@@ -98,12 +96,12 @@ struct VeganBadge: Badge {
 }
 
 struct VegetarianBadge: Badge {
-    var title: String = "100% Vegetarian 🌿"
+    var title: String = "100% Vegetarian 🥬"
     var description: String = "For the Animals"
-    var color: Color = .purple
+    var color: Color = .teal
     var mult: Double = 1.9
     var view: AnyView {
-        defaultView(icon: "heart.fill")
+        defaultView(text: "🥬")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
         return panino.composer.ingredients.allSatisfy {$0.tags.contains(.veg)}
@@ -116,7 +114,7 @@ struct GlutenFreeBadge: Badge {
     var color: Color = .yellow
     var mult: Double = 1.4
     var view: AnyView {
-        defaultView(icon: "heart.fill")
+        defaultView(text: "🌾")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
         return panino.composer.ingredients.allSatisfy {!$0.tags.contains(.gluten)}
@@ -129,7 +127,7 @@ struct DairyFreeBadge: Badge {
     var color: Color = .blue
     var mult: Double = 1.5
     var view: AnyView {
-        defaultView(icon: "heart.fill")
+        defaultView(text: "🥛")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
         return panino.composer.ingredients.allSatisfy {!$0.tags.contains(.dairy)}
@@ -139,10 +137,10 @@ struct DairyFreeBadge: Badge {
 struct BigPortionBadge: Badge {
     var title: String = "BIGGGGG"
     var description: String = "Non ti annoierai più con i prezzi!"
-    var color: Color = .orange
+    var color: Color = .indigo
     var mult: Double = 1.1
     var view: AnyView {
-        defaultView(icon: "heart.fill")
+        defaultView(text: "🦖")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
         return panino.composer.ingredients.count >= allPanini.map({$0.composer.ingredients.count}).max() ?? 0
@@ -152,10 +150,10 @@ struct BigPortionBadge: Badge {
 struct SmallPortionBadge: Badge {
     var title: String = "MINI SIZE"
     var description: String = "Mi hanno prescritto una gastroscopia 😅"
-    var color: Color = .gray
+    var color: Color = .cyan
     var mult: Double = 1.6
     var view: AnyView {
-        defaultView(icon: "heart.fill")
+        defaultView(text: "🪶")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
         return panino.composer.ingredients.count <= allPanini.map({$0.composer.ingredients.count}).min() ?? 0
@@ -163,15 +161,15 @@ struct SmallPortionBadge: Badge {
 }
 
 struct HealthyBadge: Badge {
-    var title: String = "Healthy"
+    var title: String = "FAT"
     var description: String = "Try finger but hole"
-    var color: Color = .green
+    var color: Color = .brown
     var mult: Double = 1.7
     var view: AnyView {
-        defaultView(icon: "heart.fill")
+        defaultView(text: "🐷")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
-        return panino.composer.ingredients.allSatisfy {!$0.tags.contains(.fat)}
+        return panino.composer.ingredients.contains {$0.tags.contains(.fat)}
     }
 }
 
@@ -181,7 +179,7 @@ struct SpicyBadge: Badge {
     var color: Color = .red
     var mult: Double = 1.2
     var view: AnyView {
-        defaultView(icon: "heart.fill")
+        defaultView(text: "🌶️")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
         return panino.composer.ingredients.contains(where: {$0.tags.contains(.spicy)})
@@ -194,7 +192,7 @@ struct TheChosenOne: Badge {
     var color: Color = .pink
     var mult: Double = 1.1
     var view: AnyView {
-        defaultView(icon: "heart.fill")
+        defaultView(text: "👑")
     }
     func isEligible(for panino: Panino, in allPanini: [Panino]) -> Bool {
         guard let primo = allPanini.min(by: { $0.creationDate < $1.creationDate }) else {

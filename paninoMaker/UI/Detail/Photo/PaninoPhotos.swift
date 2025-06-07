@@ -18,7 +18,7 @@ struct PaninoPhotos: View {
                 PaninoPicker(panino: panino, selectedItems: $selectedItems) {
                     Label("Seleziona immagini", systemImage: "photo.on.rectangle.angled")
                         .padding()
-                        .background(Color.blue.opacity(0.1))
+                        .background(Color.indigo.opacity(0.1))
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
             } else {
