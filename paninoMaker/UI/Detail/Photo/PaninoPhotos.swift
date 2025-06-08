@@ -9,13 +9,14 @@ import SwiftUI
 import PhotosUI
 
 struct PaninoPhotos: View {
-    @State private var selectedItems: [PhotosPickerItem] = []
+    @State private var selectedPhotoItems: [PhotosPickerItem] = []
+    private let maxSelectionCount: Int = 10
     let panino: Panino
-
+    
     var body: some View {
         VStack {
             if panino.images.isEmpty {
-                PaninoPicker(panino: panino, selectedItems: $selectedItems) {
+                PhotoSelectorButton(selectedPhotoItems: $selectedPhotoItems, maxSelectionCount: maxSelectionCount) {
                     Label("Seleziona immagini", systemImage: "photo.on.rectangle.angled")
                         .padding()
                         .background(Color.indigo.opacity(0.1))
@@ -25,7 +26,7 @@ struct PaninoPhotos: View {
                 // Mostra le immagini selezionate
                 ScrollView(.horizontal) {
                     HStack {
-                        PaninoPicker(panino: panino, selectedItems: $selectedItems) {
+                        PhotoSelectorButton(selectedPhotoItems: $selectedPhotoItems, maxSelectionCount: maxSelectionCount) {
                             ForEach(panino.images, id: \.self) { image in
                                 Image(uiImage: image)
                                     .resizable()
@@ -41,25 +42,7 @@ struct PaninoPhotos: View {
             
             Spacer()
         }
-        .padding()
-    }
-}
-
-struct PaninoPicker<Content: View>: View {
-    let panino: Panino
-    @Binding var selectedItems: [PhotosPickerItem]
-    let content: () -> Content
-    
-    var body: some View {
-        PhotosPicker(
-            selection: $selectedItems,
-            maxSelectionCount: 10,  // Numero massimo di immagini selezionabili
-            matching: .images,
-            photoLibrary: .shared()
-        ) {
-            content()
-        }
-        .onChange(of: selectedItems) { oldValue, newValue in
+        .onChange(of: selectedPhotoItems) { oldValue, newValue in
             Task {
                 panino.resetImages()
                 for item in newValue {
@@ -70,8 +53,10 @@ struct PaninoPicker<Content: View>: View {
                 }
             }
         }
+        .padding()
     }
 }
+
 
 //#Preview {
 //    PaninoPhotos(selectedItems: .constant(nil), panino: PreviewData.samplePanino)

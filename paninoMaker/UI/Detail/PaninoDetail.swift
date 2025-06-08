@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 import MapItemPicker
 import MapKit
+import PhotosUI
 
 struct PaninoDetail: View {
     @State var panino: Panino
@@ -60,7 +61,7 @@ struct PaninoDetail: View {
                     CardWrapper {
                         PaninoPhotos(panino: panino)
                     }
-                        .background(Color.indigo.opacity(0.2))
+                    .background(Color.indigo.opacity(0.2))
                     
                     Spacer()
                     

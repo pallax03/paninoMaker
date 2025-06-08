@@ -19,6 +19,17 @@ class UserModel: ObservableObject {
     var level: Int = 4
     var pex: Int = 456
     var isLogged: Bool = UserGamifications.enableGamification
+    var propicData: Data?
+    
+    var propic: UIImage {
+        UIImage(data: propicData!)!
+    }
+    
+    func addImage(_ image: UIImage) {
+        if let data = image.jpegData(compressionQuality: 0.8) {
+            self.propicData = data
+        }
+    }
     
     func unlockAll() {
         username = "Master User"

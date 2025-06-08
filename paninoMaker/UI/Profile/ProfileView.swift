@@ -16,49 +16,44 @@ struct ProfileView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @State private var showingImagePicker = false
     @State private var showCameraPicker = false
-    @State private var selectedImage: UIImage? = nil
+    @State private var selectedImages: [UIImage] = []
     @State private var showActionSheet = false
     @State private var propic: UIImage?
     @State private var badgeSelezionato: String?
     @State private var showPopoverLevel: Bool = false
     
+    @State private var selectedPhotoItems: [PhotosPickerItem] = []
+    @State private var showCamera: Bool = false
+    @State private var showLibrary: Bool = false
+    
     var body: some View {
         ScrollView {
-            VStack {
-                Button {
-                    showActionSheet = true
-                } label: {
-                    if let image = propic {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 120, height: 120)
-                            .clipShape(Circle())
-                    } else {
-                        Image(systemName: "person.crop.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 120, height: 120)
-                            .foregroundColor(.gray)
-                    }
-                }
-                .actionSheet(isPresented: $showActionSheet) {
-                    ActionSheet(
-                        title: Text("Scegli immagine profilo"),
-                        buttons: [
-                            .default(Text("Scatta foto")) { showCameraPicker = true },
-                            .default(Text("Seleziona dalla libreria")) { showingImagePicker = true },
-                            .cancel()
-                        ]
-                    )
-                }
-                .sheet(isPresented: $showingImagePicker) {
-                    
-                }
-                .sheet(isPresented: $showCameraPicker) {
-                    CameraPicker(image: $propic)
+            PhotoSelectorButton(selectedPhotoItems: $selectedPhotoItems) {
+                if let image = propic {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 120, height: 120)
+                        .clipShape(Circle())
+                } else {
+                    Image(systemName: "person.crop.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 120, height: 120)
+                        .foregroundColor(.gray)
                 }
             }
+            .onChange(of: selectedPhotoItems) { oldValue, newValue in
+                Task {
+                    for item in newValue {
+                        if let data = try? await item.loadTransferable(type: Data.self),
+                           let uiImage = UIImage(data: data) {
+                            user.addImage(uiImage)
+                            }
+                    }
+                }
+            }
+            
             
             if (!user.isLogged) {
                 NavigationLink(destination: LoginView()) {
@@ -112,24 +107,24 @@ struct ProfileView: View {
                     .popover(
                         isPresented: $showPopoverLevel,
                         arrowEdge: .top) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            let nextLevel = user.level + 1
-                            Text("Slocca al livello \(nextLevel)")
-                                .font(.headline)
-                                .fontWeight(.bold)
-                            ForEach(IngredientStore().ingredients(wantedLevel: nextLevel)) { ingredient in
-                                HStack {
-                                    Text("\(ingredient.name) - ")
-                                    Text(ingredient.category.displayName)
-                                        .font(.caption)
-                                        .foregroundStyle(ingredient.category.color)
+                            VStack(alignment: .leading, spacing: 8) {
+                                let nextLevel = user.level + 1
+                                Text("Slocca al livello \(nextLevel)")
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                ForEach(IngredientStore().ingredients(wantedLevel: nextLevel)) { ingredient in
+                                    HStack {
+                                        Text("\(ingredient.name) - ")
+                                        Text(ingredient.category.displayName)
+                                            .font(.caption)
+                                            .foregroundStyle(ingredient.category.color)
+                                    }
+                                    
                                 }
-                                
                             }
+                            .padding()
+                            .presentationCompactAdaptation(.popover)
                         }
-                        .padding()
-                        .presentationCompactAdaptation(.popover)
-                    }
                 }
                 .padding()
             }
