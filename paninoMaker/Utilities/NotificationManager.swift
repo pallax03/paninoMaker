@@ -9,11 +9,11 @@ import UserNotifications
 
 func requestNotificationPermission() {
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-//        if granted {
-//            print("Permesso garantito ✅")
-//        } else {
-//            print("Permesso negato ❌")
-//        }
+        if granted {
+            print("Permesso garantito ✅")
+        } else {
+            print("Permesso negato ❌")
+        }
     }
     
 }
@@ -25,16 +25,16 @@ func sendNotification(_ level: Int) {
     content.sound = UNNotificationSound.default
 
     // Puoi scegliere di farla apparire subito o con un ritardo
-    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
 
     let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
 
     UNUserNotificationCenter.current().add(request) { error in
-//        if let error = error {
-//            print("Errore: \(error.localizedDescription)")
-//        } else {
-//            print("Notifica programmata!")
-//        }
+        if let error = error {
+            print("Errore: \(error.localizedDescription)")
+        } else {
+            print("Notifica programmata!")
+        }
     }
 }
 
