@@ -21,11 +21,12 @@ class UserModel: ObservableObject {
     var isLogged: Bool = UserGamifications.enableGamification
     var propicData: Data?
     
-    var propic: UIImage {
-        UIImage(data: propicData!)!
+    var propic: UIImage? {
+        guard let data = propicData else { return nil }
+        return UIImage(data: data)
     }
     
-    func addImage(_ image: UIImage) {
+    func setPropic(_ image: UIImage) {
         if let data = image.jpegData(compressionQuality: 0.8) {
             self.propicData = data
         }

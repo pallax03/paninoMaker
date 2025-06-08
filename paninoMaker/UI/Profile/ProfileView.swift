@@ -16,12 +16,9 @@ struct ProfileView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @State private var showingImagePicker = false
     @State private var showCameraPicker = false
-    @State private var selectedImages: [UIImage] = []
     @State private var showActionSheet = false
-    @State private var propic: UIImage?
     @State private var badgeSelezionato: String?
     @State private var showPopoverLevel: Bool = false
-    
     @State private var selectedPhotoItems: [PhotosPickerItem] = []
     @State private var showCamera: Bool = false
     @State private var showLibrary: Bool = false
@@ -29,7 +26,7 @@ struct ProfileView: View {
     var body: some View {
         ScrollView {
             PhotoSelectorButton(selectedPhotoItems: $selectedPhotoItems) {
-                if let image = propic {
+                if let image = user.propic {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFill()
@@ -46,11 +43,13 @@ struct ProfileView: View {
             .onChange(of: selectedPhotoItems) { oldValue, newValue in
                 Task {
                     for item in newValue {
+                        print(item)
                         if let data = try? await item.loadTransferable(type: Data.self),
                            let uiImage = UIImage(data: data) {
-                            user.addImage(uiImage)
+                            user.setPropic(uiImage)
                             }
                     }
+                    selectedPhotoItems = []
                 }
             }
             
