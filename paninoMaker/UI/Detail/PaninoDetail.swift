@@ -10,6 +10,7 @@ import PhotosUI
 import MapItemPicker
 import MapKit
 import PhotosUI
+import EventKit
 
 struct PaninoDetail: View {
     @State var panino: Panino
@@ -48,7 +49,7 @@ struct PaninoDetail: View {
                     Divider()
                     
                     HStack {
-                        Text(panino.creationDate.formatted(date: .numeric, time: .omitted))
+                        PaninoCalendar(date: panino.creationDate, title: panino.name)
                         
                         Spacer()
                         
