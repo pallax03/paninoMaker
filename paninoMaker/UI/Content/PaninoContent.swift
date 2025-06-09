@@ -28,7 +28,7 @@ struct PaninoContent: View {
     }
     
     var body: some View {
-        VStack(spacing: 0 ) {
+        VStack(spacing: 0) {
             List(selection: $selectedPanino) {
                 ForEach(visiblePanini, id: \.self) { panino in
                     NavigationLink(value: panino) {

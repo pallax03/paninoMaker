@@ -6,19 +6,10 @@
 //
 
 import SwiftUI
-import PhotosUI
-import MapItemPicker
-import MapKit
-import PhotosUI
 import EventKit
 
 struct PaninoDetail: View {
     @State var panino: Panino
-    @State private var isComposing: Bool = false
-    @State private var isMapOpen: Bool = false
-    @State private var isReviewing: Bool = false
-    @State private var cameraPosition: MapCameraPosition = .automatic
-    @FocusState private var isFocused: Bool
     @State private var showConfirmationDialog: Bool = false
     
     var body: some View {
@@ -31,7 +22,6 @@ struct PaninoDetail: View {
                                 Text("New Panino")
                             }
                             .font(.title)
-                            .focused($isFocused)
                         
                         Spacer()
                         
@@ -60,87 +50,22 @@ struct PaninoDetail: View {
                 ScrollView {
                     // Experience
                     CardWrapper(title: "Experience", color:.indigo) {
-                        PaninoPhotos(panino: panino)
+                        PaninoDetailExperience(panino: panino)
                     }
                     
                     // Composer
-                    CardWrapper(title: "Composer",color: .yellow) {
-                        VStack {
-                            Button {
-                                isComposing = true
-                            } label: {
-                                ComposerPreview(composer: panino.composer)
-                            }
-                            .sheet(isPresented: $isComposing, content: {
-                                ComposerSheet(panino: $panino, draftComposer: panino.composer.copy())
-                            })
-                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 20) {
-                                ForEach(Array(panino.badges).sorted { $0.title < $1.title }, id: \.title) { entity in
-                                    BadgeView(badge: entity.resolvedBadge!)
-                                }
-                            }
-                        }
+                    CardWrapper(title: "Composer", color: .yellow) {
+                        PaninoDetailComposer(panino: panino)
                     }
                     
                     // Rating
                     CardWrapper(title: "Recensione", color: .blue) {
-                        VStack(spacing: 10) {
-                            Text("Tocca per valutare")
-                            
-                            HStack {
-                                ForEach(1...5, id: \.self) { index in
-                                    Button {
-                                        panino.rating = index
-                                        isReviewing = true
-                                    } label: {
-                                        Image(systemName: index <= panino.rating ?? 0 ? "star.fill" : "star")
-                                            .font(.title)
-                                    }
-                                }
-                            }
-                            
-                            if panino.rating != nil {
-                                Divider()
-                                
-                                TextField(
-                                    text: Binding(
-                                        get: { panino.ratingDescription ?? "" },
-                                        set: { panino.ratingDescription = $0.isEmpty ? nil : $0 }
-                                    )) {
-                                        Text("Aggiungi una descrizione...")
-                                    }
-                                    .focused($isFocused)
-                            }
-                        }
-                        .padding()
+                        PaninoDetailRating(panino: panino)
                     }
                     
                     // Map
                     CardWrapper(title: "Mappa",color: .green) {
-                        Button {
-                            isMapOpen = true
-                        } label: {
-                            if panino.coordinates != nil {
-                                Map(position: $cameraPosition) {
-                                    Annotation(panino.name, coordinate: panino.coordinates!) {
-                                        Text("🍔")
-                                            .font(.title)
-                                    }
-                                }
-                                .frame(height: 150)
-                                .cornerRadius(10)
-                            } else {
-                                Label("Imposta la posizione", systemImage: "mappin")
-                                    .padding()
-                                    .background(Color.green.opacity(0.2))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                            }
-                        }
-                        .padding()
-                        .foregroundStyle(.green)
-                        .mapItemPickerSheet(isPresented: $isMapOpen) { mapItem in
-                            panino.setCoordinates(mapItem.location)
-                        }
+                        PaninoDetailMap(panino: panino)
                     }
                 }
             }

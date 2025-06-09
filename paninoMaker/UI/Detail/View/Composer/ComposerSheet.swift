@@ -15,7 +15,7 @@ struct ComposerSheet: View {
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @Environment(\.dismiss) private var dismiss
     @State private var isShown = false
-    @Binding var panino: Panino
+    let panino: Panino
     @State var draftComposer: Composer
     
     var body: some View {
@@ -149,7 +149,7 @@ struct Bread: View {
 }
 
 #Preview {
-    ComposerSheet(panino: .constant(Panino()), draftComposer: Composer())
+    ComposerSheet(panino: Panino(), draftComposer: Composer())
         .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
         .environmentObject(UserModel())
 }

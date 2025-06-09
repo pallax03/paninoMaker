@@ -1,5 +1,5 @@
 //
-//  PaninoPhotos.swift
+//  PaninoDetailExperience.swift
 //  paninoMaker
 //
 //  Created by Nicola Graziotin on 30/05/25.
@@ -8,10 +8,10 @@
 import SwiftUI
 import PhotosUI
 
-struct PaninoPhotos: View {
+struct PaninoDetailExperience: View {
+    let panino: Panino
     @State private var selectedPhotos: [UIImage] = []
     private let maxSelectionCount: Int = 10
-    let panino: Panino
     
     var body: some View {
         VStack {
@@ -52,6 +52,10 @@ struct PaninoPhotos: View {
 }
 
 
-//#Preview {
-//    PaninoPhotos(selectedItems: .constant(nil), panino: PreviewData.samplePanino)
-//}
+#Preview {
+    CardWrapper(title: "Experience",color: .indigo) {
+        PaninoDetailExperience(panino: Panino())
+    }
+    .environmentObject(UserModel())
+    .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+}
