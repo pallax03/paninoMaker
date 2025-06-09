@@ -57,5 +57,6 @@ struct MovePaniniSheet: View {
         onNewMenu: { },
         isPresented: .constant(false)
     )
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    .environmentObject(UserModel())
+    .modelContainer(PreviewData.makeModelContainer())
 }

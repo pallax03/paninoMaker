@@ -65,6 +65,10 @@ struct PhotoSelectorButton<Content: View>: View {
     }
 }
 
-//#Preview {
-//    PhotoSelectorButton { Text("Tap me") }
-//}
+#Preview {
+    PhotoSelectorButton(selectedPhotos: .constant([])) {
+        Text("Seleziona foto")
+    }
+    .environmentObject(UserModel())
+    .modelContainer(PreviewData.makeModelContainer())
+}

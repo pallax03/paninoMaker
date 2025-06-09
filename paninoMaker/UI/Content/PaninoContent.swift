@@ -57,6 +57,7 @@ struct PaninoContent: View {
                             Label(selectedMenu == .trash ? "Restore" : "Delete", systemImage: selectedMenu == .trash ? "trash.slash.fill" : "trash.fill")
                         }
                         .tint(selectedMenu == .trash ? .cyan : .red)
+
                         Button {
                             paninoToMove = panino
                             isShowingMoveSheet = true
@@ -97,9 +98,11 @@ struct PaninoContent: View {
 }
 
 #Preview {
-    let panini = PreviewData.samplePanini
-    let menu = Menu(title: "Test", panini: panini)
-    PaninoContent(paninoToMove: .constant(nil), title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: .constant(nil), isShowingNewMenuAlert: .constant(false), newMenuTitle: .constant(""))
-        .environmentObject(UserModel())
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    NavigationStack {
+        let panini = PreviewData.samplePanini
+        let menu = Menu(title: "Test", panini: panini)
+        PaninoContent(paninoToMove: .constant(Panino()), title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: .constant(.all), isShowingNewMenuAlert: .constant(false), newMenuTitle: .constant(""))
+    }
+    .environmentObject(UserModel())
+    .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
 }

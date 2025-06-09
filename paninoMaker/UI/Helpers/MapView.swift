@@ -39,6 +39,10 @@ struct MapView: View {
         }
 }
 
-//#Preview {
-//    MapView(panini: PreviewData.samplePanini)
-//}
+#Preview {
+    NavigationStack {
+        MapView(panini: PreviewData.samplePanini, selectedPanino: .constant(PreviewData.samplePanini.first))
+    }
+    .environmentObject(UserModel())
+    .modelContainer(PreviewData.makeModelContainer())
+}
