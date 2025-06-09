@@ -25,8 +25,9 @@ struct BadgeView: View {
         .popover(
             isPresented: $showPopover,
             arrowEdge: .bottom) {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(spacing: 8) {
                 Text(badge.title)
+                    .fontWeight(.bold)
                     .font(.headline)
                 
                 Text(badge.description)

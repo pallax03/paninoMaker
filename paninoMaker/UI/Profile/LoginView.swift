@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GoogleSignInSwift
 
 struct LoginView: View {
     @Environment(\.dismiss) private var dismiss
@@ -71,14 +72,16 @@ struct LoginView: View {
                     .foregroundStyle(.gray)
             }
             
-            Button {
+            GoogleSignInButton(scheme: .dark, style: .standard, state: .normal) {
                 Task {
                     await viewModel.signInWithGoogle(user)
                 }
-            } label: {
-                Label("Continua con Google", systemImage: "globe")
+                
+                if user.isLogged {
+                    dismiss()
+                }
             }
-            .buttonStyle(.borderedProminent)
+            .padding()
         }
         .padding()
     }

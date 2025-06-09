@@ -70,7 +70,7 @@ enum BadgesLibrary {
 }
 
 struct BunBadge: Badge {
-    var title: String = "Bun"
+    var title: String = "SOLO PANE"
     var description: String = "Ai tempi della guerra!"
     var color: Color = .orange
     var mult: Double = 2.4
@@ -83,8 +83,8 @@ struct BunBadge: Badge {
 }
 
 struct VeganBadge: Badge {
-    var title: String = "100% Vegan 🌱"
-    var description: String = "For the Earth"
+    var title: String = "100% Vegano"
+    var description: String = "Sei un erbivoro"
     var color: Color = .green
     var mult: Double = 2.0
     var view: AnyView {
@@ -96,8 +96,8 @@ struct VeganBadge: Badge {
 }
 
 struct VegetarianBadge: Badge {
-    var title: String = "100% Vegetarian 🥬"
-    var description: String = "For the Animals"
+    var title: String = "100% Vegetariano"
+    var description: String = "Salvi gli animali ma uccidi le grigliate..."
     var color: Color = .teal
     var mult: Double = 1.9
     var view: AnyView {
@@ -136,7 +136,7 @@ struct DairyFreeBadge: Badge {
 
 struct BigPortionBadge: Badge {
     var title: String = "BIGGGGG"
-    var description: String = "Non ti annoierai più con i prezzi!"
+    var description: String = "Guinness World Record!"
     var color: Color = .indigo
     var mult: Double = 1.1
     var view: AnyView {
@@ -149,7 +149,7 @@ struct BigPortionBadge: Badge {
 
 struct SmallPortionBadge: Badge {
     var title: String = "MINI SIZE"
-    var description: String = "Mi hanno prescritto una gastroscopia 😅"
+    var description: String = "Le dimensioni non contano"
     var color: Color = .cyan
     var mult: Double = 1.6
     var view: AnyView {
@@ -162,7 +162,7 @@ struct SmallPortionBadge: Badge {
 
 struct HealthyBadge: Badge {
     var title: String = "FAT"
-    var description: String = "Try finger but hole"
+    var description: String = "In Romagna si chiama Baghino"
     var color: Color = .brown
     var mult: Double = 1.7
     var view: AnyView {
@@ -175,7 +175,7 @@ struct HealthyBadge: Badge {
 
 struct SpicyBadge: Badge {
     var title: String = "BURN IT"
-    var description: String = "Non mi piace il piccante!"
+    var description: String = "Caldo come il Sole"
     var color: Color = .red
     var mult: Double = 1.2
     var view: AnyView {
@@ -188,7 +188,7 @@ struct SpicyBadge: Badge {
 
 struct TheChosenOne: Badge {
     var title: String = "CHOSEN ONE"
-    var description: String = "Il più vecchio è il migliore!"
+    var description: String = "Il veterano"
     var color: Color = .pink
     var mult: Double = 1.1
     var view: AnyView {

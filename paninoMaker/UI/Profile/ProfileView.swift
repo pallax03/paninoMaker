@@ -82,7 +82,7 @@ struct ProfileView: View {
             
             Divider().padding()
             
-            if user.isLogged {
+            if !user.isLogged {
                 VStack {
                     ZStack {
                         ZStack {
@@ -109,27 +109,43 @@ struct ProfileView: View {
                         Button {
                             showPopoverLevel.toggle()
                         } label: {
-                            Image(systemName: "info.circle")
-                                .imageScale(.small)
+                            if user.level == UserGamifications.levelCap {
+                                Image(systemName: "crown.fill")
+                                    .imageScale(.small)
+                                    .foregroundStyle(.yellow)
+                            } else {
+                                Image(systemName: "info.circle")
+                                    .imageScale(.small)
+                            }
                         }
                         .foregroundStyle(.gray)
                         .offset(x: 45,y: -25)
                         .popover(
                             isPresented: $showPopoverLevel,
                             arrowEdge: .top) {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    let nextLevel = user.level + 1
-                                    Text("Slocca al livello \(nextLevel)")
-                                        .font(.headline)
-                                        .fontWeight(.bold)
-                                    ForEach(IngredientStore().ingredients(wantedLevel: nextLevel)) { ingredient in
-                                        HStack {
-                                            Text("\(ingredient.name) - ")
-                                            Text(ingredient.category.displayName)
-                                                .font(.caption)
-                                                .foregroundStyle(ingredient.category.color)
+                                VStack(spacing: 8) {
+                                    if user.level == UserGamifications.levelCap {
+                                        VStack(spacing: 8) {
+                                            Text("Congratulazioni!!!!!")
+                                                .fontWeight(.bold)
+                                                .font(.headline)
+                                            
+                                            Text("Hai raggiunto il livello massimo,\ned hai sbloccato tutti gli ingredienti.")
+                                                .font(.body)
                                         }
-                                        
+                                    } else {
+                                        let nextLevel = user.level + 1
+                                        Text("Slocca al livello \(nextLevel)")
+                                            .fontWeight(.bold)
+                                            .font(.headline)
+                                        ForEach(IngredientStore().ingredients(wantedLevel: nextLevel)) { ingredient in
+                                            HStack {
+                                                Text("\(ingredient.name)")
+                                                Text("(\(ingredient.category.displayName))")
+                                                    .foregroundStyle(ingredient.category.color)
+                                            }
+                                            .font(.body)
+                                        }
                                     }
                                 }
                                 .padding()

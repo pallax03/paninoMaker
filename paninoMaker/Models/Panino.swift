@@ -15,7 +15,7 @@ enum PaninoGamifications {
     static let pointsPerRating: Int = 1
     static let pointsPerDescription: Int = 2
     static let pointsPerMap: Int = 5
-    static let pointsPerIngredients: Int = 1
+    static let pointsPerIngredients: Int = 2
 }
 
 @Model
