@@ -36,7 +36,6 @@ struct ContentView: View {
                 MenuSidebar(selectedMenu: $selectedMenu)
             }
         } content: {
-            
             if let section = selectedMenu {
                 section.makeContentView(
                     panini: panini,

@@ -74,6 +74,7 @@ struct ComposerSheet: View {
                     Image(systemName: "plus.circle.fill")
                         .resizable()
                         .frame(width: 50, height: 50)
+                        .tint(.yellow)
                 }
                 .sheet(isPresented: $isShown) {
                     NavigationStack {
@@ -88,8 +89,6 @@ struct ComposerSheet: View {
                 Bread(draftComposer: $draftComposer.bottom)
             }
             .padding()
-            .navigationTitle("Panino #N")
-            .toolbarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {

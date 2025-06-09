@@ -77,6 +77,27 @@ class Panino {
         self.imageData.removeAll()
     }
     
+    func resetComposer() {
+        self.composer = Composer()
+    }
+    
+    func resetRating() {
+        self.rating = nil
+        self.ratingDescription = nil
+    }
+    
+    func resetMap() {
+        self.latitude = nil
+        self.longitude = nil
+    }
+    
+    func resetPanino() {
+        resetImages()
+        resetComposer()
+        resetRating()
+        resetMap()
+    }
+    
     func setCoordinates(_ coordinate: CLLocationCoordinate2D) {
         self.latitude = coordinate.latitude
         self.longitude = coordinate.longitude

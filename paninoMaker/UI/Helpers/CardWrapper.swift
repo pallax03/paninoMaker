@@ -9,25 +9,38 @@ import SwiftUI
 
 struct CardWrapper<Content: View>: View {
     let content: Content
+    var title: String
     var color: Color
     
-    init(_ color: Color, @ViewBuilder content: () -> Content) {
+    init(title: String, color: Color, @ViewBuilder content: () -> Content) {
+        self.title = title
         self.color = color
         self.content = content()
     }
 
     var body: some View {
-        content
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(color.opacity(0.2))
-            .cornerRadius(16)
-            .padding(.bottom, 5)
+        VStack(spacing: 20) {
+            HStack {
+                Text(title)
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundStyle(color)
+                
+                Spacer()
+            }
+            
+            content
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(color.opacity(0.2))
+        .cornerRadius(16)
+        .padding(.bottom, 5)
     }
 }
 
 #Preview {
-    CardWrapper(.gray) {
+    CardWrapper(title: "Test", color: .gray) {
         Text("Hello World!")
     }
 }

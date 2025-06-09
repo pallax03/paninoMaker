@@ -19,22 +19,19 @@ struct PaninoDetail: View {
     @State private var isReviewing: Bool = false
     @State private var cameraPosition: MapCameraPosition = .automatic
     @FocusState private var isFocused: Bool
+    @State private var showConfirmationDialog: Bool = false
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 VStack {
+                    // Title
                     HStack {
-                        TextField(
-                            text: Binding(
-                                get: { panino.name },
-                                set: { panino.name = $0.isEmpty ? "" : $0 }
-                            )) {
+                        TextField(text: $panino.name) {
                                 Text("New Panino")
                             }
                             .font(.title)
                             .focused($isFocused)
-                            
                         
                         Spacer()
                         
@@ -46,8 +43,9 @@ struct PaninoDetail: View {
                         }
                     }
                     
-                    Divider()
+                    Divider().padding(.top)
                     
+                    // Info
                     HStack {
                         PaninoCalendar(date: panino.creationDate, title: panino.name)
                         
@@ -55,18 +53,18 @@ struct PaninoDetail: View {
                         
                         Text(panino.owner ?? "No owner")
                     }
-                    .font(.footnote)
+                    .font(.body)
                 }
                 .padding(.bottom)
                 
                 ScrollView {
-                    CardWrapper(.indigo) {
+                    // Experience
+                    CardWrapper(title: "Experience", color:.indigo) {
                         PaninoPhotos(panino: panino)
                     }
                     
-                    Spacer()
-                    
-                    CardWrapper(.yellow) {
+                    // Composer
+                    CardWrapper(title: "Composer",color: .yellow) {
                         VStack {
                             Button {
                                 isComposing = true
@@ -84,7 +82,8 @@ struct PaninoDetail: View {
                         }
                     }
                     
-                    CardWrapper(.blue) {
+                    // Rating
+                    CardWrapper(title: "Recensione", color: .blue) {
                         VStack(spacing: 10) {
                             Text("Tocca per valutare")
                             
@@ -108,30 +107,37 @@ struct PaninoDetail: View {
                                         get: { panino.ratingDescription ?? "" },
                                         set: { panino.ratingDescription = $0.isEmpty ? nil : $0 }
                                     )) {
-                                    Text("Aggiungi una descrizione...")
-                                }
-                                .focused($isFocused)
+                                        Text("Aggiungi una descrizione...")
+                                    }
+                                    .focused($isFocused)
                             }
                         }
+                        .padding()
                     }
                     
-                    CardWrapper(.green) {
+                    // Map
+                    CardWrapper(title: "Mappa",color: .green) {
                         Button {
                             isMapOpen = true
                         } label: {
                             if panino.coordinates != nil {
-                                let coordinate = panino.coordinates!
-
                                 Map(position: $cameraPosition) {
-                                    Marker(panino.name, coordinate: coordinate)
-                                        .tint(.red)
+                                    Annotation(panino.name, coordinate: panino.coordinates!) {
+                                        Text("🍔")
+                                            .font(.title)
+                                    }
                                 }
                                 .frame(height: 150)
                                 .cornerRadius(10)
                             } else {
-                                Text("Pin Mappa")
+                                Label("Imposta la posizione", systemImage: "mappin")
+                                    .padding()
+                                    .background(Color.green.opacity(0.2))
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }
+                        .padding()
+                        .foregroundStyle(.green)
                         .mapItemPickerSheet(isPresented: $isMapOpen) { mapItem in
                             panino.setCoordinates(mapItem.location)
                         }
@@ -145,16 +151,41 @@ struct PaninoDetail: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    
+                    showConfirmationDialog.toggle()
                 } label: {
-                    Image(systemName: "ellipsis")
+                    ZStack {
+                        Text("🍔")
+                            .font(.title)
+                        
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .frame(width: 15, height: 15)
+                            .offset(x: 13, y: -13)
+                            .tint(.red)
+                    }
                 }
             }
+        }
+        .confirmationDialog("Reset Panino", isPresented: $showConfirmationDialog) {
+            
+            Button("Rimuovi Experience") { panino.resetImages() }
+            
+            Button("Rimuovi Composer") { panino.resetComposer() }
+            
+            Button("Rimuovi Recensione") { panino.resetRating() }
+            
+            Button("Rimuovi Mappa") { panino.resetMap() }
+            
+            Button("Reset Panino", role: .destructive) { panino.resetPanino() }
+            
+            Button("Annulla", role: .cancel) {}
         }
     }
 }
 
 #Preview {
-    PaninoDetail(panino: PreviewData.samplePanini.first!)
-        .environmentObject(UserModel())
+    NavigationStack {
+        PaninoDetail(panino: PreviewData.samplePanini.first!)
+            .environmentObject(UserModel())
+    }
 }
