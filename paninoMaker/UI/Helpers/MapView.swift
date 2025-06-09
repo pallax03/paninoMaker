@@ -22,9 +22,8 @@ struct MapView: View {
                         NavigationLink {
                             PaninoDetail(panino: panino)
                         } label: {
-                            Image(systemName: "mappin.circle.fill")
+                            Text("🍔")
                                 .font(.title)
-                                .foregroundColor(.orange)
                         }
                     }
                 }

@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct PaninoRow: View {
     @EnvironmentObject var user: UserModel
+    @State private var cameraPosition: MapCameraPosition = .automatic
     
     let panino: Panino
     
@@ -17,9 +19,27 @@ struct PaninoRow: View {
             HStack {
                 ComposerPreview(composer: panino.composer)
                 
-//                Image(uiImage: panino.images.first!)
-//                    .resizable()
-//                    .scaledToFit()
+                VStack(spacing: 10) {
+                    if !panino.images.isEmpty {
+                        Image(uiImage: panino.images.first!)
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(10)
+                            .frame(maxWidth: 200, maxHeight: 150)
+                    }
+                    
+                    if panino.coordinates != nil {
+                        Map(position: $cameraPosition) {
+                            Annotation(panino.name, coordinate: panino.coordinates!) {
+                                Text("🍔")
+                                    .font(.title)
+                            }
+                        }
+                        .cornerRadius(10)
+                        .frame(maxWidth: 200, maxHeight: 150)
+                    }
+                }
+                .padding()
             }
             
             HStack {
@@ -27,10 +47,15 @@ struct PaninoRow: View {
                     
                     Text(panino.name)
                     
-                    Label(panino.menu?.title ?? SidebarSection.all.title, systemImage: "folder.fill")
-                        .font(.caption)
-                        .fontWeight(.light)
-                        .foregroundStyle(.secondary)
+                    HStack {
+                        Image(systemName: "folder.fill")
+                        
+                        Text(panino.menu?.title ?? SidebarSection.all.title)
+                            .font(.caption)
+                            .fontWeight(.light)
+                            .foregroundStyle(.secondary)
+                    }
+                    .foregroundStyle(.secondary)
                 }
                 
                 Spacer()

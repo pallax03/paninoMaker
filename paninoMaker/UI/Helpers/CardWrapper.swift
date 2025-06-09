@@ -9,8 +9,10 @@ import SwiftUI
 
 struct CardWrapper<Content: View>: View {
     let content: Content
+    var color: Color
     
-    init(@ViewBuilder content: () -> Content) {
+    init(_ color: Color, @ViewBuilder content: () -> Content) {
+        self.color = color
         self.content = content()
     }
 
@@ -18,13 +20,14 @@ struct CardWrapper<Content: View>: View {
         content
             .padding()
             .frame(maxWidth: .infinity)
+            .background(color.opacity(0.2))
             .cornerRadius(16)
             .padding(.bottom, 5)
     }
 }
 
 #Preview {
-    CardWrapper {
+    CardWrapper(.gray) {
         Text("Hello World!")
     }
 }

@@ -56,17 +56,17 @@ struct PaninoDetail: View {
                         Text(panino.owner ?? "No owner")
                     }
                     .font(.footnote)
-                }.padding(.bottom)
+                }
+                .padding(.bottom)
                 
                 ScrollView {
-                    CardWrapper {
+                    CardWrapper(.indigo) {
                         PaninoPhotos(panino: panino)
                     }
-                    .background(Color.indigo.opacity(0.2))
                     
                     Spacer()
                     
-                    CardWrapper {
+                    CardWrapper(.yellow) {
                         VStack {
                             Button {
                                 isComposing = true
@@ -83,13 +83,10 @@ struct PaninoDetail: View {
                             }
                         }
                     }
-                        .background(Color.yellow.opacity(0.2))
                     
-                    
-                    CardWrapper {
-                        VStack {
+                    CardWrapper(.blue) {
+                        VStack(spacing: 10) {
                             Text("Tocca per valutare")
-                                .padding(.bottom, 5)
                             
                             HStack {
                                 ForEach(1...5, id: \.self) { index in
@@ -102,7 +99,6 @@ struct PaninoDetail: View {
                                     }
                                 }
                             }
-                            .padding(.bottom, 5)
                             
                             if panino.rating != nil {
                                 Divider()
@@ -112,14 +108,14 @@ struct PaninoDetail: View {
                                         get: { panino.ratingDescription ?? "" },
                                         set: { panino.ratingDescription = $0.isEmpty ? nil : $0 }
                                     )) {
-                                        Text("Aggiungi una descrizione...")
-                                    }
-                                    .focused($isFocused)
+                                    Text("Aggiungi una descrizione...")
+                                }
+                                .focused($isFocused)
                             }
                         }
                     }
-                        .background(Color.blue.opacity(0.2))
-                    CardWrapper {
+                    
+                    CardWrapper(.green) {
                         Button {
                             isMapOpen = true
                         } label: {
@@ -140,7 +136,6 @@ struct PaninoDetail: View {
                             panino.setCoordinates(mapItem.location)
                         }
                     }
-                        .background(Color.green.opacity(0.2))
                 }
             }
             .padding()

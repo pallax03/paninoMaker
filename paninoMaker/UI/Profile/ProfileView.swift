@@ -22,10 +22,11 @@ struct ProfileView: View {
     @State private var selectedPhotoItems: [PhotosPickerItem] = []
     @State private var showCamera: Bool = false
     @State private var showLibrary: Bool = false
+    @State private var selectedPhotos: [UIImage] = []
     
     var body: some View {
         ScrollView {
-            PhotoSelectorButton(selectedPhotoItems: $selectedPhotoItems) {
+            PhotoSelectorButton(selectedPhotos: $selectedPhotos) {
                 if let image = user.propic {
                     Image(uiImage: image)
                         .resizable()
@@ -40,16 +41,9 @@ struct ProfileView: View {
                         .foregroundColor(.gray)
                 }
             }
-            .onChange(of: selectedPhotoItems) { oldValue, newValue in
-                Task {
-                    for item in newValue {
-                        print(item)
-                        if let data = try? await item.loadTransferable(type: Data.self),
-                           let uiImage = UIImage(data: data) {
-                            user.setPropic(uiImage)
-                            }
-                    }
-                    selectedPhotoItems = []
+            .onChange(of: selectedPhotos) { oldValue, newValue in
+                for item in newValue {
+                    user.setPropic(item)
                 }
             }
             
@@ -69,7 +63,7 @@ struct ProfileView: View {
                 VStack {
                     Text(user.username)
                         .font(.title)
-
+                    
                     Button(action: {
                         user.logout()
                     }, label: {

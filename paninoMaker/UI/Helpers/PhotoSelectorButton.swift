@@ -12,14 +12,14 @@ struct PhotoSelectorButton<Content: View>: View {
     @State var showConfirmationDialog: Bool = false
     @State var showLibrary: Bool = false
     @State var showCamera: Bool = false
-    @State var selectedImages: UIImage?
+    @Binding var selectedPhotos: [UIImage]
+    @State var selectedPhotoItems: [PhotosPickerItem] = []
     
-    @Binding var selectedPhotoItems: [PhotosPickerItem]
     var maxSelectionCount: Int
     let label: Content
     
-    init(selectedPhotoItems: Binding<[PhotosPickerItem]>, maxSelectionCount: Int = 1, @ViewBuilder label: () -> Content) {
-        self._selectedPhotoItems = selectedPhotoItems
+    init(selectedPhotos: Binding<[UIImage]>, maxSelectionCount: Int = 1, @ViewBuilder label: () -> Content) {
+        self._selectedPhotos = selectedPhotos
         self.maxSelectionCount = maxSelectionCount
         self.label = label()
     }
@@ -48,8 +48,20 @@ struct PhotoSelectorButton<Content: View>: View {
             maxSelectionCount: maxSelectionCount,
             matching: .images
         )
+        .onChange(of: selectedPhotoItems) { oldValue, newValue in
+            Task {
+                for item in newValue {
+                    print(item)
+                    if let data = try? await item.loadTransferable(type: Data.self),
+                       let uiImage = UIImage(data: data) {
+                        selectedPhotos.append(uiImage)
+                        }
+                }
+//                selectedPhotoItems = []
+            }
+        }
         .sheet(isPresented: $showCamera) {
-            CameraPicker(image: $selectedImages)
+            CameraPicker(images: $selectedPhotos)
         }
     }
 }
