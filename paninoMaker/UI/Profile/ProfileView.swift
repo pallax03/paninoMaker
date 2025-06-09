@@ -14,18 +14,11 @@ struct ProfileView: View {
     @Query(filter: #Predicate { !$0.inTrash }, sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @EnvironmentObject var user: UserModel
     @EnvironmentObject var themeManager: ThemeManager
-    @State private var showingImagePicker = false
-    @State private var showCameraPicker = false
-    @State private var showActionSheet = false
-    @State private var badgeSelezionato: String?
-    @State private var showPopoverLevel: Bool = false
-    @State private var selectedPhotoItems: [PhotosPickerItem] = []
-    @State private var showCamera: Bool = false
-    @State private var showLibrary: Bool = false
     @State private var selectedPhotos: [UIImage] = []
     
     var body: some View {
         ScrollView {
+            // Profile picture
             PhotoSelectorButton(selectedPhotos: $selectedPhotos) {
                 if let image = user.propic {
                     Image(uiImage: image)
@@ -47,7 +40,7 @@ struct ProfileView: View {
                 }
             }
             
-            
+            // User login button
             if (!user.isLogged) {
                 NavigationLink(destination: LoginView()) {
                     VStack {
@@ -59,7 +52,7 @@ struct ProfileView: View {
                             .foregroundStyle(.gray)
                     }
                 }
-            } else {
+            } else { // User email
                 VStack {
                     Text(user.username)
                         .font(.title)
@@ -76,102 +69,15 @@ struct ProfileView: View {
             
             Divider().padding()
             
+            // Only if user is logged
             if user.isLogged {
-                VStack {
-                    ZStack {
-                        ZStack {
-                            Circle()
-                                .stroke(Color.gray.opacity(0.3), lineWidth: 10)
-                                .frame(width: 150, height: 150)
-                            
-                            Circle()
-                                .trim(from: 0.0, to: CGFloat(user.pex % UserGamifications.pointsPerLevelUp) / CGFloat(UserGamifications.pointsPerLevelUp))
-                                .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
-                                .rotationEffect(.degrees(-90))
-                                .frame(width: 150, height: 150)
-                        }
-                        
-                        VStack {
-                            Text("LVL. \(user.level)")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                            
-                            Text("\(user.pex) PEX")
-                                .fontWeight(.bold)
-                        }
-                        
-                        Button {
-                            showPopoverLevel.toggle()
-                        } label: {
-                            if user.level == UserGamifications.levelCap {
-                                Image(systemName: "crown.fill")
-                                    .imageScale(.small)
-                                    .foregroundStyle(.yellow)
-                            } else {
-                                Image(systemName: "info.circle")
-                                    .imageScale(.small)
-                            }
-                        }
-                        .foregroundStyle(.gray)
-                        .offset(x: 45,y: -25)
-                        .popover(
-                            isPresented: $showPopoverLevel,
-                            arrowEdge: .top) {
-                                VStack(spacing: 8) {
-                                    if user.level == UserGamifications.levelCap {
-                                        VStack(spacing: 8) {
-                                            Text("Congratulazioni!!!!!")
-                                                .fontWeight(.bold)
-                                                .font(.headline)
-                                            
-                                            Text("Hai raggiunto il livello massimo,\ned hai sbloccato tutti gli ingredienti.")
-                                                .font(.body)
-                                        }
-                                    } else {
-                                        let nextLevel = user.level + 1
-                                        Text("Slocca al livello \(nextLevel)")
-                                            .fontWeight(.bold)
-                                            .font(.headline)
-                                        ForEach(IngredientStore().ingredients(wantedLevel: nextLevel)) { ingredient in
-                                            HStack {
-                                                Text("\(ingredient.name)")
-                                                Text("(\(ingredient.category.displayName))")
-                                                    .foregroundStyle(ingredient.category.color)
-                                            }
-                                            .font(.body)
-                                        }
-                                    }
-                                }
-                                .padding()
-                                .presentationCompactAdaptation(.popover)
-                            }
-                    }
-                    .padding()
-                    
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 20) {
-                        ForEach(BadgesLibrary.all, id: \.title) { badge in
-                            VStack {
-                                let count = allPanini.filter {
-                                    $0.badges.contains { $0.title == badge.title }
-                                }.count
-                                
-                                BadgeView(badge: badge)
-                                    .opacity(count > 0 ? 1.0 : 0.3)
-                                
-                                Text("\(count)x")
-                            }
-                        }
-                    }
-                }
+                ProfileGamifications()
                 
                 Divider().padding()
                 
                 Spacer(minLength: 40)
                 
-                Text("Your Panino Badges")
-                    .font(.title)
-                    .fontWeight(.bold)
-                PaninoChart(allPanini: allPanini)
+                PaninoChart()
             }
         }
         .padding()
@@ -194,8 +100,8 @@ struct ProfileView: View {
 #Preview {
     NavigationStack {
         ProfileView()
-            .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
             .environmentObject(UserModel())
             .environmentObject(ThemeManager())
+            .modelContainer(PreviewData.makeModelContainer())
     }
 }

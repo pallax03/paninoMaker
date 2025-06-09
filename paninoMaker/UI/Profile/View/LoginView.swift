@@ -18,25 +18,18 @@ struct LoginView: View {
 
     var body: some View {
         VStack(spacing: 20) {
+            // Icon
             Image("Panino")
                 .resizable()
                 .frame(width: 150, height: 150)
+            
+            // Title
             Text(isRegistrating ? "Registrati" : "Accedi")
                 .font(.largeTitle)
                 .bold()
 
-            ZStack(alignment: .leading) {
-                if viewModel.email.isEmpty {
-                    Text("Email")
-                        .foregroundColor(.gray)
-                        .offset(x:20, y: 0)
-                } else {
-                    Text("Email")
-                        .foregroundColor(.gray)
-                        .font(.caption)
-                        .offset(x:10, y: -10)
-                }
-
+            // Email field
+            FieldWrapper(condition: $viewModel.email, placeholder: "Email") {
                 TextField("", text: $viewModel.email)
                     .textContentType(.emailAddress)
                     .autocapitalization(.none)
@@ -44,36 +37,22 @@ struct LoginView: View {
                     .padding(.top, 26)
                     .padding(.bottom, 8)
             }
-            .background(Color.white)
-            .cornerRadius(16)
-            .shadow(color: Color.black.opacity(0.07), radius: 4, x: 0, y: 2)
-
-            ZStack(alignment: .leading) {
-                if viewModel.password.isEmpty {
-                    Text("Password")
-                        .foregroundColor(.gray)
-                        .offset(x:20, y: 0)
-                } else {
-                    Text("Password")
-                        .foregroundColor(.gray)
-                        .font(.caption)
-                        .offset(x:10, y: -10)
-                }
-
+            
+            // Password field
+            FieldWrapper(condition: $viewModel.password, placeholder: "Password") {
                 SecureField("", text: $viewModel.password)
                     .padding(.horizontal, 16)
                     .padding(.top, 26)
                     .padding(.bottom, 8)
             }
-            .background(Color.white)
-            .cornerRadius(16)
-            .shadow(color: Color.black.opacity(0.07), radius: 4, x: 0, y: 2)
 
+            // Error message
             if let error = viewModel.errorMessage {
                 Text(error)
                     .foregroundColor(.red)
             }
 
+            // Confirm button
             Button {
                 Task {
                     if isRegistrating {
@@ -98,6 +77,7 @@ struct LoginView: View {
                     .cornerRadius(10)
             }
             
+            // Registration / login button
             Button {
                 isRegistrating.toggle()
             } label: {
@@ -110,6 +90,7 @@ struct LoginView: View {
                 $viewModel.password.wrappedValue = ""
             }
 
+            // Divider custom
             ZStack {
                 Divider()
                     .background(Color.gray.opacity(0.3))
@@ -120,6 +101,7 @@ struct LoginView: View {
                     .foregroundColor(.gray.opacity(0.6))
             }
             
+            // Google sign in button
             GoogleSignInButton(scheme: .dark, style: .standard, state: .normal) {
                 Task {
                     await viewModel.signInWithGoogle(user)
@@ -130,7 +112,6 @@ struct LoginView: View {
                     }
                 }
             }
-            .padding()
         }
         .padding()
     }

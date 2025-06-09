@@ -19,8 +19,6 @@ struct MenuRow: View {
             Text("\(count)")
             Image(systemName: "chevron.right")
         }
-        
-        
     }
 }
 

@@ -7,27 +7,35 @@
 
 import SwiftUI
 import Charts
+import SwiftData
 
 struct PaninoChart: View {
-    var allPanini: [Panino]
-    
+    @Query(filter: #Predicate { !$0.inTrash }, sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
+
     var body: some View {
-        Chart(allPanini) { panino in
-            LineMark(
-                x: .value("Panino", panino.name),
-                y: .value("Badges", panino.badges.count)
-            )
-            .foregroundStyle(.blue)
-            .symbol(Circle())
+        VStack {
+            Text("Your Panino Badges")
+                .font(.title)
+                .fontWeight(.bold)
+            
+            Chart(allPanini) { panino in
+                LineMark(
+                    x: .value("Panino", panino.name),
+                    y: .value("Badges", panino.badges.count)
+                )
+                .foregroundStyle(.blue)
+                .symbol(Circle())
+            }
+            .frame(height: 300)
+            .padding()
         }
-        .frame(height: 300)
         .padding()
     }
 }
 
 #Preview {
-    PaninoChart(allPanini: PreviewData.samplePanini)
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+    PaninoChart()
+        .modelContainer(PreviewData.makeModelContainer())
         .environmentObject(UserModel())
         .environmentObject(ThemeManager())
 }

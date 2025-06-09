@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct CardWrapper<Content: View>: View {
-    let content: Content
     var title: String
     var color: Color
+    let content: Content
     
     init(title: String, color: Color, @ViewBuilder content: () -> Content) {
         self.title = title
@@ -43,4 +43,6 @@ struct CardWrapper<Content: View>: View {
     CardWrapper(title: "Test", color: .gray) {
         Text("Hello World!")
     }
+    .environmentObject(UserModel())
+    .modelContainer(PreviewData.makeModelContainer())
 }
