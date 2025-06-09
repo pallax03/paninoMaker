@@ -37,23 +37,21 @@ struct IngredientList: View {
                             }
                         }
                     } label: {
-                        ZStack {
-                            category.color.opacity(0.2)
-                            HStack(spacing: 0) {
-                                Text(category.displayName)
-                                    .font(.title)
-                                    .foregroundStyle(category.color)
-                                    .fontWeight(.bold)
-                                    .padding(.vertical, 8)
-                                    .padding(.horizontal, 16)
-                                Spacer()
-                                Image(systemName: collapsedCategories.contains(category) ? "chevron.down" : "chevron.up")
-                                    .padding(.trailing, 16)
-                            }
+                        HStack {
+                            Text(category.displayName)
+                                .font(.title)
+                                .foregroundStyle(category.color)
+                                .fontWeight(.bold)
+                            
+                            Spacer()
+                            
+                            Image(systemName: collapsedCategories.contains(category) ? "chevron.down" : "chevron.up")
+                                .foregroundStyle(.gray)
                         }
-                        .frame(maxWidth: .infinity)
+                        .padding(10)
+                        .background(category.color.opacity(0.2))
                     }
-                    .buttonStyle(.plain)
+                    .cornerRadius(16)
                 }
             }
         }

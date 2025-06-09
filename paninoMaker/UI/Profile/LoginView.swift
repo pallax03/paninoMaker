@@ -7,6 +7,7 @@
 
 import SwiftUI
 import GoogleSignInSwift
+import SwiftData
 
 struct LoginView: View {
     @Environment(\.dismiss) private var dismiss
@@ -97,4 +98,5 @@ struct LoginView: View {
 #Preview {
     LoginView()
         .environmentObject(UserModel())
+        .modelContainer(PreviewData.makeModelContainer())
 }
