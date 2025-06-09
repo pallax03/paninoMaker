@@ -88,6 +88,7 @@ class UserModel: ObservableObject {
         } catch {
             print("Errore durante il logout: \(error.localizedDescription)")
         }
+        self.unlockAll()
     }
     
     func saveUserData() {
