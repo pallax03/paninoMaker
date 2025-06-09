@@ -7,6 +7,7 @@
 
 import SwiftUI
 import GoogleSignInSwift
+import SwiftData
 
 struct LoginView: View {
     @Environment(\.dismiss) private var dismiss
@@ -17,7 +18,7 @@ struct LoginView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text(isRegistrating ? "Register" : "Login")
+            Text(isRegistrating ? "Registrati" : "Accedi")
                 .font(.largeTitle)
                 .bold()
 
@@ -48,7 +49,7 @@ struct LoginView: View {
                     }
                 }
             } label: {
-                Text(isRegistrating ? "Conferma" : "Accedi")
+                Text("Conferma")
                     .font(.title2)
                     .padding(5)
             }
@@ -57,7 +58,7 @@ struct LoginView: View {
             Button {
                 isRegistrating.toggle()
             } label: {
-                Text(isRegistrating ? "Login" : "Registrati")
+                Text(isRegistrating ? "Hai già un account? Accedi" : "Vuoi registrarti?")
                     .font(.subheadline)
             }
             .onChange(of: isRegistrating) { oldValue, newValue in
@@ -78,14 +79,10 @@ struct LoginView: View {
                 Task {
                     await viewModel.signInWithGoogle(user)
                     
-                    if (user.isLogged) {
+                    if user.isLogged {
                         GamificationManager.shared.prepareForUser(user, panini: allPanini)
                         dismiss()
                     }
-                }
-                
-                if user.isLogged {
-                    dismiss()
                 }
             }
             .padding()
@@ -97,4 +94,5 @@ struct LoginView: View {
 #Preview {
     LoginView()
         .environmentObject(UserModel())
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
 }
