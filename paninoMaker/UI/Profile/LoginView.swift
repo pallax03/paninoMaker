@@ -18,17 +18,56 @@ struct LoginView: View {
 
     var body: some View {
         VStack(spacing: 20) {
+            Image("Panino")
+                .resizable()
+                .frame(width: 150, height: 150)
             Text(isRegistrating ? "Registrati" : "Accedi")
                 .font(.largeTitle)
                 .bold()
 
-            TextField("Email", text: $viewModel.email)
-                .textContentType(.emailAddress)
-                .autocapitalization(.none)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            ZStack(alignment: .leading) {
+                if viewModel.email.isEmpty {
+                    Text("Email")
+                        .foregroundColor(.gray)
+                        .offset(x:20, y: 0)
+                } else {
+                    Text("Email")
+                        .foregroundColor(.gray)
+                        .font(.caption)
+                        .offset(x:10, y: -10)
+                }
 
-            SecureField("Password", text: $viewModel.password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                TextField("", text: $viewModel.email)
+                    .textContentType(.emailAddress)
+                    .autocapitalization(.none)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 26)
+                    .padding(.bottom, 8)
+            }
+            .background(Color.white)
+            .cornerRadius(16)
+            .shadow(color: Color.black.opacity(0.07), radius: 4, x: 0, y: 2)
+
+            ZStack(alignment: .leading) {
+                if viewModel.password.isEmpty {
+                    Text("Password")
+                        .foregroundColor(.gray)
+                        .offset(x:20, y: 0)
+                } else {
+                    Text("Password")
+                        .foregroundColor(.gray)
+                        .font(.caption)
+                        .offset(x:10, y: -10)
+                }
+
+                SecureField("", text: $viewModel.password)
+                    .padding(.horizontal, 16)
+                    .padding(.top, 26)
+                    .padding(.bottom, 8)
+            }
+            .background(Color.white)
+            .cornerRadius(16)
+            .shadow(color: Color.black.opacity(0.07), radius: 4, x: 0, y: 2)
 
             if let error = viewModel.errorMessage {
                 Text(error)
@@ -51,15 +90,20 @@ struct LoginView: View {
             } label: {
                 Text("Conferma")
                     .font(.title2)
-                    .padding(5)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.orange)
+                    .cornerRadius(10)
             }
-            .buttonStyle(.borderedProminent)
             
             Button {
                 isRegistrating.toggle()
             } label: {
                 Text(isRegistrating ? "Hai già un account? Accedi" : "Vuoi registrarti?")
                     .font(.subheadline)
+                    .foregroundColor(.gray)
             }
             .onChange(of: isRegistrating) { oldValue, newValue in
                 $viewModel.email.wrappedValue = ""
@@ -68,11 +112,12 @@ struct LoginView: View {
 
             ZStack {
                 Divider()
+                    .background(Color.gray.opacity(0.3))
                 
                 Text("or")
                     .padding()
                     .background(.background)
-                    .foregroundStyle(.gray)
+                    .foregroundColor(.gray.opacity(0.6))
             }
             
             GoogleSignInButton(scheme: .dark, style: .standard, state: .normal) {

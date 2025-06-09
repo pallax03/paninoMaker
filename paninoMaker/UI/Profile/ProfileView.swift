@@ -82,7 +82,7 @@ struct ProfileView: View {
             
             Divider().padding()
             
-            if !user.isLogged {
+            if user.isLogged {
                 VStack {
                     ZStack {
                         ZStack {
