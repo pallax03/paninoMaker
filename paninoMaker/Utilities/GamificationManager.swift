@@ -17,13 +17,7 @@ final class GamificationManager {
         if !user.isLogged {
             user.unlockAll()
         } else {
-            let paniniNotInTrash = panini.filter { !$0.inTrash }
-            let points = paniniNotInTrash.map { $0.points }.reduce(0, +)
-            print("user: \(user.pex) == total points: \(points) ? ")
-            if user.pex != points {
-                user.levelUp(points: points - user.pex)
-            }
-            print("user: \(user.pex) == total points: \(points) ? \(user.pex == points)")
+            recalculateAll(panini: panini)
         }
     }
     

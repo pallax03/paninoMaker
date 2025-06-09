@@ -13,6 +13,7 @@ struct LoginView: View {
     @StateObject var viewModel = AuthModel()
     @EnvironmentObject var user: UserModel
     @State private var isRegistrating: Bool = false
+    @Query(filter: #Predicate { !$0.inTrash }, sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
 
     var body: some View {
         VStack(spacing: 20) {
@@ -42,6 +43,7 @@ struct LoginView: View {
                     }
                     
                     if user.isLogged {
+                        GamificationManager.shared.prepareForUser(user, panini: allPanini)
                         dismiss()
                     }
                 }
@@ -75,6 +77,11 @@ struct LoginView: View {
             GoogleSignInButton(scheme: .dark, style: .standard, state: .normal) {
                 Task {
                     await viewModel.signInWithGoogle(user)
+                    
+                    if (user.isLogged) {
+                        GamificationManager.shared.prepareForUser(user, panini: allPanini)
+                        dismiss()
+                    }
                 }
                 
                 if user.isLogged {
