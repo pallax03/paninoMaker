@@ -102,7 +102,7 @@ struct ComposerSheet: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         panino.composer = draftComposer
-                        GamificationManager.shared.recalculateAll(panini: allPanini, user: user)
+                        GamificationManager.shared.recalculateAll(panini: allPanini)
                         try? modelContext.save()
                         dismiss()
                     } label: {

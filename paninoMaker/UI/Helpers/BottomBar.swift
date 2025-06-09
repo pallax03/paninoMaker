@@ -71,7 +71,7 @@ struct BottomBar: View {
                             selectedPanino = panino
                             modelContext.insert(panino)
                             try? modelContext.save()
-                            GamificationManager.shared.update(panino: panino, allPanini: allPanini, user: user)
+                            GamificationManager.shared.recalculateAll(panini: allPanini)
                         } label: {
                             Image(systemName: "plus")
                                 .imageScale(.large)
@@ -83,7 +83,7 @@ struct BottomBar: View {
                                 modelContext.delete(panino)
                             }
                             try? modelContext.save()
-                            GamificationManager.shared.recalculateAll(panini: allPanini, user: user)
+                            GamificationManager.shared.recalculateAll(panini: allPanini)
                         } label: {
                             Text("Delete All")
                         }
@@ -98,7 +98,7 @@ struct BottomBar: View {
                                 panino.restoreFromTrash(menu: menu)
                             }
                             try? modelContext.save()
-                            GamificationManager.shared.recalculateAll(panini: allPanini, user: user)
+                            GamificationManager.shared.recalculateAll(panini: allPanini)
                         },
                         onNewMenu: {
                             isShowingNewMenuAlert = true

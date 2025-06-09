@@ -73,7 +73,7 @@ struct ContentView: View {
             
             guard let justClosed = lastViewedPanino else { return }
             
-            GamificationManager.shared.update(panino: justClosed, allPanini: allPanini, user: user)
+            GamificationManager.shared.recalculateAll(panini: allPanini)
             lastViewedPanino = nil
         }
         .overlay(alignment: .bottom) {
@@ -96,7 +96,7 @@ struct ContentView: View {
                 selectedMenu = .menus(menu)
                 newMenuTitle = ""
                 try? modelContext.save()
-                GamificationManager.shared.recalculateAll(panini: panini, user: user)
+                GamificationManager.shared.recalculateAll(panini: panini)
             })
             Button("Cancel", role: .cancel) {
                 newMenuTitle = ""

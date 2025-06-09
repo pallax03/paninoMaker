@@ -11,7 +11,7 @@ import PhotosUI
 
 struct ProfileView: View {
     @Environment(\.modelContext) var modelContext
-    @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
+    @Query(filter: #Predicate { !$0.inTrash }, sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @EnvironmentObject var user: UserModel
     @EnvironmentObject var themeManager: ThemeManager
     @State private var showingImagePicker = false
@@ -113,7 +113,7 @@ struct ProfileView: View {
                                 .imageScale(.small)
                         }
                         .foregroundStyle(.gray)
-                        .offset(x: 35,y: -25)
+                        .offset(x: 45,y: -25)
                         .popover(
                             isPresented: $showPopoverLevel,
                             arrowEdge: .top) {

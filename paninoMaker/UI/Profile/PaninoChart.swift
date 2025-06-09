@@ -18,6 +18,7 @@ struct PaninoChart: View {
                 y: .value("Badges", panino.badges.count)
             )
             .foregroundStyle(.blue)
+            .symbol(Circle())
         }
         .frame(height: 300)
         .padding()

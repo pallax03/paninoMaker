@@ -10,8 +10,10 @@ import Foundation
 @MainActor
 final class GamificationManager {
     static let shared = GamificationManager()
+    var user: UserModel = UserModel()
     
     func prepareForUser(_ user: UserModel, panini: [Panino]) {
+        self.user = user
         if !user.isLogged {
             user.unlockAll()
         } else {
@@ -25,49 +27,20 @@ final class GamificationManager {
         }
     }
     
-    func update(panino: Panino, allPanini: [Panino], user: UserModel) {
-        assert(Thread.isMainThread, "update deve essere chiamato sul main thread")
-        let paniniNotInTrash = allPanini.filter { !$0.inTrash }
-        print("UPDATE")
+    func recalculateAll(panini: [Panino]) {
+        let paniniNotInTrash = panini.filter { !$0.inTrash }
+        let totalPoints = paniniNotInTrash.map { $0.points }.reduce(0, +)
         
-        let oldPoints = panino.points
-        panino.refreshBadges(using: allPanini)
-        let newPoints = panino.calculatePoints()
-        
-        print("allPanini: \(allPanini.map { ($0.name, $0.points) })")
-        print("panino: \(panino.name) \(panino.points)")
-        print("panini not in trash: \(paniniNotInTrash.map { ($0.name, $0.points) })")
-        
-        // Aggiorna sempre i punti del panino
-        panino.points = panino.inTrash ? 0 : newPoints
-
-        // Ricalcola il totale dei punti da panini attivi
-        let totalPoints = allPanini.map { $0.points }.reduce(0, +)
-        
-        // Aggiorna l'utente solo se necessario
-        if user.pex != totalPoints {
-            user.pex = totalPoints
-            user.level = user.pex / UserGamifications.pointsPerLevelUp
-            user.saveUserData()
-        }
-
-        print("newPoints: \(newPoints) - oldPoints: \(oldPoints) = delta: \(newPoints - oldPoints)")
-        print("user: \(user.pex) == total points: \(totalPoints) ? \(user.pex == totalPoints)")
-    }
-    
-    func recalculateAll(panini: [Panino], user: UserModel) {
         for panino in panini {
-            panino.refreshBadges(using: panini)
+            panino.refreshBadges(using: paniniNotInTrash)
             panino.points = panino.inTrash ? 0 : panino.calculatePoints()
         }
-
-        let totalPoints = panini.map { $0.points }.reduce(0, +)
+        
         if user.pex != totalPoints {
             user.pex = totalPoints
             user.level = user.pex / UserGamifications.pointsPerLevelUp
             user.saveUserData()
         }
 
-        print("recalculated total points: \(totalPoints), user.pex: \(user.pex), match: \(user.pex == totalPoints)")
     }
 }

@@ -38,7 +38,7 @@ struct PaninoContent: View {
                         Button {
                             panino.isSaved.toggle()
                             try? modelContext.save()
-                            GamificationManager.shared.update(panino: panino, allPanini: allPanini, user: user)
+                            GamificationManager.shared.recalculateAll(panini: allPanini)
                         } label: {
                             Label("Saved", systemImage: panino.isSaved ? "bookmark.slash.fill" : "bookmark.fill")
                         }
@@ -52,7 +52,7 @@ struct PaninoContent: View {
                                 panino.sendToTrash()
                             }
                             try? modelContext.save()
-                            GamificationManager.shared.update(panino: panino, allPanini: panini, user: user)
+                            GamificationManager.shared.recalculateAll(panini: allPanini)
                         } label: {
                             Label(selectedMenu == .trash ? "Restore" : "Delete", systemImage: selectedMenu == .trash ? "trash.slash.fill" : "trash.fill")
                         }
@@ -82,7 +82,7 @@ struct PaninoContent: View {
                         if let panino = paninoToMove {
                             panino.restoreFromTrash(menu: menu)
                             try? modelContext.save()
-                            GamificationManager.shared.update(panino: panino, allPanini: panini, user: user)
+                            GamificationManager.shared.recalculateAll(panini: allPanini)
                         }
                     },
                     onNewMenu: {
