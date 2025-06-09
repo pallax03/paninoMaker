@@ -80,88 +80,89 @@ struct ProfileView: View {
                 }
             }
             
-            Divider()
-            
-            VStack {
-                ZStack {
-                    ZStack {
-                        Circle()
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 10)
-                            .frame(width: 150, height: 150)
-                        
-                        Circle()
-                            .trim(from: 0.0, to: CGFloat(user.pex % UserGamifications.pointsPerLevelUp) / CGFloat(UserGamifications.pointsPerLevelUp))
-                            .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
-                            .rotationEffect(.degrees(-90))
-                            .frame(width: 150, height: 150)
-                    }
-                    
-                    VStack {
-                        Text("LVL. \(user.level)")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        
-                        Text("\(user.pex) PEX")
-                            .fontWeight(.bold)
-                    }
-                    
-                    Button {
-                        showPopoverLevel.toggle()
-                    } label: {
-                        Image(systemName: "info.circle")
-                            .imageScale(.small)
-                    }
-                    .foregroundStyle(.gray)
-                    .offset(x: 35,y: -25)
-                    .popover(
-                        isPresented: $showPopoverLevel,
-                        arrowEdge: .top) {
-                            VStack(alignment: .leading, spacing: 8) {
-                                let nextLevel = user.level + 1
-                                Text("Slocca al livello \(nextLevel)")
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                ForEach(IngredientStore().ingredients(wantedLevel: nextLevel)) { ingredient in
-                                    HStack {
-                                        Text("\(ingredient.name) - ")
-                                        Text(ingredient.category.displayName)
-                                            .font(.caption)
-                                            .foregroundStyle(ingredient.category.color)
-                                    }
-                                    
-                                }
-                            }
-                            .padding()
-                            .presentationCompactAdaptation(.popover)
-                        }
-                }
-                .padding()
-            }
-            
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 20) {
-                ForEach(BadgesLibrary.all, id: \.title) { badge in
-                    VStack {
-                        let count = allPanini.filter {
-                            $0.badges.contains { $0.title == badge.title }
-                        }.count
-                        
-                        BadgeView(badge: badge)
-                            .opacity(count > 0 ? 1.0 : 0.3)
-                        
-                        Text("\(count)x")
-                    }
-                }
-            }
             Divider().padding()
             
-            Spacer(minLength: 40)
-            
-            Text("Your Panino Badges")
-                .font(.title)
-                .fontWeight(.bold)
-            PaninoChart(allPanini: allPanini)
-            
-            
+            if user.isLogged {
+                VStack {
+                    ZStack {
+                        ZStack {
+                            Circle()
+                                .stroke(Color.gray.opacity(0.3), lineWidth: 10)
+                                .frame(width: 150, height: 150)
+                            
+                            Circle()
+                                .trim(from: 0.0, to: CGFloat(user.pex % UserGamifications.pointsPerLevelUp) / CGFloat(UserGamifications.pointsPerLevelUp))
+                                .stroke(Color.green, style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                                .rotationEffect(.degrees(-90))
+                                .frame(width: 150, height: 150)
+                        }
+                        
+                        VStack {
+                            Text("LVL. \(user.level)")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            
+                            Text("\(user.pex) PEX")
+                                .fontWeight(.bold)
+                        }
+                        
+                        Button {
+                            showPopoverLevel.toggle()
+                        } label: {
+                            Image(systemName: "info.circle")
+                                .imageScale(.small)
+                        }
+                        .foregroundStyle(.gray)
+                        .offset(x: 35,y: -25)
+                        .popover(
+                            isPresented: $showPopoverLevel,
+                            arrowEdge: .top) {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    let nextLevel = user.level + 1
+                                    Text("Slocca al livello \(nextLevel)")
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                    ForEach(IngredientStore().ingredients(wantedLevel: nextLevel)) { ingredient in
+                                        HStack {
+                                            Text("\(ingredient.name) - ")
+                                            Text(ingredient.category.displayName)
+                                                .font(.caption)
+                                                .foregroundStyle(ingredient.category.color)
+                                        }
+                                        
+                                    }
+                                }
+                                .padding()
+                                .presentationCompactAdaptation(.popover)
+                            }
+                    }
+                    .padding()
+                    
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 20) {
+                        ForEach(BadgesLibrary.all, id: \.title) { badge in
+                            VStack {
+                                let count = allPanini.filter {
+                                    $0.badges.contains { $0.title == badge.title }
+                                }.count
+                                
+                                BadgeView(badge: badge)
+                                    .opacity(count > 0 ? 1.0 : 0.3)
+                                
+                                Text("\(count)x")
+                            }
+                        }
+                    }
+                }
+                
+                Divider().padding()
+                
+                Spacer(minLength: 40)
+                
+                Text("Your Panino Badges")
+                    .font(.title)
+                    .fontWeight(.bold)
+                PaninoChart(allPanini: allPanini)
+            }
         }
         .padding()
         .toolbar {

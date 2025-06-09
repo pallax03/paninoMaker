@@ -16,7 +16,17 @@ class AuthModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var errorMessage: String?
-    @Published var isLoggedIn: Bool = false
+    
+    func register(_ user: UserModel) async {
+        do {
+            try await Auth.auth().createUser(withEmail: email, password: password)
+            print("✅ Registrazione riuscita")
+            await login(user)
+        } catch {
+            errorMessage = error.localizedDescription
+            user.logout()
+        }
+    }
     
     func login(_ user: UserModel) async {
         do {

@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct LoginView: View {
+    @Environment(\.dismiss) private var dismiss
     @StateObject var viewModel = AuthModel()
     @EnvironmentObject var user: UserModel
+    @State private var isRegistrating: Bool = false
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Login")
+            Text(isRegistrating ? "Register" : "Login")
                 .font(.largeTitle)
                 .bold()
 
@@ -30,13 +32,36 @@ struct LoginView: View {
                     .foregroundColor(.red)
             }
 
-            Button("Login") {
+            Button {
                 Task {
-                    await viewModel.login(user)
+                    if isRegistrating {
+                        await viewModel.register(user)
+                    } else {
+                        await viewModel.login(user)
+                    }
+                    
+                    if user.isLogged {
+                        dismiss()
+                    }
                 }
+            } label: {
+                Text(isRegistrating ? "Conferma" : "Accedi")
+                    .font(.title2)
+                    .padding(5)
             }
             .buttonStyle(.borderedProminent)
             
+            Button {
+                isRegistrating.toggle()
+            } label: {
+                Text(isRegistrating ? "Login" : "Registrati")
+                    .font(.subheadline)
+            }
+            .onChange(of: isRegistrating) { oldValue, newValue in
+                $viewModel.email.wrappedValue = ""
+                $viewModel.password.wrappedValue = ""
+            }
+
             ZStack {
                 Divider()
                 
