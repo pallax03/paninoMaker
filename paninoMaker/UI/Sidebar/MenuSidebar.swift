@@ -46,14 +46,14 @@ struct MenuSidebar: View {
                                 try? modelContext.save()
                                 
                             } label: {
-                                Label("Delete Menu", systemImage: "trash")
+                                Label("Delete", systemImage: "trash")
                             }
                             Button {
                                 focusedMenu = menu
                                 renameMenuTitle = menu.title
                                 isShowingRenameMenuAlert.toggle()
                             } label: {
-                                Label("Rename Menu", systemImage: "square.and.arrow.up")
+                                Label("Rename", systemImage: "pencil")
                             }
                         }
                         .swipeActions(edge: .leading) {
