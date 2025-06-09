@@ -8,6 +8,7 @@
 import SwiftUI
 import SwiftData
 import UserNotifications
+import FirebaseAuth
 
 struct ContentView: View {
     @EnvironmentObject var user: UserModel
@@ -16,7 +17,8 @@ struct ContentView: View {
     @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
     @State var selectedMenu: SidebarSection? = .all
     @State var selectedPanino: Panino?
-
+    @State private var lastViewedPanino: Panino?
+    
     @State private var isShowingNewMenuAlert = false
     @State private var newMenuTitle = ""
     @State private var selectedPanini: Set<Panino> = []
@@ -60,7 +62,19 @@ struct ContentView: View {
             }
         }
         .task {
+            await user.syncUserData()
             GamificationManager.shared.prepareForUser(user, panini: allPanini)
+        }
+        .onChange(of: selectedPanino) {
+            guard selectedPanino == nil else {
+                lastViewedPanino = selectedPanino
+                return
+            }
+            
+            guard let justClosed = lastViewedPanino else { return }
+            
+            GamificationManager.shared.update(panino: justClosed, allPanini: allPanini, user: user)
+            lastViewedPanino = nil
         }
         .overlay(alignment: .bottom) {
             BottomBar(
@@ -81,7 +95,7 @@ struct ContentView: View {
                 }
                 selectedMenu = .menus(menu)
                 newMenuTitle = ""
-                try? modelContext.save() 
+                try? modelContext.save()
             })
             Button("Cancel", role: .cancel) {
                 newMenuTitle = ""

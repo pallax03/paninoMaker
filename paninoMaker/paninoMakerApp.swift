@@ -40,7 +40,9 @@ struct paninoMakerApp: App {
                 .preferredColorScheme(themeManager.selectedColorScheme)
                 .onAppear {
                     if Auth.auth().currentUser != nil {
-                        user.syncUserData()
+                        Task {
+                            await user.syncUserData()
+                        }
                     }
                 }
         }

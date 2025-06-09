@@ -162,8 +162,6 @@ struct BottomBar: View {
 #Preview {
     let panino = PreviewData.samplePanino
     let menu = PreviewData.sampleMenu
-    let isShowingNewMenuAlert = true
-    let newMenuTitle = "New Menu"
     
     Text("Menu Sidebar")
     BottomBar(selectedMenu: .constant(nil), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))

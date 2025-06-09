@@ -35,6 +35,7 @@ class Panino {
     var ratingDescription: String? = nil
     var composer: Composer
     var menu: Menu?
+    var points = 0
     
     // MARK: - Computed
     
@@ -114,9 +115,11 @@ class Panino {
         if self.coordinates != nil { points += PaninoGamifications.pointsPerMap }
         
         let divisor = pow(10.0, 2.0)
-        let mult = (badges.map{ $0.mult }.reduce(1.0, *) * divisor).rounded() / divisor
+        let mult = (badges.map{ $0.mult }.reduce(1.0, +) * divisor).rounded() / divisor
         
-        return Int(Double(points) * mult)
+        self.points = Int(Double(points) * mult)
+        print("points: \(points), mult: \(mult)")
+        return self.points
     }
     
     func refreshBadges(using allPanini: [Panino]) {

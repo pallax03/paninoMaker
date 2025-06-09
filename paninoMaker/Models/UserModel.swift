@@ -17,6 +17,7 @@ enum UserGamifications {
     static let pointsPerLevelUp: Int = 100
 }
 
+@MainActor
 class UserModel: ObservableObject {
     @Published var username: String = "Guest"
     @Published var level: Int = 0
@@ -48,28 +49,35 @@ class UserModel: ObservableObject {
         }
     }
     
-    func syncUserData() {
+    
+    func syncUserData() async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         self.username = Auth.auth().currentUser?.email ?? "no email"
         let ref = db.collection("users").document(uid)
-        ref.getDocument { snapshot, error in
-            if let data = snapshot?.data() {
+        
+        do {
+            let snapshot = try await ref.getDocument()
+            if let data = snapshot.data() {
                 self.pex = data["pex"] as? Int ?? 0
                 self.level = self.pex / UserGamifications.pointsPerLevelUp
                 self.isLogged = true
-                
                 if let urlStr = data["profileImageURL"] as? String,
                    let url = URL(string: urlStr) {
                     self.downloadImage(from: url)
                 }
             } else {
-                ref.setData([
+                // documento non esiste: crea con valori iniziali
+                try await ref.setData([
                     "pex": 0,
                     "level": 0
                 ])
+                self.pex = 0
+                self.level = 0
+                self.isLogged = true
             }
+        } catch {
+            print("Errore fetch Firestore: \(error)")
         }
-        self.isLogged = true
     }
     
     func logout() {
@@ -99,9 +107,10 @@ class UserModel: ObservableObject {
     }
     
     func levelUp(points: Int) {
-        pex += points
-        level = isLevelUpAvailable(pex / UserGamifications.pointsPerLevelUp)
-        saveUserData()
+        self.pex += points
+        self.level = self.isLevelUpAvailable(self.pex / UserGamifications.pointsPerLevelUp)
+        print("Saving user data... \(self.level)level, \(self.pex) pex")
+        self.saveUserData()
     }
     
     func isLevelUpAvailable(_ lvl: Int) -> Int {

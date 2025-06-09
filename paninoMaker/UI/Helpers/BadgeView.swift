@@ -40,5 +40,5 @@ struct BadgeView: View {
 
 #Preview {
     let badge: any Badge = BadgesLibrary.randomBadges(count: 1).first!.resolvedBadge!
-    BadgeView(badge: BunBadge())
+    BadgeView(badge: badge)
 }

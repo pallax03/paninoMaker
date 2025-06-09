@@ -32,7 +32,7 @@ class AuthModel: ObservableObject {
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             print("✅ Login riuscito per:", result.user.email ?? "-")
-            user.syncUserData()
+            await user.syncUserData()
         } catch {
             errorMessage = error.localizedDescription
             user.logout()
@@ -61,7 +61,7 @@ class AuthModel: ObservableObject {
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
             
             _ = try await Auth.auth().signIn(with: credential)
-            user.syncUserData()
+            await user.syncUserData()
         } catch {
             errorMessage = error.localizedDescription
             user.logout()
