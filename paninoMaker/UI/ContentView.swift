@@ -69,7 +69,6 @@ struct ContentView: View {
                 lastViewedPanino = selectedPanino
                 return
             }
-                        
             GamificationManager.shared.recalculateAll(panini: allPanini)
             lastViewedPanino = nil
         }

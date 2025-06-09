@@ -9,13 +9,15 @@ import SwiftUI
 import SwiftData
 
 
-
 struct MenuSidebar: View {
     @EnvironmentObject var user: UserModel
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @Binding var selectedMenu: SidebarSection?
+    @State private var isShowingRenameMenuAlert = false
+    @State private var renameMenuTitle = ""
+    @State private var focusedMenu: Menu? = nil
     
     var body: some View {
         List(selection: $selectedMenu) {
@@ -44,13 +46,25 @@ struct MenuSidebar: View {
                                 try? modelContext.save()
                                 
                             } label: {
-                                Label("Delete Menu", systemImage: "trash")
+                                Label("Delete", systemImage: "trash")
                             }
-                            Button() {
-                                
+                            Button {
+                                focusedMenu = menu
+                                renameMenuTitle = menu.title
+                                isShowingRenameMenuAlert.toggle()
                             } label: {
-                                Label("Share Menu", systemImage: "square.and.arrow.up")
+                                Label("Rename", systemImage: "pencil")
                             }
+                        }
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                focusedMenu = menu
+                                renameMenuTitle = menu.title
+                                isShowingRenameMenuAlert.toggle()
+                            } label: {
+                                Label("Rename", systemImage: "pencil")
+                            }
+                            .tint(.indigo)
                         }
                 }
                 .onDelete { indexSet in
@@ -82,6 +96,19 @@ struct MenuSidebar: View {
                         .font(.title)
                 }
             }
+        }
+        .alert("Rename Menu", isPresented: $isShowingRenameMenuAlert) {
+            TextField("Title of the menu", text: $renameMenuTitle)
+            Button("Rename", action: {
+                focusedMenu?.renameMenu(renameMenuTitle)
+                try? modelContext.save()
+                renameMenuTitle = ""
+            })
+            Button("Cancel", role: .cancel) {
+                renameMenuTitle = ""
+            }
+        } message: {
+            Text("Rename menu title.")
         }
     }
 }
