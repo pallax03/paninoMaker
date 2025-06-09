@@ -70,7 +70,11 @@ struct ContentView: View {
                 lastViewedPanino = selectedPanino
                 return
             }
+<<<<<<< HEAD
                         
+=======
+            
+>>>>>>> 2668f96 (renaming menus)
             GamificationManager.shared.recalculateAll(panini: allPanini)
             lastViewedPanino = nil
         }

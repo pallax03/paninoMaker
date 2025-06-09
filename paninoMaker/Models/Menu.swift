@@ -20,6 +20,10 @@ class Menu {
         self.panini = panini
     }
     
+    func renameMenu(_ newTitle: String) {
+        self.title = newTitle
+    }
+    
     func deletePanini() {
         for panino in panini {
             panino.sendToTrash()
