@@ -98,6 +98,7 @@ struct BottomBar: View {
                                 panino.restoreFromTrash(menu: menu)
                             }
                             try? modelContext.save()
+                            GamificationManager.shared.recalculateAll(panini: allPanini, user: user)
                         },
                         onNewMenu: {
                             isShowingNewMenuAlert = true

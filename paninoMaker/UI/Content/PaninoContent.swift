@@ -14,6 +14,7 @@ struct PaninoContent: View {
     @Binding var paninoToMove: Panino?
     @State var isShowingMoveSheet: Bool = false
     var title: String
+    @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     var panini: [Panino]
     @Binding var selectedPanino: Panino?
     @Binding var selectedMenu: SidebarSection?
@@ -37,7 +38,7 @@ struct PaninoContent: View {
                         Button {
                             panino.isSaved.toggle()
                             try? modelContext.save()
-                            GamificationManager.shared.update(panino: panino, allPanini: panini, user: user)
+                            GamificationManager.shared.update(panino: panino, allPanini: allPanini, user: user)
                         } label: {
                             Label("Saved", systemImage: panino.isSaved ? "bookmark.slash.fill" : "bookmark.fill")
                         }
@@ -100,4 +101,5 @@ struct PaninoContent: View {
     let menu = Menu(title: "Test", panini: panini)
     PaninoContent(paninoToMove: .constant(nil), title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: .constant(nil), isShowingNewMenuAlert: .constant(false), newMenuTitle: .constant(""))
         .environmentObject(UserModel())
+        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
 }

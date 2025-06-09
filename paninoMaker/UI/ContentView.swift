@@ -96,6 +96,7 @@ struct ContentView: View {
                 selectedMenu = .menus(menu)
                 newMenuTitle = ""
                 try? modelContext.save()
+                GamificationManager.shared.recalculateAll(panini: panini, user: user)
             })
             Button("Cancel", role: .cancel) {
                 newMenuTitle = ""

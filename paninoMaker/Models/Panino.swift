@@ -118,7 +118,6 @@ class Panino {
         let mult = (badges.map{ $0.mult }.reduce(1.0, +) * divisor).rounded() / divisor
         
         self.points = Int(Double(points) * mult)
-        print("points: \(points), mult: \(mult)")
         return self.points
     }
     
