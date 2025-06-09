@@ -8,13 +8,14 @@
 import SwiftUI
 import SwiftData
 import FirebaseCore
+import FirebaseAuth
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
 }
 
 @main
@@ -37,6 +38,11 @@ struct paninoMakerApp: App {
                 .environmentObject(user)
                 .environmentObject(themeManager)
                 .preferredColorScheme(themeManager.selectedColorScheme)
+                .onAppear {
+                    if Auth.auth().currentUser != nil {
+                        user.syncUserData()
+                    }
+                }
         }
         .modelContainer(for: [Menu.self, Panino.self])
     }

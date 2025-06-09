@@ -66,8 +66,18 @@ struct ProfileView: View {
                     }
                 }
             } else {
-                Text(user.username)
-                    .font(.title)
+                VStack {
+                    Text(user.username)
+                        .font(.title)
+
+                    Button(action: {
+                        user.logout()
+                    }, label: {
+                        Text("Logout")
+                            .font(.title3)
+                            .foregroundStyle(Color.blue)
+                    })
+                }
             }
             
             Divider()
@@ -150,6 +160,8 @@ struct ProfileView: View {
                 .font(.title)
                 .fontWeight(.bold)
             PaninoChart(allPanini: allPanini)
+            
+            
         }
         .padding()
         .toolbar {
