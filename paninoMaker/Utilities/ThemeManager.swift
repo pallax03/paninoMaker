@@ -31,6 +31,17 @@ class ThemeManager: ObservableObject {
         }
     }
     
+    var name: String {
+        switch selectedColorScheme {
+        case .light:
+            return "light"
+        case .dark:
+            return "dark"
+        default:
+            return "auto"
+        }
+    }
+    
     var iconName: String {
         switch selectedColorScheme {
         case .light:
@@ -38,7 +49,7 @@ class ThemeManager: ObservableObject {
         case .dark:
             return "moon"
         default:
-            return "automatic.brakesignal" // Tema di sistema
+            return ""
         }
     }
     

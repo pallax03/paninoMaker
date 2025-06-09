@@ -170,7 +170,10 @@ struct ProfileView: View {
                 Button {
                     themeManager.toggleTheme()
                 } label: {
-                    Image(systemName: themeManager.iconName)
+                    HStack {
+                        Image(systemName: themeManager.iconName)
+                        Text(themeManager.name)
+                    }
                 }
                 .animation(.easeInOut, value: themeManager.selectedColorScheme)
             }
@@ -179,8 +182,10 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView()
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
-        .environmentObject(ThemeManager())
+    NavigationStack {
+        ProfileView()
+            .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
+            .environmentObject(UserModel())
+            .environmentObject(ThemeManager())
+    }
 }
