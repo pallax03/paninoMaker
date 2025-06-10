@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import GoogleSignInSwift
 import SwiftData
 
 struct LoginView: View {
@@ -20,7 +19,7 @@ struct LoginView: View {
     var body: some View {
         VStack(spacing: 20) {
             // Icon
-            Image("Panino")
+            Image("panino")
                 .resizable()
                 .frame(width: 150, height: 150)
             
@@ -109,7 +108,7 @@ struct LoginView: View {
             }
             
             // Google sign in button
-            GoogleSignInButton(scheme: .light, style: .standard, state: .normal) {
+            Button {
                 Task {
                     await viewModel.signInWithGoogle(user)
                     
@@ -118,6 +117,26 @@ struct LoginView: View {
                         dismiss()
                     }
                 }
+            } label: {
+                HStack {
+                    Image("google")
+                        .resizable()
+                        .scaledToFit()
+                    
+                    Text("Continue with Google")
+                }
+                .padding()
+                .foregroundStyle(.gray)
+                .frame(height: 56)
+                .padding(.horizontal, 16)
+                .background(.white)
+                .cornerRadius(12)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(.black.opacity(0.2), lineWidth: 2)
+                }
+                .contentShape(Rectangle())
+
             }
         }
         .padding()
