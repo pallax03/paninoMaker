@@ -14,7 +14,8 @@ struct LoginView: View {
     @EnvironmentObject var user: UserModel
     @State private var isRegistrating: Bool = false
     @Query(filter: #Predicate { !$0.inTrash }, sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
-    @State private var isLoading: Bool = false
+    @State private var isLoadingEmail: Bool = false
+    @State private var isLoadingGoogle: Bool = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -48,14 +49,14 @@ struct LoginView: View {
             
             // Confirm button
             ZStack {
-                if isLoading {
+                if isLoadingEmail {
                     ProgressView()
                         .tint(.orange)
                         .transition(.opacity.combined(with: .scale))
                 } else {
                     Button {
-                        withAnimation(.easeInOut(duration: 0.4)) {
-                            isLoading = true
+                        withAnimation(.easeInOut(duration: 0.25)) {
+                            isLoadingEmail = true
                         }
                         Task {
                             if isRegistrating {
@@ -64,8 +65,8 @@ struct LoginView: View {
                                 await viewModel.login(user)
                             }
                             
-                            withAnimation(.easeInOut(duration: 0.25)) {
-                                isLoading = false
+                            withAnimation(.easeInOut(duration: 0.4)) {
+                                isLoadingEmail = false
                             }
                             
                             if user.isLogged {
@@ -76,15 +77,15 @@ struct LoginView: View {
                     } label: {
                         Text("Conferma")
                             .foregroundColor(.white)
-                            .frame(maxWidth: isLoading ? 0 : .infinity)
+                            .frame(maxWidth: isLoadingEmail ? 0 : .infinity)
                             .transition(.opacity)
                     }
-                    .disabled(isLoading)
+                    .disabled(isLoadingEmail || isLoadingGoogle)
                 }
             }
             .frame(height: 56)
-            .animation(.easeInOut(duration: 0.6), value: isLoading)
-            .background(isLoading ? .white : Color.orange)
+            .animation(.easeInOut(duration: 0.6), value: isLoadingEmail)
+            .background(isLoadingEmail ? .white : Color.orange)
             .cornerRadius(12)
             
             // Registration / login button
@@ -109,8 +110,15 @@ struct LoginView: View {
             
             // Google sign in button
             Button {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    isLoadingGoogle = true
+                }
                 Task {
                     await viewModel.signInWithGoogle(user)
+                    
+                    withAnimation(.easeInOut(duration: 0.4)) {
+                        isLoadingGoogle = false
+                    }
                     
                     if user.isLogged {
                         GamificationManager.shared.prepareForUser(user, panini: allPanini)
@@ -119,16 +127,22 @@ struct LoginView: View {
                 }
             } label: {
                 HStack {
+                    
                     Image("google")
                         .resizable()
                         .scaledToFit()
                     
-                    Text("Continue with Google")
+                    if isLoadingGoogle {
+                        ProgressView()
+                            .transition(.opacity.combined(with: .scale))
+                    } else {
+                        Text("Continue with Google")
+                    }
+                    
                 }
                 .padding()
                 .foregroundStyle(.gray)
                 .frame(height: 56)
-                .padding(.horizontal, 16)
                 .background(.white)
                 .cornerRadius(12)
                 .overlay {
@@ -136,7 +150,7 @@ struct LoginView: View {
                         .stroke(.black.opacity(0.2), lineWidth: 2)
                 }
                 .contentShape(Rectangle())
-
+                .disabled(isLoadingGoogle || isLoadingEmail)
             }
         }
         .padding()

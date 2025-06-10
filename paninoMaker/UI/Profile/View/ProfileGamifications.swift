@@ -39,10 +39,11 @@ struct ProfileGamifications: View {
                 }
                 
                 // Level info button
+                let isUserCapped = user.level >= UserGamifications.levelCap
                 Button {
                     showPopoverLevel.toggle()
                 } label: {
-                    if user.level >= UserGamifications.levelCap {
+                    if isUserCapped {
                         Image(systemName: "crown.fill")
                             .imageScale(.small)
                             .foregroundStyle(.yellow)
@@ -57,7 +58,7 @@ struct ProfileGamifications: View {
                     isPresented: $showPopoverLevel,
                     arrowEdge: .top) {
                         VStack(spacing: 8) {
-                            if user.level == UserGamifications.levelCap {
+                            if isUserCapped {
                                 VStack(spacing: 8) {
                                     Text("Congratulazioni!!!!!")
                                         .fontWeight(.bold)
@@ -68,7 +69,7 @@ struct ProfileGamifications: View {
                                 }
                             } else {
                                 let nextLevel = user.level + 1
-                                Text("Slocca al livello \(nextLevel)")
+                                Text("Si sblocca al livello \(nextLevel)")
                                     .fontWeight(.bold)
                                     .font(.headline)
                                 ForEach(IngredientStore().ingredients(wantedLevel: nextLevel)) { ingredient in
