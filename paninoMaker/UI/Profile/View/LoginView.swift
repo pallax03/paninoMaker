@@ -15,7 +15,8 @@ struct LoginView: View {
     @EnvironmentObject var user: UserModel
     @State private var isRegistrating: Bool = false
     @Query(filter: #Predicate { !$0.inTrash }, sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
-
+    @State private var isLoading: Bool = false
+    
     var body: some View {
         VStack(spacing: 20) {
             // Icon
@@ -27,55 +28,65 @@ struct LoginView: View {
             Text(isRegistrating ? "Registrati" : "Accedi")
                 .font(.largeTitle)
                 .bold()
-
+            
             // Email field
             FieldWrapper(condition: $viewModel.email, placeholder: "Email") {
                 TextField("", text: $viewModel.email)
                     .textContentType(.emailAddress)
                     .autocapitalization(.none)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 26)
-                    .padding(.bottom, 8)
             }
             
             // Password field
             FieldWrapper(condition: $viewModel.password, placeholder: "Password") {
                 SecureField("", text: $viewModel.password)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 26)
-                    .padding(.bottom, 8)
             }
-
+            
             // Error message
             if let error = viewModel.errorMessage {
                 Text(error)
                     .foregroundColor(.red)
             }
-
+            
             // Confirm button
-            Button {
-                Task {
-                    if isRegistrating {
-                        await viewModel.register(user)
-                    } else {
-                        await viewModel.login(user)
+            ZStack {
+                if isLoading {
+                    ProgressView()
+                        .tint(.orange)
+                        .transition(.opacity.combined(with: .scale))
+                } else {
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.4)) {
+                            isLoading = true
+                        }
+                        Task {
+                            if isRegistrating {
+                                await viewModel.register(user)
+                            } else {
+                                await viewModel.login(user)
+                            }
+                            
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                isLoading = false
+                            }
+                            
+                            if user.isLogged {
+                                GamificationManager.shared.prepareForUser(user, panini: allPanini)
+                                dismiss()
+                            }
+                        }
+                    } label: {
+                        Text("Conferma")
+                            .foregroundColor(.white)
+                            .frame(maxWidth: isLoading ? 0 : .infinity)
+                            .transition(.opacity)
                     }
-                    
-                    if user.isLogged {
-                        GamificationManager.shared.prepareForUser(user, panini: allPanini)
-                        dismiss()
-                    }
+                    .disabled(isLoading)
                 }
-            } label: {
-                Text("Conferma")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.orange)
-                    .cornerRadius(10)
             }
+            .frame(height: 56)
+            .animation(.easeInOut(duration: 0.6), value: isLoading)
+            .background(isLoading ? .white : Color.orange)
+            .cornerRadius(12)
             
             // Registration / login button
             Button {
@@ -85,11 +96,7 @@ struct LoginView: View {
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
-            .onChange(of: isRegistrating) { oldValue, newValue in
-                $viewModel.email.wrappedValue = ""
-                $viewModel.password.wrappedValue = ""
-            }
-
+            
             // Divider custom
             ZStack {
                 Divider()
@@ -102,7 +109,7 @@ struct LoginView: View {
             }
             
             // Google sign in button
-            GoogleSignInButton(scheme: .dark, style: .standard, state: .normal) {
+            GoogleSignInButton(scheme: .light, style: .standard, state: .normal) {
                 Task {
                     await viewModel.signInWithGoogle(user)
                     

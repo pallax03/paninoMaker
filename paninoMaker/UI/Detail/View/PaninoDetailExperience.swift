@@ -42,8 +42,7 @@ struct PaninoDetailExperience: View {
             }
         }
         .padding()
-        .onChange(of: selectedPhotos) { oldValue, newValue in
-            panino.resetImages()
+        .onChange(of: selectedPhotos) { _, newValue in
             for item in newValue {
                 panino.addImage(item)
             }

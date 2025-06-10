@@ -42,7 +42,7 @@ struct ProfileGamifications: View {
                 Button {
                     showPopoverLevel.toggle()
                 } label: {
-                    if user.level == UserGamifications.levelCap {
+                    if user.level >= UserGamifications.levelCap {
                         Image(systemName: "crown.fill")
                             .imageScale(.small)
                             .foregroundStyle(.yellow)

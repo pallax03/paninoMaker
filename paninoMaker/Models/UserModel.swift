@@ -115,11 +115,10 @@ class UserModel: ObservableObject {
     }
     
     func isLevelUpAvailable(_ lvl: Int) -> Int {
-        let newLevel = min(UserGamifications.levelCap, lvl)
-        if level != newLevel {
-            sendNotification(newLevel)
+        if level != lvl {
+            sendNotification(lvl)
         }
-        return newLevel
+        return lvl
     }
     
     func unlockAll() {

@@ -7,10 +7,12 @@
 
 import SwiftUI
 import EventKit
+import SwiftData
 
 struct PaninoDetail: View {
     @State var panino: Panino
     @State private var showConfirmationDialog: Bool = false
+    @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     
     var body: some View {
         NavigationStack {
@@ -105,12 +107,18 @@ struct PaninoDetail: View {
             
             Button("Annulla", role: .cancel) {}
         }
+        .onChange(of: showConfirmationDialog) { _, isPresented in
+            if !isPresented {
+                GamificationManager.shared.recalculateAll(panini: allPanini)
+            }
+        }
     }
 }
 
 #Preview {
     NavigationStack {
         PaninoDetail(panino: PreviewData.samplePanini.first!)
+            .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
             .environmentObject(UserModel())
     }
 }
