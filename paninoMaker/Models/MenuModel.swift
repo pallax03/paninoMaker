@@ -1,5 +1,5 @@
 //
-//  Menu.swift
+//  MenuModel.swift
 //  paninoMaker
 //
 //  Created by alex mazzoni on 27/05/25.
@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftData
 
 @Model
-class Menu {
+class MenuModel {
     var title: String
     var panini: [Panino] = []
     var position: Int = 0

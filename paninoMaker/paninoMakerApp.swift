@@ -46,6 +46,6 @@ struct paninoMakerApp: App {
                     }
                 }
         }
-        .modelContainer(for: [Menu.self, Panino.self])
+        .modelContainer(for: [MenuModel.self, Panino.self])
     }
 }

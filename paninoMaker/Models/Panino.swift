@@ -34,7 +34,7 @@ class Panino {
     var rating: Int? = nil
     var ratingDescription: String? = nil
     var composer: Composer
-    var menu: Menu?
+    var menu: MenuModel?
     var points = 0
     
     // MARK: - Computed
@@ -53,7 +53,7 @@ class Panino {
         name: String = "",
         owner: String? = nil,
         composer: Composer = .init(),
-        menu: Menu? = nil,
+        menu: MenuModel? = nil,
         coordinates: CLLocationCoordinate2D? = nil,
         images: [UIImage] = [],
     ) {
@@ -120,7 +120,7 @@ class Panino {
         self.menu = nil
     }
     
-    func restoreFromTrash(menu: Menu?) {
+    func restoreFromTrash(menu: MenuModel?) {
         self.inTrash = false
         self.menu = menu
     }

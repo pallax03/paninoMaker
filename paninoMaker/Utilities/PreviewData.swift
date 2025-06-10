@@ -33,17 +33,17 @@ enum PreviewData {
         )
     ]
     
-    static let sampleMenu: Menu = Menu(title: "Preview Menu 1", panini: samplePanini)
+    static let sampleMenu: MenuModel = MenuModel(title: "Preview Menu 1", panini: samplePanini)
     
-    static let sampleMenus: [Menu] = [
+    static let sampleMenus: [MenuModel] = [
         sampleMenu,
-        Menu(title: "Preview Menu 2", panini: [samplePanino])
+        MenuModel(title: "Preview Menu 2", panini: [samplePanino])
     ]
     
     
     
     static func makeModelContainer(
-        for entities: [any PersistentModel.Type] = [Menu.self],
+        for entities: [any PersistentModel.Type] = [MenuModel.self],
         withSampleData: Bool = true
     ) -> ModelContainer {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)

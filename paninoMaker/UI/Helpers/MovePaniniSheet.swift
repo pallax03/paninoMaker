@@ -10,8 +10,8 @@ import SwiftData
 
 struct MovePaniniSheet: View {
     @Environment(\.modelContext) var modelContext
-    @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
-    var onSelect: (Menu?) -> Void
+    @Query(sort: \MenuModel.position, order: .forward) var allMenus: [MenuModel]
+    var onSelect: (MenuModel?) -> Void
     var onNewMenu: () -> Void
     @Binding var isPresented: Bool
 

@@ -12,12 +12,12 @@ import SwiftData
 struct MenuSidebar: View {
     @EnvironmentObject var user: UserModel
     @Environment(\.modelContext) var modelContext
-    @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
+    @Query(sort: \MenuModel.position, order: .forward) var allMenus: [MenuModel]
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     @Binding var selectedMenu: SidebarSection?
     @State private var isShowingRenameMenuAlert = false
     @State private var renameMenuTitle = ""
-    @State private var focusedMenu: Menu? = nil
+    @State private var focusedMenu: MenuModel? = nil
     
     var body: some View {
         List(selection: $selectedMenu) {

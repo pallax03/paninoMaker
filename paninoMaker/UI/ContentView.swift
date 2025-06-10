@@ -14,7 +14,7 @@ struct ContentView: View {
     @EnvironmentObject var user: UserModel
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
-    @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
+    @Query(sort: \MenuModel.position, order: .forward) var allMenus: [MenuModel]
     @State var selectedMenu: SidebarSection? = .all
     @State var selectedPanino: Panino?
     @State private var lastViewedPanino: Panino?
@@ -83,7 +83,7 @@ struct ContentView: View {
         .alert("New Menu", isPresented: $isShowingNewMenuAlert) {
             TextField("Title of the new menu", text: $newMenuTitle)
             Button("Create", action: {
-                let menu = Menu(title: newMenuTitle.isEmpty ? "No title" : newMenuTitle, panini: [])
+                let menu = MenuModel(title: newMenuTitle.isEmpty ? "No title" : newMenuTitle, panini: [])
                 modelContext.insert(menu)
                 if let panino = paninoToMove {
                     panino.restoreFromTrash(menu: menu)

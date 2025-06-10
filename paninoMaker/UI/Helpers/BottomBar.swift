@@ -12,13 +12,13 @@ struct BottomBar: View {
     @EnvironmentObject var user: UserModel
     @Environment(\.modelContext) var modelContext
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
-    @Query(sort: \Menu.position, order: .forward) var allMenus: [Menu]
+    @Query(sort: \MenuModel.position, order: .forward) var allMenus: [MenuModel]
     @Binding var selectedMenu: SidebarSection?
     @Binding var selectedPanino: Panino?
     @Binding var isShowingNewMenuAlert: Bool
     @Binding var newMenuTitle: String
     
-    @State private var selectedMenuForRestore: Menu?
+    @State private var selectedMenuForRestore: MenuModel?
     @State private var isShowingMoveAllSheet = false
     
     var body: some View {

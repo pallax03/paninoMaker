@@ -15,9 +15,9 @@ enum SidebarSection: Hashable {
     case map
     case trash
     case profile
-    case menus(Menu)
+    case menus(MenuModel)
     
-    var menu: Menu? {
+    var menu: MenuModel? {
         if case let .menus(menu) = self {
             return menu
         }
