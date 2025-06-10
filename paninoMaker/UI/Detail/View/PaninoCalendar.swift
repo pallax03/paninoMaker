@@ -35,7 +35,7 @@ struct PaninoCalendar: View {
     func addAllDayEventToCalendar(title: String, description: String?, date: Date) {
         let eventStore = EKEventStore()
         
-        eventStore.requestAccess(to: .event) { granted, error in
+        eventStore.requestFullAccessToEvents { granted, error in
             if granted && error == nil {
                 let event = EKEvent(eventStore: eventStore)
                 event.title = title
