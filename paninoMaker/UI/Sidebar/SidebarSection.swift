@@ -58,7 +58,7 @@ enum SidebarSection: Hashable {
         case .nopex:
             return noTrashedPanini.filter { $0.pex == 0 }
         case .saved:
-            return noTrashedPanini
+            return noTrashedPanini.filter { $0.isSaved }
         case .map:
             return allPanini.filter { $0.coordinates != nil && !$0.inTrash }
         case .trash:
