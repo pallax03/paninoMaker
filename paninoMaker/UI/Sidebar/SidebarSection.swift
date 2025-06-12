@@ -42,7 +42,7 @@ enum SidebarSection: Hashable {
         case .map: return "map"
         case .trash: return "trash"
         case .menus: return "folder"
-        default: return ""
+        default: return "xmark"
         }
     }
     

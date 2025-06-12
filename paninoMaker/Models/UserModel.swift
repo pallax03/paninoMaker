@@ -14,7 +14,7 @@ import FirebaseStorage
 enum UserGamifications {
     static let enableGamification: Bool = false
     static let levelCap = 5
-    static let pointsPerLevelUp: Int = 100
+    static let pointsPerLevelUp: Int = 200
 }
 
 @MainActor
@@ -84,11 +84,10 @@ class UserModel: ObservableObject {
         do {
             try Auth.auth().signOut()
             self.isLogged = false
-            unlockAll()
         } catch {
             print("Errore durante il logout: \(error.localizedDescription)")
         }
-        self.unlockAll()
+        unlockAll()
     }
     
     func saveUserData() {
@@ -115,15 +114,15 @@ class UserModel: ObservableObject {
     }
     
     func isLevelUpAvailable(_ lvl: Int) -> Int {
-        if level != lvl {
+        if level < lvl {
             sendNotification(lvl)
         }
         return lvl
     }
     
     func unlockAll() {
-        username = "Master User"
-        pex = 2405
+        username = "Guest"
+        pex = UserGamifications.levelCap * UserGamifications.pointsPerLevelUp
         level = UserGamifications.levelCap
     }
 }

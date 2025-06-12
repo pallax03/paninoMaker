@@ -15,7 +15,7 @@ struct ProfileGamifications: View {
     
     
     var body: some View {
-        VStack {
+        VStack(spacing: 40) {
             ZStack {
                 ZStack {
                     Circle()
@@ -82,11 +82,9 @@ struct ProfileGamifications: View {
                                 }
                             }
                         }
-                        .padding()
                         .presentationCompactAdaptation(.popover)
                     }
             }
-            .padding()
             
             // Badges count
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 20) {

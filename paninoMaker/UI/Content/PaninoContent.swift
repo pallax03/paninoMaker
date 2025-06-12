@@ -111,12 +111,13 @@ struct PaninoContent: View {
                                     sortAscending = true
                                 }
                             } label: {
-                                Label(
-                                    field.rawValue,
-                                    systemImage: sortField == field
-                                    ? (sortAscending ? "arrow.up" : "arrow.down")
-                                    : ""
-                                )
+                                HStack {
+                                    Text(field.rawValue)
+                                    
+                                    if sortField == field {
+                                        Image(systemName: sortAscending ? "arrow.up" : "arrow.down")
+                                    }
+                                }
                             }
                         }
                     } label: {

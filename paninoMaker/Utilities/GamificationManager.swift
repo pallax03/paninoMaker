@@ -32,9 +32,6 @@ final class GamificationManager {
         
         if user.pex != totalPoints {
             user.levelUp(points: totalPoints)
-//            user.pex = totalPoints
-//            user.level = user.pex / UserGamifications.pointsPerLevelUp
-//            user.saveUserData()
         }
 
     }

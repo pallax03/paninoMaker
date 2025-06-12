@@ -19,13 +19,8 @@ protocol Badge: Hashable {
 }
 
 extension Badge {
-    func defaultView(icon: String? = nil, text: String? = nil) -> AnyView {
-        if icon != nil {
-            return AnyView(
-                Image(systemName: icon ?? "questionmark")
-            )
-        }
-        return AnyView(Text(text ?? ""))
+    func defaultView(text: String) -> AnyView {
+        return AnyView(Text(text))
     }
     func entity() -> BadgeEntity {
         BadgeEntity(title: title, mult: mult)

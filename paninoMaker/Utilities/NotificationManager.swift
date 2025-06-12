@@ -10,9 +10,9 @@ import UserNotifications
 func requestNotificationPermission() {
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
         if granted {
-            print("Permesso garantito ✅")
+            print("Permesso notifiche garantito ✅")
         } else {
-            print("Permesso negato ❌")
+            print("Permesso notifiche negato ❌")
         }
     }
     

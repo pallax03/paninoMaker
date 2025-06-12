@@ -11,6 +11,8 @@ import SwiftData
 
 struct PaninoChart: View {
     @Query(filter: #Predicate { !$0.inTrash }, sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
+    @State private var selectedPanino: Panino?
+
 
     var body: some View {
         VStack {
@@ -24,12 +26,10 @@ struct PaninoChart: View {
                     y: .value("Badges", panino.badges.count)
                 )
                 .foregroundStyle(.blue)
-                .symbol(Circle())
+                .symbol{ Text("🍔").font(.caption) }
             }
             .frame(height: 300)
-            .padding()
         }
-        .padding()
     }
 }
 

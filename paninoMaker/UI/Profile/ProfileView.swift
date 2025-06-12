@@ -67,15 +67,13 @@ struct ProfileView: View {
                 }
             }
             
-            Divider().padding()
+            Divider().padding(.vertical, 20)
             
             // Only if user is logged
             if user.isLogged {
                 ProfileGamifications()
                 
-                Divider().padding()
-                
-                Spacer(minLength: 40)
+                Divider().padding(.vertical, 20)
                 
                 PaninoChart()
             }
@@ -87,7 +85,9 @@ struct ProfileView: View {
                     themeManager.toggleTheme()
                 } label: {
                     HStack {
-                        Image(systemName: themeManager.iconName)
+                        if !themeManager.iconName.isEmpty {
+                            Image(systemName: themeManager.iconName)
+                        }
                         Text(themeManager.name)
                     }
                 }
