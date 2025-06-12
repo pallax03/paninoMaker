@@ -68,7 +68,6 @@ struct PaninoContent: View {
                         Button {
                             panino.isSaved.toggle()
                             try? modelContext.save()
-                            GamificationManager.shared.recalculateAll(panini: allPanini)
                         } label: {
                             Label("Saved", systemImage: panino.isSaved ? "bookmark.slash.fill" : "bookmark.fill")
                         }

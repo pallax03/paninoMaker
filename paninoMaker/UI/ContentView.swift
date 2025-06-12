@@ -64,14 +64,6 @@ struct ContentView: View {
             await user.syncUserData()
             GamificationManager.shared.prepareForUser(user, panini: allPanini)
         }
-        .onChange(of: selectedPanino) {
-            guard selectedPanino == nil else {
-                lastViewedPanino = selectedPanino
-                return
-            }
-            GamificationManager.shared.recalculateAll(panini: allPanini)
-            lastViewedPanino = nil
-        }
         .overlay(alignment: .bottom) {
             BottomBar(
                 selectedMenu: $selectedMenu,
