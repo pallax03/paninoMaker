@@ -112,19 +112,20 @@ class UserModel: ObservableObject {
         db.collection("users").document(uid).setData([
             "pex": pex,
             "level": level
-        ], merge: true)
+        ], merge: false)
     }
     
     func levelUp(points: Int) {
         self.pex = points
         self.level = self.isLevelUpAvailable(self.pex / UserGamifications.pointsPerLevelUp)
-        print("Saving user data... \(self.level)level, \(self.pex) pex")
         self.saveUserData()
     }
     
     func isLevelUpAvailable(_ lvl: Int) -> Int {
         if level < lvl {
-            sendNotification(lvl)
+            sendNotification(lvl, message: "salito ")
+        } else if level > lvl {
+            sendNotification(lvl, message: "sceso ")
         }
         return lvl
     }

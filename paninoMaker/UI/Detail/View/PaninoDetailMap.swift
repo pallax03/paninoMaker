@@ -8,14 +8,13 @@
 import SwiftUI
 import MapKit
 import MapItemPicker
-import SwiftData
 
 struct PaninoDetailMap: View {
     @State private var isMapOpen: Bool = false
     @State private var cameraPosition: MapCameraPosition = .automatic
-    @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     
     let panino: Panino
+    var callback: () -> Void
     
     var body: some View {
         Button {
@@ -41,17 +40,14 @@ struct PaninoDetailMap: View {
         .foregroundStyle(.green)
         .mapItemPickerSheet(isPresented: $isMapOpen) { mapItem in
             panino.setCoordinates(mapItem.location)
-        }
-        .onChange(of: panino.coordinates) {
-            GamificationManager.shared.recalculateAll(panini: allPanini)
+            callback()
         }
     }
 }
 
 #Preview {
     CardWrapper(title: "Mappa", color: .green) {
-        PaninoDetailMap(panino: Panino())
+        PaninoDetailMap(panino: Panino(), callback: {})
     }
     .environmentObject(UserModel())
-    .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
 }

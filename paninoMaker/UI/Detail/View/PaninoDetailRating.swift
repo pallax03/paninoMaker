@@ -6,14 +6,11 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct PaninoDetailRating: View {
     @State private var isReviewing: Bool = false
-    @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
-
-
     let panino: Panino
+    var callback: () -> Void
     
     var body: some View {
         VStack(spacing: 10) {
@@ -24,6 +21,7 @@ struct PaninoDetailRating: View {
                     Button {
                         panino.rating = index
                         isReviewing = true
+                        callback()
                     } label: {
                         Image(systemName: index <= panino.rating ?? 0 ? "star.fill" : "star")
                             .font(.title)
@@ -44,19 +42,15 @@ struct PaninoDetailRating: View {
             }
         }
         .padding()
-        .onChange(of: panino.rating) {
-            GamificationManager.shared.recalculateAll(panini: allPanini)
-        }
         .onChange(of: panino.ratingDescription) {
-            GamificationManager.shared.recalculateAll(panini: allPanini)
+            callback()
         }
     }
 }
 
 #Preview {
     CardWrapper(title: "Recensione", color: .blue) {
-        PaninoDetailRating(panino: Panino())
+        PaninoDetailRating(panino: Panino(), callback: {})
     }
     .environmentObject(UserModel())
-    .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
 }

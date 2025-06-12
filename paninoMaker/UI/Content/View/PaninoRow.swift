@@ -62,7 +62,7 @@ struct PaninoRow: View {
                 
                 VStack(alignment: .trailing) {
                     Text(panino.owner ?? "no user")
-                    Text("\(panino.points) PEX \(!user.isLogged ? "⚠️" : "")")
+                    Text("\(panino.pex) PEX \(!user.isLogged ? "⚠️" : "")")
                         .font(.caption)
                         .fontWeight(.light)
                         .foregroundStyle(.secondary)

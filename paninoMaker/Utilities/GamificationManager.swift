@@ -23,16 +23,16 @@ final class GamificationManager {
     
     func recalculateAll(panini: [Panino]) {
         let paniniNotInTrash = panini.filter { !$0.inTrash }
-        let totalPoints = paniniNotInTrash.map { $0.points }.reduce(0, +)
         
         for panino in panini {
             panino.refreshBadges(using: paniniNotInTrash)
-            panino.points = panino.inTrash ? 0 : panino.calculatePoints()
+            panino.pex = panino.inTrash ? 0 : panino.calculatePoints()
         }
         
-        if user.pex != totalPoints {
+        let totalPoints = paniniNotInTrash.map { $0.pex }.reduce(0, +)
+        
+        if user.isLogged && user.pex != totalPoints {
             user.levelUp(points: totalPoints)
         }
-
     }
 }

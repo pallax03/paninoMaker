@@ -15,8 +15,11 @@ struct BottomBar: View {
     @Query(sort: \MenuModel.position, order: .forward) var allMenus: [MenuModel]
     @Binding var selectedMenu: SidebarSection?
     @Binding var selectedPanino: Panino?
+    @Binding var isShowingMoveSheet: Bool
     @Binding var isShowingNewMenuAlert: Bool
     @Binding var newMenuTitle: String
+    @Binding var paniniToMove: [Panino]?
+    
     
     @State private var selectedMenuForRestore: MenuModel?
     @State private var isShowingMoveAllSheet = false
@@ -38,7 +41,8 @@ struct BottomBar: View {
                     
                     if showRecycleBinButton {
                         Button {
-                            isShowingMoveAllSheet = true
+                            paniniToMove = allPanini.filter { $0.inTrash }
+                            isShowingMoveSheet = true
                         } label: {
                             Text("Move All")
                         }
@@ -91,20 +95,6 @@ struct BottomBar: View {
                 }
                 .padding()
                 .background(.ultraThinMaterial)
-                .sheet(isPresented: $isShowingMoveAllSheet) {
-                    MovePaniniSheet(
-                        onSelect: { menu in
-                            for panino in allPanini where panino.inTrash {
-                                panino.restoreFromTrash(menu: menu)
-                            }
-                            try? modelContext.save()
-                            GamificationManager.shared.recalculateAll(panini: allPanini)
-                        },
-                        onNewMenu: {
-                            isShowingNewMenuAlert = true
-                        },
-                        isPresented: $isShowingMoveAllSheet)
-                }
             }
         }
     }
@@ -163,55 +153,50 @@ struct BottomBar: View {
 #Preview {
     let panino = PreviewData.samplePanino
     let menu = PreviewData.sampleMenu
+    let container = PreviewData.makeModelContainer(withSampleData: true)
+    let userModel = UserModel()
     
-    Text("Menu Sidebar")
-    BottomBar(selectedMenu: .constant(nil), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
+    let previews: [(label: String, menu: SidebarSection?, panino: Panino?)] = [
+            ("Menu Sidebar", nil, nil),
+            ("Profile", .profile, nil),
+            ("Map", .map, panino),
+            ("Saved - no panino", .saved, nil),
+            ("PaninoContent all - nopanino", .all, nil),
+            ("PaninoContent menu - nopanino", .menus(menu), nil),
+            ("PaninoDetail", .menus(menu), panino),
+            ("Saved - panino", .saved, panino),
+            ("Recycle Bin", .trash, nil),
+            ("Recycle Bin - panino", .trash, panino)
+        ]
     
-    Text("Profile")
-    BottomBar(selectedMenu: .constant(.profile), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
-    
-    Text("Map")
-    BottomBar(selectedMenu: .constant(.map), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
-    
-    Text("Saved - no panino")
-    BottomBar(selectedMenu: .constant(.saved), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
-    
-    Text("PaninoContent all - nopanino")
-    BottomBar(selectedMenu: .constant(.all), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
-    
-    Text("PaninoContent menu - nopanino")
-    BottomBar(selectedMenu: .constant(.menus(menu)), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
-    
-    Text("PaninoDetail")
-    BottomBar(selectedMenu: .constant(.menus(menu)), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
-    
-    Text("Saved - panino")
-    BottomBar(selectedMenu: .constant(.saved), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
-    
-    Text("Recycle Bin")
-    BottomBar(selectedMenu: .constant(.trash), selectedPanino: .constant(nil), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
-    
-    Text("Recycle Bin - panino")
-    BottomBar(selectedMenu: .constant(.trash), selectedPanino: .constant(panino), isShowingNewMenuAlert: .constant(true), newMenuTitle: .constant("New Menu"))
-        .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
-        .environmentObject(UserModel())
-    
+    ForEach(Array(previews.enumerated()), id: \.offset) { _, preview in
+            VStack {
+                Text(preview.label)
+                makeBottomBar(
+                    selectedMenu: preview.menu,
+                    selectedPanino: preview.panino,
+                    container: container,
+                    userModel: userModel
+                )
+            }
+        }
+}
+
+@ViewBuilder
+func makeBottomBar(
+    selectedMenu: SidebarSection?,
+    selectedPanino: Panino?,
+    container: ModelContainer,
+    userModel: UserModel
+) -> some View {
+    BottomBar(
+        selectedMenu: .constant(selectedMenu),
+        selectedPanino: .constant(selectedPanino),
+        isShowingMoveSheet: .constant(false),
+        isShowingNewMenuAlert: .constant(false),
+        newMenuTitle: .constant("New Menu"),
+        paniniToMove: .constant(nil)
+    )
+    .modelContainer(container)
+    .environmentObject(userModel)
 }

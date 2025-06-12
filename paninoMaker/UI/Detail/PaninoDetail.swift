@@ -29,6 +29,7 @@ struct PaninoDetail: View {
                         
                         Button {
                             panino.isSaved.toggle()
+                            GamificationManager.shared.recalculateAll(panini: allPanini)
                         } label: {
                             Image(systemName: panino.isSaved ? "bookmark.fill" : "bookmark")
                                 .foregroundStyle(.orange)
@@ -52,7 +53,9 @@ struct PaninoDetail: View {
                 ScrollView {
                     // Experience
                     CardWrapper(title: "Experience", color:.indigo) {
-                        PaninoDetailExperience(panino: panino)
+                        PaninoDetailExperience(panino: panino, callback: {
+                            GamificationManager.shared.recalculateAll(panini: allPanini)
+                        })
                     }
                     
                     // Composer
@@ -62,12 +65,16 @@ struct PaninoDetail: View {
                     
                     // Rating
                     CardWrapper(title: "Recensione", color: .blue) {
-                        PaninoDetailRating(panino: panino)
+                        PaninoDetailRating(panino: panino, callback: {
+                            GamificationManager.shared.recalculateAll(panini: allPanini)
+                        })
                     }
                     
                     // Map
                     CardWrapper(title: "Mappa",color: .green) {
-                        PaninoDetailMap(panino: panino)
+                        PaninoDetailMap(panino: panino, callback: {
+                            GamificationManager.shared.recalculateAll(panini: allPanini)
+                        })
                     }
                 }
             }
