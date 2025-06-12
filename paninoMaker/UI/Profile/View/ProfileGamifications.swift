@@ -82,6 +82,7 @@ struct ProfileGamifications: View {
                                 }
                             }
                         }
+                        .padding()
                         .presentationCompactAdaptation(.popover)
                     }
             }

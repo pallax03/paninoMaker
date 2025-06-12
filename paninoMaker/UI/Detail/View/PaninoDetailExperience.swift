@@ -35,7 +35,6 @@ struct PaninoDetailExperience: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 150, height: 150)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
                                     .shadow(radius: 3)
                             }
                         }
