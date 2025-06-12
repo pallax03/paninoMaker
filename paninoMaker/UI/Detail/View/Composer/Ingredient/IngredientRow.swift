@@ -28,7 +28,7 @@ struct IngredientRow: View {
                         Text(ingredient.name)
                             .font(.headline)
                         Text(ingredient.tags.map { $0.rawValue.capitalized }.joined(separator: ", "))                    }
-                    .foregroundStyle(.black)
+                    .foregroundStyle(.primary)
                     
                     Spacer()
                     

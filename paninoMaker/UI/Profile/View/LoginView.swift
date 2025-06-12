@@ -34,11 +34,13 @@ struct LoginView: View {
                 TextField("", text: $viewModel.email)
                     .textContentType(.emailAddress)
                     .autocapitalization(.none)
+                    .foregroundStyle(.primary)
             }
             
             // Password field
             FieldWrapper(condition: $viewModel.password, placeholder: "Password") {
                 SecureField("", text: $viewModel.password)
+                    .foregroundStyle(.primary)
             }
             
             // Error message

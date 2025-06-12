@@ -39,7 +39,7 @@ struct BottomBar: View {
                         }
                     }
                     
-                    if showRecycleBinButton {
+                    if showDeleteButton {
                         Button {
                             paniniToMove = allPanini.filter { $0.inTrash }
                             isShowingMoveSheet = true
@@ -81,7 +81,7 @@ struct BottomBar: View {
                                 .imageScale(.large)
                         }
                     }
-                    if showRecycleBinButton {
+                    if showDeleteButton {
                         Button {
                             for panino in allPanini where panino.inTrash {
                                 modelContext.delete(panino)
@@ -124,7 +124,7 @@ struct BottomBar: View {
         }
     }
     
-    var showRecycleBinButton: Bool {
+    var showDeleteButton: Bool {
         guard let section = selectedMenu else { return false }
         switch section {
         case .trash:
