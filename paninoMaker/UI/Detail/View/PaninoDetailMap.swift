@@ -8,12 +8,10 @@
 import SwiftUI
 import MapKit
 import MapItemPicker
-import SwiftData
 
 struct PaninoDetailMap: View {
     @State private var isMapOpen: Bool = false
     @State private var cameraPosition: MapCameraPosition = .automatic
-    @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     
     let panino: Panino
     var callback: () -> Void
@@ -44,9 +42,6 @@ struct PaninoDetailMap: View {
             panino.setCoordinates(mapItem.location)
             callback()
         }
-        .onChange(of: panino.coordinates) {
-            GamificationManager.shared.recalculateAll(panini: allPanini)
-        }
     }
 }
 
@@ -55,5 +50,4 @@ struct PaninoDetailMap: View {
         PaninoDetailMap(panino: Panino(), callback: {})
     }
     .environmentObject(UserModel())
-    .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
 }

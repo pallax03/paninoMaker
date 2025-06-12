@@ -72,9 +72,10 @@ enum SidebarSection: Hashable {
         panini: [Panino],
         selectedPanino: Binding<Panino?>,
         selectedMenu: Binding<SidebarSection?>,
+        isShowingMoveSheet: Binding<Bool>,
         isShowingNewMenuAlert: Binding<Bool>,
         newMenuTitle: Binding<String>,
-        paninoToMove: Binding<Panino?>,
+        paniniToMove: Binding<[Panino]?>,
         searchPanino: Binding<String>,
     ) -> some View {
         switch self {
@@ -85,11 +86,12 @@ enum SidebarSection: Hashable {
         default:
             let isTrashView = (self == .trash)
             PaninoContent(
-                paninoToMove: paninoToMove,
+                paniniToMove: paniniToMove,
                 title: title,
                 panini: panini,
                 selectedPanino: selectedPanino,
                 selectedMenu: selectedMenu,
+                isShowingMoveSheet: isShowingMoveSheet,
                 isShowingNewMenuAlert: isShowingNewMenuAlert,
                 newMenuTitle: newMenuTitle,
                 isTrash: isTrashView

@@ -123,7 +123,9 @@ class UserModel: ObservableObject {
     
     func isLevelUpAvailable(_ lvl: Int) -> Int {
         if level < lvl {
-            sendNotification(lvl)
+            sendNotification(lvl, message: "salito ")
+        } else if level > lvl {
+            sendNotification(lvl, message: "sceso ")
         }
         return lvl
     }

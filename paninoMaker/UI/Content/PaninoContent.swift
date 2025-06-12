@@ -19,13 +19,14 @@ enum PaninoSortField: String, CaseIterable, Identifiable {
 struct PaninoContent: View {
     @EnvironmentObject var user: UserModel
     @Environment(\.modelContext) var modelContext
-    @Binding var paninoToMove: Panino?
-    @State var isShowingMoveSheet: Bool = false
+    @Binding var paniniToMove: [Panino]?
+    
     var title: String
     @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     var panini: [Panino]
     @Binding var selectedPanino: Panino?
     @Binding var selectedMenu: SidebarSection?
+    @Binding var isShowingMoveSheet: Bool
     @Binding var isShowingNewMenuAlert: Bool
     @Binding var newMenuTitle: String
     @State private var sortField: PaninoSortField = .date
@@ -88,7 +89,7 @@ struct PaninoContent: View {
                         .tint(selectedMenu == .trash ? .cyan : .red)
                         
                         Button {
-                            paninoToMove = panino
+                            paniniToMove = [panino]
                             isShowingMoveSheet = true
                         } label: {
                             Label("Move", systemImage: "folder.fill")
@@ -124,22 +125,6 @@ struct PaninoContent: View {
                     }
                 }
             }
-            .sheet(isPresented: $isShowingMoveSheet) {
-                MovePaniniSheet(
-                    onSelect: {menu in
-                        if let panino = paninoToMove {
-                            panino.restoreFromTrash(menu: menu)
-                            try? modelContext.save()
-                            GamificationManager.shared.recalculateAll(panini: allPanini)
-                        }
-                    },
-                    onNewMenu: {
-                        isShowingMoveSheet = false
-                        isShowingNewMenuAlert = true
-                    },
-                    isPresented: $isShowingMoveSheet
-                )
-            }
         }
     }
 }
@@ -148,7 +133,7 @@ struct PaninoContent: View {
     NavigationStack {
         let panini = PreviewData.samplePanini
         let menu = MenuModel(title: "Test", panini: panini)
-        PaninoContent(paninoToMove: .constant(Panino()), title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: .constant(.all), isShowingNewMenuAlert: .constant(false), newMenuTitle: .constant(""))
+        PaninoContent(paniniToMove: .constant(nil), title: menu.title, panini: panini, selectedPanino: .constant(nil), selectedMenu: .constant(.all), isShowingMoveSheet: .constant(false), isShowingNewMenuAlert: .constant(false), newMenuTitle: .constant(""))
     }
     .environmentObject(UserModel())
     .modelContainer(PreviewData.makeModelContainer(withSampleData: true))

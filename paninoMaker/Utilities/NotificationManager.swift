@@ -18,10 +18,10 @@ func requestNotificationPermission() {
     
 }
 
-func sendNotification(_ level: Int) {
+func sendNotification(_ level: Int, message: String) {
     let content = UNMutableNotificationContent()
     content.title = "Level UPPP"
-    content.body = "Sei salito al Livello \(level)"
+    content.body = "Sei \(message)al Livello \(level)!"
     content.sound = UNNotificationSound.default
 
     // Puoi scegliere di farla apparire subito o con un ritardo

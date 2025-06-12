@@ -35,5 +35,4 @@ struct PaninoDetailComposer: View {
         PaninoDetailComposer(panino: Panino())
     }
     .environmentObject(UserModel())
-    .modelContainer(PreviewData.makeModelContainer(withSampleData: true))
 }
