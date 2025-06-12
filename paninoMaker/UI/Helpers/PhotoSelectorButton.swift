@@ -51,7 +51,6 @@ struct PhotoSelectorButton<Content: View>: View {
         .onChange(of: selectedPhotoItems) { oldValue, newValue in
             Task {
                 for item in newValue {
-                    print(item)
                     if let data = try? await item.loadTransferable(type: Data.self),
                        let uiImage = UIImage(data: data) {
                         selectedPhotos.append(uiImage)

@@ -34,21 +34,35 @@ class UserModel: ObservableObject {
     
     func setPropic(_ image: UIImage) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        if let data = image.jpegData(compressionQuality: 0.8) {
+
+        // Resize propic (max 512x512)
+        let targetSize = CGSize(width: 512, height: 512)
+        let resizedImage: UIImage = {
+            let size = image.size
+            let widthRatio = targetSize.width / size.width
+            let heightRatio = targetSize.height / size.height
+            let scaleFactor = min(widthRatio, heightRatio)
+            let newSize = CGSize(width: size.width * scaleFactor, height: size.height * scaleFactor)
+
+            UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
+            image.draw(in: CGRect(origin: .zero, size: newSize))
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+
+            return newImage ?? image
+        }()
+
+        // Compress to 0.5 quality
+        if let data = resizedImage.jpegData(compressionQuality: 0.4) {
             self.propicData = data
-            let ref = Storage.storage().reference().child("profileImages/\(uid).jpg")
-            ref.putData(data, metadata: nil) { _, _ in
-                ref.downloadURL { url, _ in
-                    if let url = url {
-                        self.db.collection("users").document(uid).setData([
-                            "profileImageURL": url.absoluteString
-                        ], merge: true)
-                    }
-                }
-            }
+            let base64String = data.base64EncodedString()
+
+            // Save in Firestore field
+            db.collection("users").document(uid).setData([
+                "profileImageBase64": base64String
+            ], merge: true)
         }
     }
-    
     
     func syncUserData() async {
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -61,12 +75,15 @@ class UserModel: ObservableObject {
                 self.pex = data["pex"] as? Int ?? 0
                 self.level = self.pex / UserGamifications.pointsPerLevelUp
                 self.isLogged = true
-                if let urlStr = data["profileImageURL"] as? String,
-                   let url = URL(string: urlStr) {
-                    self.downloadImage(from: url)
+
+                // ✅ Caricamento immagine da stringa base64 (non da Storage)
+                if let base64String = data["profileImageBase64"] as? String,
+                   let imageData = Data(base64Encoded: base64String) {
+                    self.propicData = imageData
                 }
+
             } else {
-                // documento non esiste: crea con valori iniziali
+                // Documento non esiste: crea con valori iniziali
                 try await ref.setData([
                     "pex": 0,
                     "level": 0
@@ -96,14 +113,6 @@ class UserModel: ObservableObject {
             "pex": pex,
             "level": level
         ], merge: true)
-    }
-    
-    private func downloadImage(from url: URL) {
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            DispatchQueue.main.async {
-                self.propicData = data
-            }
-        }.resume()
     }
     
     func levelUp(points: Int) {

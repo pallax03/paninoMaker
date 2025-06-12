@@ -20,7 +20,7 @@ class AuthModel: ObservableObject {
     func register(_ user: UserModel) async {
         do {
             try await Auth.auth().createUser(withEmail: email, password: password)
-            print("✅ Registrazione riuscita")
+            print("Registrazione riuscita")
             await login(user)
         } catch {
             errorMessage = error.localizedDescription
@@ -31,7 +31,7 @@ class AuthModel: ObservableObject {
     func login(_ user: UserModel) async {
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
-            print("✅ Login riuscito per:", result.user.email ?? "-")
+            print("Login riuscito per:", result.user.email ?? "-")
             await user.syncUserData()
         } catch {
             errorMessage = error.localizedDescription
