@@ -108,7 +108,7 @@ class UserModel: ObservableObject {
     }
     
     func levelUp(points: Int) {
-        self.pex += points
+        self.pex = points
         self.level = self.isLevelUpAvailable(self.pex / UserGamifications.pointsPerLevelUp)
         print("Saving user data... \(self.level)level, \(self.pex) pex")
         self.saveUserData()

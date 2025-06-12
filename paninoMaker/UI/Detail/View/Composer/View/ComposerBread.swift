@@ -20,7 +20,8 @@ struct ComposerBread: View {
                 Image(draftComposer.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: .infinity, height: 80)
+                    .frame(height: 80)
+                    .frame(maxWidth: .infinity)
                     .cornerRadius(10)
                     .padding()
                 

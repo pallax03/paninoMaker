@@ -25,7 +25,7 @@ func sendNotification(_ level: Int) {
     content.sound = UNNotificationSound.default
 
     // Puoi scegliere di farla apparire subito o con un ritardo
-    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
 
     let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
 
