@@ -26,10 +26,10 @@ final class GamificationManager {
         
         for panino in panini {
             panino.refreshBadges(using: paniniNotInTrash)
-            panino.points = panino.inTrash ? 0 : panino.calculatePoints()
+            panino.pex = panino.inTrash ? 0 : panino.calculatePoints()
         }
         
-        let totalPoints = paniniNotInTrash.map { $0.points }.reduce(0, +)
+        let totalPoints = paniniNotInTrash.map { $0.pex }.reduce(0, +)
         
         if user.isLogged && user.pex != totalPoints {
             user.levelUp(points: totalPoints)

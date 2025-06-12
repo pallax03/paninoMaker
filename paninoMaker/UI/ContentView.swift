@@ -84,13 +84,13 @@ struct ContentView: View {
                         }
                         paniniToMove = nil
                     }
-                    selectedMenu = .menus(menu!)
+                    
+                    selectedMenu = menu.map { .menus($0) } ?? .all
+                    
                     try? modelContext.save()
                     GamificationManager.shared.recalculateAll(panini: allPanini)
-
                 },
                 onNewMenu: {
-                    isShowingMoveSheet = false
                     isShowingNewMenuAlert = true
                 },
                 isPresented: $isShowingMoveSheet

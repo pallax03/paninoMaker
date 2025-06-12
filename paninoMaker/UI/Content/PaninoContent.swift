@@ -41,7 +41,7 @@ struct PaninoContent: View {
         switch sortField {
         case .points:
             sorted = filtered.sorted {
-                sortAscending ? ($0.points < $1.points) : ($0.points > $1.points)
+                sortAscending ? ($0.pex < $1.pex) : ($0.pex > $1.pex)
             }
         case .date:
             sorted = filtered.sorted {

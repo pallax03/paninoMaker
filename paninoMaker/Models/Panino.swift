@@ -35,7 +35,7 @@ class Panino {
     var ratingDescription: String? = nil
     var composer: Composer
     var menu: MenuModel?
-    var points = 0
+    var pex = 0
     
     // MARK: - Computed
     
@@ -138,8 +138,8 @@ class Panino {
         let divisor = pow(10.0, 2.0)
         let mult = (badges.map{ $0.mult }.reduce(1.0, +) * divisor).rounded() / divisor
         
-        self.points = Int(Double(points) * mult)
-        return self.points
+        self.pex = Int(Double(points) * mult)
+        return self.pex
     }
     
     func refreshBadges(using allPanini: [Panino]) {

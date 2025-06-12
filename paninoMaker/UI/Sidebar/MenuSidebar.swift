@@ -22,7 +22,7 @@ struct MenuSidebar: View {
     var body: some View {
         List(selection: $selectedMenu) {
             Section {
-                ForEach([SidebarSection.all, .saved, .map, .trash], id: \.self) { section in
+                ForEach([SidebarSection.all, .nopex, .saved, .map, .trash], id: \.self) { section in
                     MenuRow(
                         title: section.title,
                         systemImageName: section.systemImageName,

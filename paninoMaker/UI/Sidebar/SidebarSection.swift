@@ -12,6 +12,7 @@ import SwiftData
 enum SidebarSection: Hashable {
     case all
     case saved
+    case nopex
     case map
     case trash
     case profile
@@ -26,10 +27,11 @@ enum SidebarSection: Hashable {
     
     var title: String {
         switch self {
-        case .all: return "All Panini"
-        case .saved: return "Saved"
-        case .map: return "Map"
-        case .trash: return "Recycle Bin"
+        case .all: return "Tutti i Panini"
+        case .nopex: return "Zero PEX"
+        case .saved: return "Salvati"
+        case .map: return "Mappa"
+        case .trash: return "Cestino"
         case .menus(let menu): return menu.title
         default: return ""
         }
@@ -38,6 +40,7 @@ enum SidebarSection: Hashable {
     var systemImageName: String {
         switch self {
         case .all: return "folder"
+        case .nopex: return "exclamationmark.triangle"
         case .saved: return "bookmark"
         case .map: return "map"
         case .trash: return "trash"
@@ -47,17 +50,21 @@ enum SidebarSection: Hashable {
     }
     
     func filteredPanini(allPanini: [Panino], searchPanino: String = "") -> [Panino] {
+        let searchedPanini = allPanini.filter { ( searchPanino.isEmpty ||  $0.name.localizedCaseInsensitiveContains(searchPanino) ) }
+        let noTrashedPanini = searchedPanini.filter { !$0.inTrash }
         switch self {
         case .all:
-            return allPanini.filter { !$0.inTrash && ( searchPanino.isEmpty || $0.name.localizedCaseInsensitiveContains(searchPanino) ) }
+            return noTrashedPanini
+        case .nopex:
+            return noTrashedPanini.filter { $0.pex == 0 }
         case .saved:
-            return allPanini.filter { !$0.inTrash && $0.isSaved && ( searchPanino.isEmpty || $0.name.localizedCaseInsensitiveContains(searchPanino) ) }
+            return noTrashedPanini
         case .map:
             return allPanini.filter { $0.coordinates != nil && !$0.inTrash }
         case .trash:
-            return allPanini.filter { $0.inTrash && ( searchPanino.isEmpty || $0.name.localizedCaseInsensitiveContains(searchPanino) ) }
+            return searchedPanini.filter { $0.inTrash }
         case .menus(let menu):
-            return allPanini.filter { $0.menu == menu && !$0.inTrash && ( searchPanino.isEmpty || $0.name.localizedCaseInsensitiveContains(searchPanino) ) }
+            return noTrashedPanini.filter { $0.menu == menu }
         default:
             return []
         }
