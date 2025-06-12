@@ -7,11 +7,13 @@
 
 import SwiftUI
 import PhotosUI
+import SwiftData
 
 struct PaninoDetailExperience: View {
     let panino: Panino
     @State private var selectedPhotos: [UIImage] = []
     private let maxSelectionCount: Int = 10
+    @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
     
     var body: some View {
         VStack {
@@ -46,6 +48,8 @@ struct PaninoDetailExperience: View {
             for item in newValue {
                 panino.addImage(item)
             }
+            selectedPhotos = []
+            GamificationManager.shared.recalculateAll(panini: allPanini)
         }
     }
 }

@@ -57,6 +57,7 @@ struct PhotoSelectorButton<Content: View>: View {
                         selectedPhotos.append(uiImage)
                         }
                 }
+                selectedPhotoItems = []
             }
         }
         .sheet(isPresented: $showCamera) {

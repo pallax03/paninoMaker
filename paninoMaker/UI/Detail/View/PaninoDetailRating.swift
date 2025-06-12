@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PaninoDetailRating: View {
     @State private var isReviewing: Bool = false
+    @Query(sort: \Panino.creationDate, order: .reverse) var allPanini: [Panino]
+
 
     let panino: Panino
     
@@ -41,6 +44,12 @@ struct PaninoDetailRating: View {
             }
         }
         .padding()
+        .onChange(of: panino.rating) {
+            GamificationManager.shared.recalculateAll(panini: allPanini)
+        }
+        .onChange(of: panino.ratingDescription) {
+            GamificationManager.shared.recalculateAll(panini: allPanini)
+        }
     }
 }
 
