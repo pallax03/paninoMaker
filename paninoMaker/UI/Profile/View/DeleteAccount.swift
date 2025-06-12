@@ -11,7 +11,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 struct DeleteAccount: View {
-    @EnvironmentObject var userModel: UserModel
+    @EnvironmentObject var user: UserModel
     @Environment(\.dismiss) var dismiss
     @State private var showAlert = false
     @State private var showError = false
@@ -52,7 +52,12 @@ struct DeleteAccount: View {
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authError in
                 DispatchQueue.main.async {
                     if success {
-                        deleteUserDataAndAccount()
+                        user.deleteUserAccount(onError: { message in
+                            self.errorMessage = message
+                            self.showError = true
+                        }, onSuccess: {
+                            dismiss()
+                        })
                     } else {
                         self.errorMessage = "Autenticazione fallita."
                         self.showError = true
@@ -62,38 +67,6 @@ struct DeleteAccount: View {
         } else {
             self.errorMessage = "Autenticazione biometrica non disponibile."
             self.showError = true
-        }
-    }
-
-    func deleteUserDataAndAccount() {
-        guard let user = Auth.auth().currentUser else {
-            self.errorMessage = "Nessun utente autenticato."
-            self.showError = true
-            return
-        }
-
-        let db = Firestore.firestore()
-        let userRef = db.collection("users").document(user.uid)
-
-        userRef.delete { error in
-            if let error = error {
-                self.errorMessage = "Errore durante l'eliminazione dei dati Firestore: \(error.localizedDescription)"
-                self.showError = true
-            } else {
-                user.delete { error in
-                    DispatchQueue.main.async {
-                        if let error = error {
-                            self.errorMessage = "Errore nell'eliminazione account: \(error.localizedDescription)"
-                            self.showError = true
-                        } else {
-                            userModel.isLogged = false
-                            userModel.unlockAll()
-                            dismiss()
-                            print("Account e dati eliminati.")
-                        }
-                    }
-                }
-            }
         }
     }
 }

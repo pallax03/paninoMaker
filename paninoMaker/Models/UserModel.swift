@@ -107,6 +107,30 @@ class UserModel: ObservableObject {
         unlockAll()
     }
     
+    func deleteUserAccount(onError: @escaping (String) -> Void, onSuccess: @escaping () -> Void) {
+            guard let user = Auth.auth().currentUser else {
+                onError("Nessun utente autenticato.")
+                return
+            }
+            let userRef = db.collection("users").document(user.uid)
+            userRef.delete { error in
+                if let error = error {
+                    onError("Errore durante l'eliminazione dei dati Firestore: \(error.localizedDescription)")
+                } else {
+                    user.delete { error in
+                        if let error = error {
+                            onError("Errore nell'eliminazione account: \(error.localizedDescription)")
+                        } else {
+                            self.isLogged = false
+                            self.unlockAll()
+                            onSuccess()
+                            print("Account e dati eliminati.")
+                        }
+                    }
+                }
+            }
+        }
+    
     func saveUserData() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         db.collection("users").document(uid).setData([
