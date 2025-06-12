@@ -76,6 +76,8 @@ struct ProfileView: View {
                 Divider().padding(.vertical, 20)
                 
                 PaninoChart()
+                
+                DeleteAccount()
             }
         }
         .padding()

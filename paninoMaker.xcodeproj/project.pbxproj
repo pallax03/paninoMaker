@@ -482,6 +482,7 @@
 				INFOPLIST_FILE = paninoMaker/Info.plist;
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Calendar is required for add an event.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is required for panino and profile picture.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Face ID is required to delete your account.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location is required to show the map.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -515,6 +516,7 @@
 				INFOPLIST_FILE = paninoMaker/Info.plist;
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Calendar is required for add an event.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is required for panino and profile picture.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Face ID is required to delete your account.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location is required to show the map.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
