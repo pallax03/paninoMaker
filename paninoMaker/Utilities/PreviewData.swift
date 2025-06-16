@@ -12,8 +12,8 @@ import CoreLocation
 enum PreviewData {
     static let samplePanino: Panino =
     Panino(
-        name: "Hamburger",
-        owner: "Preview User",
+        name: "SuperMEGAGIGABIGHamburgerOfTheUniverse",
+        owner: "Reallyreallyreallylonglongname@email.it",
         composer: Composer(ingredients: IngredientStore().generateRandoms(count: 10)),
         coordinates: CLLocationCoordinate2D(latitude: 44.1483115, longitude: 12.2357904)
     )

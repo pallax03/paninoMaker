@@ -44,8 +44,17 @@ struct PaninoRow: View {
             
             HStack {
                 VStack(alignment: .leading) {
+                    HStack {
+                        Text(panino.name)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                            .frame(maxWidth: 200, alignment: .leading)
+                        if panino.isSaved {
+                            Image(systemName:  "bookmark.fill")
+                                .foregroundStyle(.orange)
+                        }
+                    }
                     
-                    Text(panino.name)
                     
                     HStack {
                         Image(systemName: "folder.fill")
@@ -54,6 +63,8 @@ struct PaninoRow: View {
                             .font(.caption)
                             .fontWeight(.light)
                             .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
                     }
                     .foregroundStyle(.secondary)
                 }
@@ -62,6 +73,9 @@ struct PaninoRow: View {
                 
                 VStack(alignment: .trailing) {
                     Text(panino.owner ?? "no user")
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                        .frame(maxWidth: 150, alignment: .trailing)
                     Text("\(panino.pex) PEX \(!user.isLogged ? "⚠️" : "")")
                         .font(.caption)
                         .fontWeight(.light)
