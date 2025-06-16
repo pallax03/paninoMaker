@@ -23,6 +23,7 @@ struct FieldWrapper<Content: View>: View {
         let isActive = focused || condition.count > 0
         ZStack(alignment: isActive ? .topLeading : .center) {
             content
+                .foregroundStyle(.black)
                 .font(.system(size: 16, weight: .regular))
                 .opacity(isActive ? 1 : 0)
                 .offset(y: 7)
