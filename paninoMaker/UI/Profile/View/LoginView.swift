@@ -87,7 +87,7 @@ struct LoginView: View {
             }
             .frame(height: 56)
             .animation(.easeInOut(duration: 0.6), value: isLoadingEmail)
-            .background(isLoadingEmail ? .white : Color.orange)
+            .background(isLoadingEmail ? .clear : Color.orange)
             .cornerRadius(12)
             
             // Registration / login button
@@ -145,11 +145,11 @@ struct LoginView: View {
                 .padding()
                 .foregroundStyle(.gray)
                 .frame(height: 56)
-                .background(.white)
+                .background(.clear)
                 .cornerRadius(12)
                 .overlay {
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(.black.opacity(0.2), lineWidth: 2)
+                        .stroke(.gray.opacity(0.2), lineWidth: 2)
                 }
                 .contentShape(Rectangle())
                 .disabled(isLoadingGoogle || isLoadingEmail)
